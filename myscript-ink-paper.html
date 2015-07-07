@@ -1,0 +1,132 @@
+<!--
+Copyright © MyScript.
+LICENSE: github.com/MyScriptWebComponents/myscript-ink-paper/blob/master/LICENSE
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../myscript/myscript.html">
+<!--
+The `myscript-ink-paper` contains MyScript Ink Paper.<br>
+It is used to draw handwriting inks on an HTML5 canvas.
+
+##### Example
+
+    var options = {
+        applicationKey: applicationKey, // MyScript Cloud application key
+        hmacKey: hmacKey, // MyScript Cloud HMAC key
+        type: 'MATH', // Recognition type
+        timeout: 25, // Recognition timeout
+        mathParameters: {
+            resultTypes: ['LATEX'] // Set the recognition result type (i.e.: 'LATEX', 'MATHML' or 'SYMBOLTREE')
+        }
+    };
+
+    var recognized = function (e) {
+        var data = e.detail;
+        if (data) {
+            var results = data.getMathDocument().getResultElements();
+            for (var i in results) {
+                if (results[i] instanceof MyScript.MathLaTexResultElement) {
+                    result.innerHTML = results[i].getValue();
+                }
+            }
+        } else {
+            result.innerHTML = '';
+        }
+    };
+
+    var error = function (e) {
+        if (e) {
+            result.innerHTML = e;
+        }
+    };
+    ...
+    <myscript-ink-paper options={{options}} on-error="error" on-result="recognized"></myscript-ink-paper>
+
+@group MyScript Elements
+@element myscript-ink-paper
+@blurb MyScript Ink Paper to help developer for integrate handwriting recognition.
+@status alpha
+@homepage http://myscriptwebcomponents.github.io/myscript-ink-paper
+
+@demo demo/index.html Basic Demo
+-->
+<dom-module id="myscript-input">
+    <style>
+        :host {
+            display: block !important;
+            background: url(background-pattern.png) !important;
+        }
+    </style>
+    <template>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'myscript-ink-paper',
+        properties: {
+            /**
+             * Recognition parameters
+             *
+             * @attribute options
+             * @type Object
+             */
+            options: {
+                type: Object,
+                notify: true
+            },
+            /**
+             * Recognition result callback
+             *
+             * @attribute result-callback
+             * @type Function
+             */
+            resultCallback: {
+                type: Function,
+                notify: true
+            }
+        },
+        /**
+         * Clear all context
+         *
+         * @method clear
+         */
+        clear: function () {
+            this._inkPaper.clear();
+        },
+        /**
+         * Undo action, and launch recognition if timeout is set
+         *
+         * @method undo
+         */
+        undo: function () {
+            this._inkPaper.undo();
+        },
+        /**
+         * Redo action, and launch recognition if timeout is set
+         *
+         * @method redo
+         */
+        redo: function () {
+            this._inkPaper.redo();
+        },
+        /**
+         * Launch recognition
+         *
+         * @method recognize
+         */
+        recognize: function () {
+            this._inkPaper.recognize();
+        },
+        attached: function () {
+            this._inkPaper = new MyScript.InkPaper(this, this.options, function (data, err) {
+                if (data) {
+                    this.fire('result', data);
+                }
+                if (err) {
+                    this.fire('error', err);
+                }
+            });
+        }
+    });
+</script>

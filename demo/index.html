@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <title>myscript-ink-paper</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../myscript-ink-paper.html">
+
+</head>
+<body>
+<template id="app" is="dom-bind">
+    <div style="position: absolute;">
+        <paper-fab id="clear" mini icon="delete" title="delete" on-tap="clear"></paper-fab>
+        <paper-fab id="undo" mini icon="undo" title="undo" on-tap="undo"></paper-fab>
+        <paper-fab id="redo" mini icon="redo" title="redo" on-tap="redo"></paper-fab>
+        <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize"></paper-fab>
+    </div>
+    <myscript-ink-paper id="input" fancy style="width: 800px; height: 600px;"
+                    on-result="recognized"
+                    on-error="error">
+    </myscript-ink-paper>
+    <paper-toast id="error" text="Recognition failed"></paper-toast>
+    <p id="result"></p>
+</template>
+<script>
+    (function (document) {
+        'use strict';
+        // Grab a reference to our auto-binding template
+        // and give it some initial binding values
+        // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
+        var app = document.querySelector('#app');
+        // Listen for template bound event to know when bindings
+        // have resolved and content has been stamped to the page
+        app.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+            var input = document.querySelector('myscript-ink-paper[id=input]'),
+                alert = document.querySelector('#error'),
+                result = document.querySelector('#result');
+            app.clear = function () {
+                input.clear();
+                result.innerHTML = '';
+            };
+            app.undo = function () {
+                input.undo();
+            };
+            app.redo = function () {
+                input.redo();
+            };
+            app.recognize = function () {
+                input.recognize();
+            };
+            app.error = function error() {
+                alert.show();
+            };
+            app.recognized = function (e) {
+                result.innerHTML = e.detail.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+            };
+        });
+    })(document);
+</script>
+</body>
+</html>
