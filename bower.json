@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.0.x",
-    "myscript": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#3cb3123033d775a263e1b2bb36c84862aee25fbf"
+    "myscript": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#1.0.x",
