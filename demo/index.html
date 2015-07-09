@@ -16,7 +16,11 @@
         <paper-fab id="redo" mini icon="redo" title="redo" on-tap="redo"></paper-fab>
         <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize"></paper-fab>
     </div>
-    <myscript-ink-paper id="input" fancy style="width: 800px; height: 600px;"
+    <myscript-ink-paper id="input" fancy
+                        type="MATH"
+                        width="800"
+                        height="800"
+                        timeout="-1"
                     on-result="recognized"
                     on-error="error">
     </myscript-ink-paper>
@@ -41,6 +45,7 @@
             var input = document.querySelector('myscript-ink-paper[id=input]'),
                 alert = document.querySelector('#error'),
                 result = document.querySelector('#result');
+
             app.clear = function () {
                 input.clear();
                 result.innerHTML = '';

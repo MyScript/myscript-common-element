@@ -53,11 +53,15 @@ It is used to draw handwriting inks on an HTML5 canvas.
 <dom-module id="myscript-input">
     <style>
         :host {
-            display: block !important;
-            background: url(background-pattern.png) !important;
+            display: block;
+        }
+        #ms-rendering-canvas {
+            background: url(background-pattern.png);
         }
     </style>
+
     <template>
+        <div id="inkPaper"></div>
     </template>
 </dom-module>
 
@@ -66,25 +70,69 @@ It is used to draw handwriting inks on an HTML5 canvas.
         is: 'myscript-ink-paper',
         properties: {
             /**
-             * Recognition parameters
+             * Width
              *
-             * @attribute options
-             * @type Object
+             * @attribute width
+             * @type Number
              */
-            options: {
-                type: Object,
-                notify: true
+            width: {
+                type: Number,
+                notify: true,
+                value: 400
             },
             /**
-             * Recognition result callback
+             * Height
              *
-             * @attribute result-callback
-             * @type Function
+             * @attribute height
+             * @type Number
              */
-            resultCallback: {
-                type: Function,
-                notify: true
-            }
+            height: {
+                type: Number,
+                notify: true,
+                value: 300
+            },
+            /**
+             * Recognition type
+             *
+             * @attribute type
+             * @type String
+             * @default 'TEXT'
+             */
+            type: {
+                type: String,
+                notify: true,
+                value: 'TEXT'
+            },
+            /**
+             * Recognition timeout
+             *
+             * @attribute timeout
+             * @type Number
+             * @default -1
+             */
+            timeout: {
+                type: Number,
+                notify: true,
+                value: -1
+            },
+            /**
+             * Application key to use for recognition on MyScript handwriting recognition server.<br>
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
+             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
+             *
+             * @attribute application-key
+             * @type String
+             */
+            applicationKey: String,
+            /**
+             * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
+             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
+             *
+             * @attribute hmac-key
+             * @type String
+             */
+            hmacKey: String
         },
         /**
          * Clear all context
@@ -118,8 +166,16 @@ It is used to draw handwriting inks on an HTML5 canvas.
         recognize: function () {
             this._inkPaper.recognize();
         },
-        attached: function () {
-            this._inkPaper = new MyScript.InkPaper(this, this.options, function (data, err) {
+        ready: function () {
+
+            var options = {
+                type: this.type,
+                width: this.width,
+                height: this.height,
+                timeout: this.timeout
+            };
+
+            this._inkPaper = new MyScript.InkPaper(this, options, function (data, err) {
                 if (data) {
                     this.fire('result', data);
                 }
