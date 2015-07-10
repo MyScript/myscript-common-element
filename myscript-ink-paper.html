@@ -3,6 +3,7 @@ Copyright © MyScript.
 LICENSE: github.com/MyScriptWebComponents/myscript-ink-paper/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../myscript/myscript.html">
 <!--
 The `myscript-ink-paper` contains MyScript Ink Paper.<br>
@@ -70,11 +71,11 @@ It is used to draw handwriting inks on an HTML5 canvas.
              *
              * @attribute width
              * @type Number
+             * @default 400
              */
             width: {
                 type: Number,
                 notify: true,
-                value: 400,
                 observer: '_widthChanged'
             },
             /**
@@ -82,11 +83,11 @@ It is used to draw handwriting inks on an HTML5 canvas.
              *
              * @attribute height
              * @type Number
+             * @default 300
              */
             height: {
                 type: Number,
                 notify: true,
-                value: 300,
                 observer: '_heightChanged'
             },
             /**
@@ -99,7 +100,6 @@ It is used to draw handwriting inks on an HTML5 canvas.
             type: {
                 type: String,
                 notify: true,
-                value: 'TEXT',
                 observer: '_typeChanged'
             },
             /**
@@ -107,12 +107,11 @@ It is used to draw handwriting inks on an HTML5 canvas.
              *
              * @attribute timeout
              * @type Number
-             * @default -1
+             * @default 2000
              */
             timeout: {
                 type: Number,
                 notify: true,
-                value: -1,
                 observer: '_timeoutChanged'
             },
             /**
@@ -141,6 +140,12 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 notify: true,
                 observer: '_hmacKeyChanged'
             }
+        },
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        listeners: {
+            'iron-resize': '_onResize'
         },
         /**
          * Clear all context
@@ -182,6 +187,15 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 this._inkPaper.recognize();
             }
         },
+        get parent() {
+            if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                return this.parentNode.host;
+            }
+            return this.parentNode;
+        },
+        attached: function() {
+            this.async(this.notifyResize, 1);
+        },
         ready: function () {
 
             var options = {
@@ -200,6 +214,16 @@ It is used to draw handwriting inks on an HTML5 canvas.
                     this.fire('error', err);
                 }
             });
+        },
+        _onResize: function() {
+            if (this._inkPaper) {
+                if (!this.width && (this.parent.offsetWidth > 0)) {
+                    this._inkPaper.setWidth(this.parent.offsetWidth);
+                }
+                if (!this.height && (this.parent.offsetHeight > 0)) {
+                    this._inkPaper.setHeight(this.parent.offsetHeight);
+                }
+            }
         },
         /**
          * Width changed observer

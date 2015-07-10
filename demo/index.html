@@ -6,7 +6,6 @@
     <title>myscript-ink-paper</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-ink-paper.html">
-
 </head>
 <body>
 <template id="app" is="dom-bind">
@@ -18,8 +17,6 @@
     </div>
     <myscript-ink-paper id="input" fancy
                         type="{{ type }}"
-                        width="{{ width }}"
-                        height="{{ height }}"
                         timeout="{{ timeout }}"
                         application-key="{{ applicationKey }}"
                         hmac-key="{{ hmacKey }}"
@@ -49,8 +46,6 @@
                 result = document.querySelector('#result');
 
             // Settings
-            app.width = 800;
-            app.height = 600;
             app.type = 'MATH';
             app.timeout = 2000;
             app.applicationKey = '0b2c0e80-beb3-42a6-9580-5732f5e8f80f';
