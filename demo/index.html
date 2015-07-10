@@ -21,6 +21,8 @@
                         width="{{ width }}"
                         height="{{ height }}"
                         timeout="{{ timeout }}"
+                        application-key="{{ applicationKey }}"
+                        hmac-key="{{ hmacKey }}"
                         on-result="recognized"
                         on-error="error">
     </myscript-ink-paper>
@@ -50,7 +52,9 @@
             app.width = 800;
             app.height = 600;
             app.type = 'MATH';
-            app.timeout = -1;
+            app.timeout = 2000;
+            app.applicationKey = '0b2c0e80-beb3-42a6-9580-5732f5e8f80f';
+            app.hmacKey = '18e72adc-4160-4738-9c9b-fe7b012b928f';
 
             app.clear = function () {
                 input.clear();

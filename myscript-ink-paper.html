@@ -183,7 +183,16 @@ It is used to draw handwriting inks on an HTML5 canvas.
             }
         },
         ready: function () {
-            this._inkPaper = new MyScript.InkPaper(this, {}, function (data, err) {
+
+            var options = {
+                type: this.type,
+                width: this.width,
+                height: this.height,
+                timeout: this.timeout,
+                applicationKey: this.applicationKey,
+                hmacKey: this.hmacKey
+            };
+            this._inkPaper = new MyScript.InkPaper(this, options, function (data, err) {
                 if (data) {
                     this.fire('result', data);
                 }
