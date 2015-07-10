@@ -7,7 +7,7 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-ink-paper.html">
 </head>
-<body>
+<body unresolved>
 <template id="app" is="dom-bind">
     <div style="position: absolute;">
         <paper-fab id="clear" mini icon="delete" title="delete" on-tap="clear"></paper-fab>
@@ -15,8 +15,7 @@
         <paper-fab id="redo" mini icon="redo" title="redo" on-tap="redo"></paper-fab>
         <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize"></paper-fab>
     </div>
-    <myscript-ink-paper id="input" fancy
-                        type="{{ type }}"
+    <myscript-ink-paper type="{{ type }}"
                         timeout="{{ timeout }}"
                         application-key="{{ applicationKey }}"
                         hmac-key="{{ hmacKey }}"
@@ -41,7 +40,7 @@
         // See https://github.com/Polymer/polymer/issues/1381
         window.addEventListener('WebComponentsReady', function () {
             document.querySelector('body').removeAttribute('unresolved');
-            var input = document.querySelector('myscript-ink-paper[id=input]'),
+            var input = document.querySelector('myscript-ink-paper'),
                 alert = document.querySelector('#error'),
                 result = document.querySelector('#result');
 

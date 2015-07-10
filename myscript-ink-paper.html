@@ -32,8 +32,6 @@ It is used to draw handwriting inks on an HTML5 canvas.
     };
     ...
     <myscript-ink-paper
-        width="800"
-        height="600"
         type="MATH"
         timeout="2000"
         application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
@@ -50,18 +48,7 @@ It is used to draw handwriting inks on an HTML5 canvas.
 
 @demo demo/index.html Basic Demo
 -->
-<dom-module id="myscript-input">
-    <style>
-        #ms-rendering-canvas {
-            background: url(background-pattern.png);
-        }
-    </style>
-
-    <template>
-        <div id="inkPaper"></div>
-    </template>
-</dom-module>
-
+<dom-module id="myscript-ink-paper"></dom-module>
 <script>
     Polymer({
         is: 'myscript-ink-paper',
