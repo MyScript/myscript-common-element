@@ -1,6 +1,6 @@
 {
     "name": "myscript-ink-paper",
-    "version": "1.1.0-beta3",
+    "version": "1.1.0-beta4",
     "description": "MyScript Ink Paper to help developer for integrate handwriting recognition.",
     "keywords": [
         "web-component",
