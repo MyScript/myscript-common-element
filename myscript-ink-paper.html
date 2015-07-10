@@ -200,7 +200,7 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 if (err) {
                     this.fire('error', err);
                 }
-            });
+            }.bind(this));
         },
         _onResize: function() {
             if (this._inkPaper) {

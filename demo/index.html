@@ -5,18 +5,32 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
     <title>myscript-ink-paper</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
+    <link rel="import" href="../../iron-icons/iron-icons.html">
+    <link rel="import" href="../../iron-icons/av-icons.html">
+    <link rel="import" href="../../paper-fab/paper-fab.html">
+    <link rel="import" href="../../paper-toast/paper-toast.html">
     <link rel="import" href="../myscript-ink-paper.html">
 </head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+</style>
 <body unresolved>
 <template id="app" is="dom-bind">
-    <div style="position: absolute;">
+    <div style="position: absolute; z-index: 2;">
         <paper-fab id="clear" mini icon="delete" title="delete" on-tap="clear"></paper-fab>
         <paper-fab id="undo" mini icon="undo" title="undo" on-tap="undo"></paper-fab>
         <paper-fab id="redo" mini icon="redo" title="redo" on-tap="redo"></paper-fab>
         <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize"></paper-fab>
     </div>
-    <myscript-ink-paper type="{{ type }}"
-                        timeout="{{ timeout }}"
+    <myscript-ink-paper type="TEXT"
+                        timeout="-1"
                         application-key="{{ applicationKey }}"
                         hmac-key="{{ hmacKey }}"
                         on-result="recognized"
@@ -45,10 +59,8 @@
                 result = document.querySelector('#result');
 
             // Settings
-            app.type = 'MATH';
-            app.timeout = 2000;
-            app.applicationKey = '0b2c0e80-beb3-42a6-9580-5732f5e8f80f';
-            app.hmacKey = '18e72adc-4160-4738-9c9b-fe7b012b928f';
+            app.applicationKey = 'af5f7b94-85e6-458c-8336-38f572e2f494';
+            app.hmacKey = '39989a38-7136-46ef-9e6e-45c7eae1f147';
 
             app.clear = function () {
                 input.clear();
