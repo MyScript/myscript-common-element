@@ -10,16 +10,6 @@ It is used to draw handwriting inks on an HTML5 canvas.
 
 ##### Example
 
-    var options = {
-        applicationKey: applicationKey, // MyScript Cloud application key
-        hmacKey: hmacKey, // MyScript Cloud HMAC key
-        type: 'MATH', // Recognition type
-        timeout: 25, // Recognition timeout
-        mathParameters: {
-            resultTypes: ['LATEX'] // Set the recognition result type (i.e.: 'LATEX', 'MATHML' or 'SYMBOLTREE')
-        }
-    };
-
     var recognized = function (e) {
         var data = e.detail;
         if (data) {
@@ -40,7 +30,16 @@ It is used to draw handwriting inks on an HTML5 canvas.
         }
     };
     ...
-    <myscript-ink-paper options={{options}} on-error="error" on-result="recognized"></myscript-ink-paper>
+    <myscript-ink-paper
+        width="800"
+        height="600"
+        type="MATH"
+        timeout="2000"
+        application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        on-error="error"
+        on-result="recognized">
+    </myscript-ink-paper>
 
 @group MyScript Elements
 @element myscript-ink-paper
@@ -52,9 +51,6 @@ It is used to draw handwriting inks on an HTML5 canvas.
 -->
 <dom-module id="myscript-input">
     <style>
-        :host {
-            display: block;
-        }
         #ms-rendering-canvas {
             background: url(background-pattern.png);
         }
@@ -78,7 +74,8 @@ It is used to draw handwriting inks on an HTML5 canvas.
             width: {
                 type: Number,
                 notify: true,
-                value: 400
+                value: 400,
+                observer: '_widthChanged'
             },
             /**
              * Height
@@ -89,7 +86,8 @@ It is used to draw handwriting inks on an HTML5 canvas.
             height: {
                 type: Number,
                 notify: true,
-                value: 300
+                value: 300,
+                observer: '_heightChanged'
             },
             /**
              * Recognition type
@@ -101,7 +99,8 @@ It is used to draw handwriting inks on an HTML5 canvas.
             type: {
                 type: String,
                 notify: true,
-                value: 'TEXT'
+                value: 'TEXT',
+                observer: '_typeChanged'
             },
             /**
              * Recognition timeout
@@ -113,7 +112,8 @@ It is used to draw handwriting inks on an HTML5 canvas.
             timeout: {
                 type: Number,
                 notify: true,
-                value: -1
+                value: -1,
+                observer: '_timeoutChanged'
             },
             /**
              * Application key to use for recognition on MyScript handwriting recognition server.<br>
@@ -123,7 +123,11 @@ It is used to draw handwriting inks on an HTML5 canvas.
              * @attribute application-key
              * @type String
              */
-            applicationKey: String,
+            applicationKey: {
+                type: String,
+                notify: true,
+                observer: '_applicationKeyChanged'
+            },
             /**
              * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
              * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
@@ -132,7 +136,11 @@ It is used to draw handwriting inks on an HTML5 canvas.
              * @attribute hmac-key
              * @type String
              */
-            hmacKey: String
+            hmacKey: {
+                type: String,
+                notify: true,
+                observer: '_hmacKeyChanged'
+            }
         },
         /**
          * Clear all context
@@ -140,7 +148,9 @@ It is used to draw handwriting inks on an HTML5 canvas.
          * @method clear
          */
         clear: function () {
-            this._inkPaper.clear();
+            if (this._inkPaper) {
+                this._inkPaper.clear();
+            }
         },
         /**
          * Undo action, and launch recognition if timeout is set
@@ -148,7 +158,9 @@ It is used to draw handwriting inks on an HTML5 canvas.
          * @method undo
          */
         undo: function () {
-            this._inkPaper.undo();
+            if (this._inkPaper) {
+                this._inkPaper.undo();
+            }
         },
         /**
          * Redo action, and launch recognition if timeout is set
@@ -156,7 +168,9 @@ It is used to draw handwriting inks on an HTML5 canvas.
          * @method redo
          */
         redo: function () {
-            this._inkPaper.redo();
+            if (this._inkPaper) {
+                this._inkPaper.redo();
+            }
         },
         /**
          * Launch recognition
@@ -164,18 +178,12 @@ It is used to draw handwriting inks on an HTML5 canvas.
          * @method recognize
          */
         recognize: function () {
-            this._inkPaper.recognize();
+            if (this._inkPaper) {
+                this._inkPaper.recognize();
+            }
         },
         ready: function () {
-
-            var options = {
-                type: this.type,
-                width: this.width,
-                height: this.height,
-                timeout: this.timeout
-            };
-
-            this._inkPaper = new MyScript.InkPaper(this, options, function (data, err) {
+            this._inkPaper = new MyScript.InkPaper(this, {}, function (data, err) {
                 if (data) {
                     this.fire('result', data);
                 }
@@ -183,6 +191,72 @@ It is used to draw handwriting inks on an HTML5 canvas.
                     this.fire('error', err);
                 }
             });
+        },
+        /**
+         * Width changed observer
+         *
+         * @private
+         * @method _widthChanged
+         */
+        _widthChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setWidth(this.width);
+            }
+        },
+        /**
+         * Height changed observer
+         *
+         * @private
+         * @method _heightChanged
+         */
+        _heightChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setHeight(this.height);
+            }
+        },
+        /**
+         * Application key changed observer
+         *
+         * @private
+         * @method _applicationKeyChanged
+         */
+        _applicationKeyChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setApplicationKey(this.applicationKey);
+            }
+        },
+        /**
+         * HMAC key changed observer
+         *
+         * @private
+         * @method _hmacKeyChanged
+         */
+        _hmacKeyChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setHmacKey(this.hmacKey);
+            }
+        },
+        /**
+         * Timeout changed observer
+         *
+         * @private
+         * @method _timeoutChanged
+         */
+        _timeoutChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setTimeout(this.timeout);
+            }
+        },
+        /**
+         * Recognition type changed observer
+         *
+         * @private
+         * @method _typeChanged
+         */
+        _typeChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setType(this.type);
+            }
         }
     });
 </script>

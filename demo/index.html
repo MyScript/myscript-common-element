@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-  <title>myscript-ink-paper</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../myscript-ink-paper.html">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>myscript-ink-paper</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-ink-paper.html">
 
 </head>
 <body>
@@ -17,12 +17,12 @@
         <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize"></paper-fab>
     </div>
     <myscript-ink-paper id="input" fancy
-                        type="MATH"
-                        width="800"
-                        height="800"
-                        timeout="-1"
-                    on-result="recognized"
-                    on-error="error">
+                        type="{{ type }}"
+                        width="{{ width }}"
+                        height="{{ height }}"
+                        timeout="{{ timeout }}"
+                        on-result="recognized"
+                        on-error="error">
     </myscript-ink-paper>
     <paper-toast id="error" text="Recognition failed"></paper-toast>
     <p id="result"></p>
@@ -45,6 +45,12 @@
             var input = document.querySelector('myscript-ink-paper[id=input]'),
                 alert = document.querySelector('#error'),
                 result = document.querySelector('#result');
+
+            // Settings
+            app.width = 800;
+            app.height = 600;
+            app.type = 'MATH';
+            app.timeout = -1;
 
             app.clear = function () {
                 input.clear();
