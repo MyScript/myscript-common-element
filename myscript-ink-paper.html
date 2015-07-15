@@ -180,7 +180,7 @@ It is used to draw handwriting inks on an HTML5 canvas.
             }
             return this.parentNode;
         },
-        attached: function() {
+        attached: function () {
             this.async(this.notifyResize, 1);
         },
         ready: function () {
@@ -202,7 +202,7 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 }
             }.bind(this));
         },
-        _onResize: function() {
+        _onResize: function () {
             if (this._inkPaper) {
                 if (!this.width && (this.parent.offsetWidth > 0)) {
                     this._inkPaper.setWidth(this.parent.offsetWidth);
