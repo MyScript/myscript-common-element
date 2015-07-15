@@ -23,6 +23,7 @@
 </style>
 <body unresolved>
 <template id="app" is="dom-bind">
+    <div style="height: 90px;"></div>
     <div style="position: absolute; z-index: 2;">
         <paper-fab id="clear" mini icon="delete" title="delete" on-tap="clear"></paper-fab>
         <paper-fab id="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !hasUndo }}"></paper-fab>
@@ -60,21 +61,6 @@
                 result = document.querySelector('#result');
 
             app.hasRedo = app.hasUndo = false;
-
-            input.addEventListener('undo-changed', function (e) {
-               app.hasUndo = e.detail.hasUndo;
-                app.hasRedo = e.detail.hasRedo;
-            });
-
-            input.addEventListener('redo-changed', function (e) {
-                app.hasUndo = e.detail.hasUndo;
-                app.hasRedo = e.detail.hasRedo;
-            });
-
-            input.addEventListener('cleared', function (e) {
-                app.hasUndo = e.detail.hasUndo;
-                app.hasRedo = e.detail.hasRedo;
-            });
 
             // Settings
             app.applicationKey = 'af5f7b94-85e6-458c-8336-38f572e2f494';
