@@ -20,17 +20,31 @@
         padding: 0;
         margin: 0;
     }
+    #ink-paper {
+        height: 90%;
+    }
+    #buttons {
+        position: absolute;
+        z-index: 2;
+    }
+    #result {
+        height: 10%;
+        text-align: center;
+        font-size: xx-large;
+    }
 </style>
 <body unresolved>
 <template id="app" is="dom-bind">
-    <div style="height: 90px;"></div>
-    <div style="position: absolute; z-index: 2;">
+    <div id="result"></div>
+    <div id="buttons">
         <paper-fab id="clear" mini icon="delete" title="delete" on-tap="clear"></paper-fab>
         <paper-fab id="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !hasUndo }}"></paper-fab>
         <paper-fab id="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !hasRedo }}"></paper-fab>
-        <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize" disabled="{{ !hasUndo }}"></paper-fab>
+        <paper-fab id="recognize" mini icon="send" title="reco" on-tap="recognize"
+                   disabled="{{ !hasUndo }}"></paper-fab>
     </div>
-    <myscript-ink-paper type="TEXT"
+    <myscript-ink-paper id="ink-paper"
+                        type="TEXT"
                         timeout="-1"
                         application-key="{{ applicationKey }}"
                         hmac-key="{{ hmacKey }}"
@@ -39,7 +53,6 @@
                         on-changed="_onChanged">
     </myscript-ink-paper>
     <paper-toast id="error" text="Recognition failed"></paper-toast>
-    <p id="result"></p>
 </template>
 <script>
     (function (document) {

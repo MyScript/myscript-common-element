@@ -6,8 +6,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-ink-paper/blob/master/LICENSE
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../myscript/myscript.html">
 <!--
-The `myscript-ink-paper` contains MyScript Ink Paper.<br>
-It is used to draw handwriting inks on an HTML5 canvas.
+The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
 
 ##### Example
 
@@ -42,43 +41,50 @@ It is used to draw handwriting inks on an HTML5 canvas.
 
 @group MyScript Elements
 @element myscript-ink-paper
-@blurb MyScript Ink Paper to help developer for integrate handwriting recognition.
-@status alpha
+@blurb MyScript InkPaper to help developer for integrate handwriting recognition.
+@status beta
 @homepage http://myscriptwebcomponents.github.io/myscript-ink-paper
 
 @demo demo/index.html Basic Demo
 -->
-<dom-module id="myscript-ink-paper"></dom-module>
+<dom-module id="myscript-ink-paper">
+    <style>
+        :host {
+            display: block;
+        }
+
+        #myscript-input-area {
+            height: 100%;
+            width: 100%;
+            min-height: 300px;
+            min-width: 400px;
+        }
+    </style>
+    <template>
+        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-failure="_onFailure"></div>
+    </template>
+</dom-module>
 <script>
     Polymer({
         is: 'myscript-ink-paper',
+        /**
+         * Fired when a recognition result is successfully received.
+         *
+         * @event result
+         */
+        /**
+         * Fired when a recognition error occurred.
+         *
+         * @event error
+         */
+        /**
+         * Fired when the content of the InkPaper changes.
+         *
+         * @event changed
+         */
         properties: {
             /**
-             * Width
-             *
-             * @attribute width
-             * @type Number
-             * @default 400
-             */
-            width: {
-                type: Number,
-                notify: true,
-                observer: '_widthChanged'
-            },
-            /**
-             * Height
-             *
-             * @attribute height
-             * @type Number
-             * @default 300
-             */
-            height: {
-                type: Number,
-                notify: true,
-                observer: '_heightChanged'
-            },
-            /**
-             * Recognition type
+             * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
              *
              * @attribute type
              * @type String
@@ -90,7 +96,7 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 observer: '_typeChanged'
             },
             /**
-             * Recognition timeout
+             * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
              *
              * @attribute timeout
              * @type Number
@@ -115,7 +121,7 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 observer: '_applicationKeyChanged'
             },
             /**
-             * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
              * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
              * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
              *
@@ -174,6 +180,12 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 this._inkPaper.recognize();
             }
         },
+        /**
+         * Get parent
+         *
+         * @private
+         * @method parent
+         */
         get parent() {
             if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
                 return this.parentNode.host;
@@ -184,16 +196,17 @@ It is used to draw handwriting inks on an HTML5 canvas.
             this.async(this.notifyResize, 1);
         },
         ready: function () {
+            this._inputArea = this.querySelector('#myscript-input-area');
 
             var options = {
                 type: this.type,
-                width: this.width,
-                height: this.height,
+                width: this.offsetWidth,
+                height: this.offsetHeight,
                 timeout: this.timeout,
                 applicationKey: this.applicationKey,
                 hmacKey: this.hmacKey
             };
-            this._inkPaper = new MyScript.InkPaper(this, options, function (data, err) {
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, options, function (data, err) {
                 if (data) {
                     this.fire('result', data);
                 }
@@ -202,37 +215,50 @@ It is used to draw handwriting inks on an HTML5 canvas.
                 }
             }.bind(this));
         },
+        /**
+         * Resize listener
+         *
+         * @private
+         * @method _onResize
+         */
         _onResize: function () {
             if (this._inkPaper) {
-                if (!this.width && (this.parent.offsetWidth > 0)) {
-                    this._inkPaper.setWidth(this.parent.offsetWidth);
+
+                if (this.offsetWidth && (this.offsetWidth > 0)) {
+                    this._inkPaper.setWidth(this.offsetWidth);
                 }
-                if (!this.height && (this.parent.offsetHeight > 0)) {
-                    this._inkPaper.setHeight(this.parent.offsetHeight);
+
+                if (this.offsetHeight && (this.offsetHeight > 0)) {
+                    this._inkPaper.setHeight(this.offsetHeight);
                 }
             }
         },
         /**
-         * Width changed observer
+         * Changed listener
          *
          * @private
-         * @method _widthChanged
+         * @method _onChanged
          */
-        _widthChanged: function () {
-            if (this._inkPaper) {
-                this._inkPaper.setWidth(this.width);
-            }
+        _onChanged: function (e) {
+            this.fire(e.type, e.detail);
         },
         /**
-         * Height changed observer
+         * Success listener
          *
          * @private
-         * @method _heightChanged
+         * @method _onSuccess
          */
-        _heightChanged: function () {
-            if (this._inkPaper) {
-                this._inkPaper.setHeight(this.height);
-            }
+        _onSuccess: function (e) {
+            this.fire(e.type, e.detail);
+        },
+        /**
+         * Failure listener
+         *
+         * @private
+         * @method _onFailure
+         */
+        _onFailure: function (e) {
+            this.fire(e.type, e.detail);
         },
         /**
          * Application key changed observer
