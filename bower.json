@@ -36,6 +36,7 @@
         "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
         "iron-icons": "polymerelements/iron-icons#1.0.x",
         "paper-fab": "polymerelements/paper-fab#1.0.x",
+        "paper-input": "PolymerElements/paper-input#1.0.x",
         "paper-toast": "polymerelements/paper-toast#1.0.x",
         "web-component-tester": "*"
     }

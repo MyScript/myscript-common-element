@@ -11,17 +11,7 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
 ##### Example
 
     var recognized = function (e) {
-        var data = e.detail;
-        if (data) {
-            var results = data.getMathDocument().getResultElements();
-            for (var i in results) {
-                if (results[i] instanceof MyScript.MathLaTexResultElement) {
-                    result.innerHTML = results[i].getValue();
-                }
-            }
-        } else {
-            result.innerHTML = '';
-        }
+        result.innerHTML = e.detail.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
     };
 
     var error = function (e) {
@@ -31,8 +21,8 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
     };
     ...
     <myscript-ink-paper
-        type="MATH"
-        timeout="2000"
+        protocol="WebSocket"
+        type="TEXT"
         application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         on-error="error"
@@ -94,6 +84,29 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
                 type: String,
                 notify: true,
                 observer: '_typeChanged'
+            },
+            /**
+             * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
+             *
+             * @attribute protocol
+             * @type String
+             * @default 'REST'
+             */
+            protocol: {
+                type: String,
+                notify: true
+            },
+            /**
+             * The current recognition service host
+             *
+             * @private
+             * @attribute host
+             * @type String
+             * @default 'cloud.myscript.com'
+             */
+            host: {
+                type: String,
+                notify: true
             },
             /**
              * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
@@ -199,6 +212,8 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
             this._inputArea = this.querySelector('#myscript-input-area');
 
             var options = {
+                host: this.host,
+                protocol: this.protocol,
                 type: this.type,
                 width: this.offsetWidth,
                 height: this.offsetHeight,
