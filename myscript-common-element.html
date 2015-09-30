@@ -1,12 +1,12 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-ink-paper/blob/master/LICENSE
+LICENSE: github.com/MyScriptWebComponents/myscript-common-element/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../myscript/myscript.html">
 <!--
-The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
+The `myscript-common-element` is a web component wrapper around MyScriptJS InkPaper.
 
 ##### Example
 
@@ -20,24 +20,24 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
         }
     };
     ...
-    <myscript-ink-paper
+    <myscript-common-element
         protocol="WebSocket"
         type="TEXT"
-        application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         on-error="error"
         on-result="recognized">
-    </myscript-ink-paper>
+    </myscript-common-element>
 
 @group MyScript Elements
-@element myscript-ink-paper
+@element myscript-common-element
 @blurb MyScript InkPaper to help developer for integrate handwriting recognition.
 @status beta
-@homepage http://myscriptwebcomponents.github.io/myscript-ink-paper
+@homepage http://myscriptwebcomponents.github.io/myscript-common-element
 
 @demo demo/index.html Basic Demo
 -->
-<dom-module id="myscript-ink-paper">
+<dom-module id="myscript-common-element">
     <style>
         :host {
             display: block;
@@ -125,26 +125,32 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
              * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
              * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
              *
-             * @attribute application-key
+             * @attribute applicationkey
              * @type String
              */
-            applicationKey: {
+            applicationkey: {
                 type: String,
                 notify: true,
-                observer: '_applicationKeyChanged'
+                observer: '_applicationkeyChanged'
             },
             /**
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
              * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
              * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
              *
-             * @attribute hmac-key
+             * @attribute hmackey
              * @type String
              */
-            hmacKey: {
+            hmackey: {
                 type: String,
                 notify: true,
-                observer: '_hmacKeyChanged'
+                observer: '_hmackeyChanged'
+            },
+            /**
+             *
+             */
+            options : {
+                type: Object
             }
         },
         behaviors: [
@@ -211,17 +217,22 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
         ready: function () {
             this._inputArea = this.querySelector('#myscript-input-area');
 
-            var options = {
-                host: this.host,
-                protocol: this.protocol,
-                type: this.type,
-                width: this.offsetWidth,
-                height: this.offsetHeight,
-                timeout: this.timeout,
-                applicationKey: this.applicationKey,
-                hmacKey: this.hmacKey
-            };
-            this._inkPaper = new MyScript.InkPaper(this._inputArea, options, function (data, err) {
+            var configOptions = this.option;
+            //Create option object if non set
+            if(!configOptions) {
+                configOptions = {};
+            }
+
+            configOptions.host= this.host;
+            configOptions.protocol= this.protocol;
+            configOptions.type = this.type;
+            configOptions.width = this.offsetWidth;
+            configOptions.height = this.offsetHeight;
+            configOptions.timeout = this.timeout;
+            configOptions.applicationKey = this.applicationkey;
+            configOptions.hmacKey = this.hmackey;
+
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions, function (data, err) {
                 if (data) {
                     this.fire('result', data);
                 }
@@ -281,9 +292,9 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
          * @private
          * @method _applicationKeyChanged
          */
-        _applicationKeyChanged: function () {
+        _applicationkeyChanged: function () {
             if (this._inkPaper) {
-                this._inkPaper.setApplicationKey(this.applicationKey);
+                this._inkPaper.setApplicationKey(this.applicationkey);
             }
         },
         /**
@@ -292,9 +303,9 @@ The `myscript-ink-paper` is a web component wrapper around MyScriptJS InkPaper.
          * @private
          * @method _hmacKeyChanged
          */
-        _hmacKeyChanged: function () {
+        _hmackeyChanged: function () {
             if (this._inkPaper) {
-                this._inkPaper.setHmacKey(this.hmacKey);
+                this._inkPaper.setHmacKey(this.hmackey);
             }
         },
         /**
