@@ -60,7 +60,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         /**
          * Fired when a recognition result is successfully received.
          *
-         * @event result
+         * @event myscript-common-element-result
          */
         /**
          * Fired when a recognition error occurred.
@@ -234,7 +234,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 
             this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions, function (data, err) {
                 if (data) {
-                    this.fire('result', data);
+                    this.fire('myscript-common-element-result', data);
                 }
                 if (err) {
                     this.fire('error', err);
