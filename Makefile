@@ -11,4 +11,4 @@ escrow:
 
 _backup-src:
 	@echo "Archiving sources"
-	@git archive --format=tar HEAD | gzip > escrow/myscriptjs-src-$(GIT_VERSION).tar.gz
+	@git archive --format=tar HEAD | gzip > escrow/myscript-common-element-src-$(GIT_VERSION).tar.gz
