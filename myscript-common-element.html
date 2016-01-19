@@ -442,6 +442,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _languageChanged: function () {
             if (this._inkPaper) {
                 this._inkPaper.getTextParameters().setLanguage(this.language);
+                this._inkPaper.setTextParameters(this._inkPaper.getTextParameters());
             }
         },
         /**
@@ -453,6 +454,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _resulttypesChanged: function () {
             if (this._inkPaper) {
                 this._inkPaper.getMathParameters().setResultTypes(this.resulttypes);
+                this._inkPaper.setMathParameters(this._inkPaper.getMathParameters());
             }
         },
         /**
