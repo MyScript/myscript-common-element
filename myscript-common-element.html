@@ -172,6 +172,74 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_hmackeyChanged'
             },
             /**
+             * Parameter to typeset, or not, the result onto the ink paper.<br>
+             * <b>Warning</b> : For some recognition types, such as TEXT or MATH, this param will never be applied as
+             * typesetting is not available for these recognitions.
+             *
+             * @attribute typeset
+             * @type Boolean
+             */
+            typeset: {
+                type: Boolean,
+                notify: true,
+                observer: '_typesetChanged'
+            },
+            /**
+             * Recognition parameters for the text recognition.<br>
+             *
+             * @attribute text-parameters
+             * @type Object
+             */
+            textParameters: {
+                type: Object,
+                notify: true,
+                observer: '_textParametersChanged'
+            },
+            /**
+             * Recognition parameters for the math recognition.<br>
+             *
+             * @attribute math-parameters
+             * @type Object
+             */
+            mathParameters: {
+                type: Object,
+                notify: true,
+                observer: '_mathParametersChanged'
+            },
+            /**
+             * Recognition parameters for the shape recognition.<br>
+             *
+             * @attribute shape-parameters
+             * @type Object
+             */
+            shapeParameters: {
+                type: Object,
+                notify: true,
+                observer: '_shapeParametersChanged'
+            },
+            /**
+             * Recognition parameters for the music recognition.<br>
+             *
+             * @attribute music-parameters
+             * @type Object
+             */
+            musicParameters: {
+                type: Object,
+                notify: true,
+                observer: '_musicParametersChanged'
+            },
+            /**
+             * Recognition parameters for the analyzer recognition.<br>
+             *
+             * @attribute analyzer-parameters
+             * @type Object
+             */
+            analyzerParameters: {
+                type: Object,
+                notify: true,
+                observer: '_analyzerParametersChanged'
+            },
+            /**
              * A object with MyScriptJS option used to build the common element.
              */
             options : {
@@ -256,6 +324,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             configOptions.timeout = this.timeout;
             configOptions.applicationKey = this.applicationkey;
             configOptions.hmacKey = this.hmackey;
+            configOptions.typeset = this.typeset;
+            configOptions.components = this.components;
+            configOptions.textParameters = this.textParameters;
+            configOptions.mathParameters = this.mathParameters;
+            configOptions.shapeParameters = this.shapeParameters;
+            configOptions.musicParameters = this.musicParameters;
+            configOptions.analyzerParameters = this.analyzerParameters;
 
             this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions, function (data, err) {
                 if (data) {
@@ -366,7 +441,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          */
         _languageChanged: function () {
             if (this._inkPaper) {
-                this._inkPaper.setLanguage(this.language);
+                this._inkPaper.getTextParameters().setLanguage(this.language);
             }
         },
         /**
@@ -377,7 +452,73 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          */
         _resulttypesChanged: function () {
             if (this._inkPaper) {
-                this._inkPaper.setResultTypes(this.resulttypes);
+                this._inkPaper.getMathParameters().setResultTypes(this.resulttypes);
+            }
+        },
+        /**
+         * Typeset result param changed
+         *
+         * @private
+         * @method _typesetChanged
+         */
+        _typesetChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setTypeset(this.typeset);
+            }
+        },
+        /**
+         * Text recognition parameters changed
+         *
+         * @private
+         * @method _textParametersChanged
+         */
+        _textParametersChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setTextParameters(this.textParameters);
+            }
+        },
+        /**
+         * Math recognition parameters changed
+         *
+         * @private
+         * @method _mathParametersChanged
+         */
+        _mathParametersChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setMathParameters(this.mathParameters);
+            }
+        },
+        /**
+         * Shape recognition parameters changed
+         *
+         * @private
+         * @method _shapeParametersChanged
+         */
+        _shapeParametersChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setShapeParameters(this.shapeParameters);
+            }
+        },
+        /**
+         * Music recognition parameters changed
+         *
+         * @private
+         * @method _musicParametersChanged
+         */
+        _musicParametersChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setMusicParameters(this.musicParameters);
+            }
+        },
+        /**
+         * Analyzer recognition parameters changed
+         *
+         * @private
+         * @method _analyzerParametersChanged
+         */
+        _analyzerParametersChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setAnalyzerParameters(this.analyzerParameters);
             }
         }
 
