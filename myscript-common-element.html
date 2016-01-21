@@ -87,6 +87,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * The current recognition language (e.g. en_US, fr_FR, ...)
              *
+             * @deprecated Use text-parameters.language instead of this property
              * @attribute language
              * @type String
              * @default 'en_US'
@@ -100,6 +101,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
              *
+             * @deprecated Use math-parameters.resultTypes or music-parameters.resultTypes instead of this property
              * @attribute resulttypes
              * @type Array
              */
@@ -193,6 +195,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             textParameters: {
                 type: Object,
                 notify: true,
+                value: new MyScript.TextParameter(),
                 observer: '_textParametersChanged'
             },
             /**
@@ -204,6 +207,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             mathParameters: {
                 type: Object,
                 notify: true,
+                value: new MyScript.MathParameter(),
                 observer: '_mathParametersChanged'
             },
             /**
@@ -215,6 +219,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             shapeParameters: {
                 type: Object,
                 notify: true,
+                value: new MyScript.ShapeParameter(),
                 observer: '_shapeParametersChanged'
             },
             /**
@@ -226,6 +231,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             musicParameters: {
                 type: Object,
                 notify: true,
+                value: new MyScript.MusicParameter(),
                 observer: '_musicParametersChanged'
             },
             /**
@@ -237,12 +243,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             analyzerParameters: {
                 type: Object,
                 notify: true,
+                value: new MyScript.AnalyzerParameter(),
                 observer: '_analyzerParametersChanged'
             },
             /**
              * A object with MyScriptJS option used to build the common element.
              */
-            options : {
+            options: {
                 type: Object
             }
         },
@@ -253,8 +260,18 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             'iron-resize': '_onResize'
         },
         /**
-         * Delete all context
+         * Clear all context
          *
+         * @method clear
+         */
+        clear: function () {
+            if (this._inkPaper) {
+                this._inkPaper.clear();
+            }
+        },
+        /**
+         * Delete all context
+         * @deprecated Use clear instead of delete
          * @method delete
          */
         delete: function () {
@@ -312,12 +329,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 
             var configOptions = this.option;
             //Create option object if non set
-            if(!configOptions) {
+            if (!configOptions) {
                 configOptions = {};
             }
 
-            configOptions.host= this.host;
-            configOptions.protocol= this.protocol;
+            configOptions.host = this.host;
+            configOptions.protocol = this.protocol;
             configOptions.type = this.type;
             configOptions.width = this.offsetWidth;
             configOptions.height = this.offsetHeight;
@@ -332,14 +349,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             configOptions.musicParameters = this.musicParameters;
             configOptions.analyzerParameters = this.analyzerParameters;
 
-            this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions, function (data, err) {
-                if (data) {
-                    this.fire('myscript-common-element-result', data);
-                }
-                if (err) {
-                    this.fire('error', err);
-                }
-            }.bind(this));
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions);
 
             this._languageChanged();
             this._resulttypesChanged();
@@ -379,6 +389,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          */
         _onSuccess: function (e) {
             this.fire(e.type, e.detail);
+            this.fire('myscript-common-element-result', e.detail);
         },
         /**
          * Failure listener
@@ -388,6 +399,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          */
         _onFailure: function (e) {
             this.fire(e.type, e.detail);
+            this.fire('error', e.detail);
         },
         /**
          * Application key changed observer
