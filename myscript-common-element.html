@@ -248,6 +248,18 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_analyzerParametersChanged'
             },
             /**
+             * Recognition input components.<br>
+             *
+             * @attribute components
+             * @type Array
+             */
+            components: {
+                type: Array,
+                notify: true,
+                value: [],
+                observer: '_componentsChanged'
+            },
+            /**
              * A object with MyScriptJS option used to build the common element.
              */
             options: {
@@ -324,9 +336,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         attached: function () {
             this.async(this.notifyResize, 1);
-        },
-        ready: function () {
-            this._inputArea = this.querySelector('#myscript-input-area');
 
             var configOptions = this.option;
             //Create option object if non set
@@ -334,15 +343,15 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 configOptions = {};
             }
 
-            configOptions.host = this.host;
-            configOptions.protocol = this.protocol;
+            configOptions.host= this.host;
+            configOptions.protocol= this.protocol;
             configOptions.type = this.type;
             configOptions.width = this.offsetWidth;
             configOptions.height = this.offsetHeight;
             configOptions.timeout = this.timeout;
             configOptions.applicationKey = this.applicationkey;
             configOptions.hmacKey = this.hmackey;
-            configOptions.typeset = this.typeset;
+            configOptions.typeset= this.typeset;
             configOptions.components = this.components;
             configOptions.textParameters = this.textParameters;
             configOptions.mathParameters = this.mathParameters;
@@ -351,9 +360,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             configOptions.analyzerParameters = this.analyzerParameters;
 
             this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions);
-
-            this._languageChanged();
-            this._resulttypesChanged();
+        },
+        ready: function () {
+            this._inputArea = this.querySelector('#myscript-input-area');
         },
         /**
          * Resize listener
@@ -408,9 +417,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _applicationKeyChanged
          */
-        _applicationkeyChanged: function () {
+        _applicationkeyChanged: function (applicationKey) {
             if (this._inkPaper) {
-                this._inkPaper.setApplicationKey(this.applicationkey);
+                this._inkPaper.setApplicationKey(applicationKey);
             }
         },
         /**
@@ -419,9 +428,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _hmacKeyChanged
          */
-        _hmackeyChanged: function () {
+        _hmackeyChanged: function (hmacKey) {
             if (this._inkPaper) {
-                this._inkPaper.setHmacKey(this.hmackey);
+                this._inkPaper.setHmacKey(hmacKey);
             }
         },
         /**
@@ -430,9 +439,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _timeoutChanged
          */
-        _timeoutChanged: function () {
+        _timeoutChanged: function (timeout) {
             if (this._inkPaper) {
-                this._inkPaper.setTimeout(this.timeout);
+                this._inkPaper.setTimeout(timeout);
             }
         },
         /**
@@ -441,9 +450,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _typeChanged
          */
-        _typeChanged: function () {
+        _typeChanged: function (type) {
             if (this._inkPaper) {
-                this._inkPaper.setType(this.type);
+                this._inkPaper.setType(type);
             }
         },
         /**
@@ -452,9 +461,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _languageChanged
          */
-        _languageChanged: function () {
+        _languageChanged: function (language) {
             if (this._inkPaper) {
-                this._inkPaper.getTextParameters().setLanguage(this.language);
+                this._inkPaper.getTextParameters().setLanguage(language);
                 this._inkPaper.setTextParameters(this._inkPaper.getTextParameters());
             }
         },
@@ -464,9 +473,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _resulttypesChanged
          */
-        _resulttypesChanged: function () {
+        _resulttypesChanged: function (resultTypes) {
             if (this._inkPaper) {
-                this._inkPaper.getMathParameters().setResultTypes(this.resulttypes);
+                this._inkPaper.getMathParameters().setResultTypes(resultTypes);
                 this._inkPaper.setMathParameters(this._inkPaper.getMathParameters());
             }
         },
@@ -476,9 +485,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _typesetChanged
          */
-        _typesetChanged: function () {
+        _typesetChanged: function (typeset) {
             if (this._inkPaper) {
-                this._inkPaper.setTypeset(this.typeset);
+                this._inkPaper.setTypeset(typeset);
             }
         },
         /**
@@ -487,9 +496,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _textParametersChanged
          */
-        _textParametersChanged: function () {
+        _textParametersChanged: function (textParameters) {
             if (this._inkPaper) {
-                this._inkPaper.setTextParameters(this.textParameters);
+                this._inkPaper.setTextParameters(textParameters);
             }
         },
         /**
@@ -498,9 +507,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _mathParametersChanged
          */
-        _mathParametersChanged: function () {
+        _mathParametersChanged: function (mathParameters) {
             if (this._inkPaper) {
-                this._inkPaper.setMathParameters(this.mathParameters);
+                this._inkPaper.setMathParameters(mathParameters);
             }
         },
         /**
@@ -509,9 +518,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _shapeParametersChanged
          */
-        _shapeParametersChanged: function () {
+        _shapeParametersChanged: function (shapeParameters) {
             if (this._inkPaper) {
-                this._inkPaper.setShapeParameters(this.shapeParameters);
+                this._inkPaper.setShapeParameters(shapeParameters);
             }
         },
         /**
@@ -520,9 +529,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _musicParametersChanged
          */
-        _musicParametersChanged: function () {
+        _musicParametersChanged: function (musicParameters) {
             if (this._inkPaper) {
-                this._inkPaper.setMusicParameters(this.musicParameters);
+                this._inkPaper.setMusicParameters(musicParameters);
             }
         },
         /**
@@ -531,9 +540,20 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _analyzerParametersChanged
          */
-        _analyzerParametersChanged: function () {
+        _analyzerParametersChanged: function (analyzerParameters) {
             if (this._inkPaper) {
-                this._inkPaper.setAnalyzerParameters(this.analyzerParameters);
+                this._inkPaper.setAnalyzerParameters(analyzerParameters);
+            }
+        },
+        /**
+         * Input recognition components changed
+         *
+         * @private
+         * @method _componentsChanged
+         */
+        _componentsChanged: function (components) {
+            if (this._inkPaper) {
+                this._inkPaper.setComponents(components);
             }
         }
 
