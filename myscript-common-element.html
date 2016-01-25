@@ -256,14 +256,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             components: {
                 type: Array,
                 notify: true,
-                value: [],
-                observer: '_componentsChanged'
-            },
-            /**
-             * A object with MyScriptJS option used to build the common element.
-             */
-            options: {
-                type: Object
+                value: []
             }
         },
         behaviors: [
@@ -337,29 +330,25 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         attached: function () {
             this.async(this.notifyResize, 1);
 
-            var configOptions = this.option;
-            //Create option object if non set
-            if (!configOptions) {
-                configOptions = {};
-            }
+            var conf = {
+                host: this.host,
+                protocol: this.protocol,
+                type : this.type,
+                width : this.offsetWidth,
+                height : this.offsetHeight,
+                timeout : this.timeout,
+                applicationKey : this.applicationkey,
+                hmacKey : this.hmackey,
+                typeset: this.typeset,
+                components : this.components,
+                textParameters : this.textParameters,
+                mathParameters : this.mathParameters,
+                shapeParameters : this.shapeParameters,
+                musicParameters : this.musicParameters,
+                analyzerParameters : this.analyzerParameters
+            };
 
-            configOptions.host= this.host;
-            configOptions.protocol= this.protocol;
-            configOptions.type = this.type;
-            configOptions.width = this.offsetWidth;
-            configOptions.height = this.offsetHeight;
-            configOptions.timeout = this.timeout;
-            configOptions.applicationKey = this.applicationkey;
-            configOptions.hmacKey = this.hmackey;
-            configOptions.typeset= this.typeset;
-            configOptions.components = this.components;
-            configOptions.textParameters = this.textParameters;
-            configOptions.mathParameters = this.mathParameters;
-            configOptions.shapeParameters = this.shapeParameters;
-            configOptions.musicParameters = this.musicParameters;
-            configOptions.analyzerParameters = this.analyzerParameters;
-
-            this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions);
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, conf);
         },
         ready: function () {
             this._inputArea = this.querySelector('#myscript-input-area');
@@ -543,17 +532,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _analyzerParametersChanged: function (analyzerParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setAnalyzerParameters(analyzerParameters);
-            }
-        },
-        /**
-         * Input recognition components changed
-         *
-         * @private
-         * @method _componentsChanged
-         */
-        _componentsChanged: function (components) {
-            if (this._inkPaper) {
-                this._inkPaper.setComponents(components);
             }
         }
 
