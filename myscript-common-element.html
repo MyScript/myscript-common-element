@@ -248,6 +248,18 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_analyzerParametersChanged'
             },
             /**
+             * Pen parameters for the handwriting.<br>
+             *
+             * @attribute pen-parameters
+             * @type Object
+             */
+            penParameters: {
+                type: Object,
+                notify: true,
+                value: new MyScript.PenParameters(),
+                observer: '_penParametersChanged'
+            },
+            /**
              * Recognition input components.<br>
              *
              * @attribute components
@@ -345,7 +357,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 mathParameters : this.mathParameters,
                 shapeParameters : this.shapeParameters,
                 musicParameters : this.musicParameters,
-                analyzerParameters : this.analyzerParameters
+                analyzerParameters : this.analyzerParameters,
+                penParameters: this.penParameters
             };
 
             this._inkPaper = new MyScript.InkPaper(this._inputArea, conf);
@@ -532,6 +545,17 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _analyzerParametersChanged: function (analyzerParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setAnalyzerParameters(analyzerParameters);
+            }
+        },
+        /**
+         * Pen parameters changed
+         *
+         * @private
+         * @method _penParametersChanged
+         */
+        _penParametersChanged: function (penParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setPenParameters(penParameters);
             }
         }
 
