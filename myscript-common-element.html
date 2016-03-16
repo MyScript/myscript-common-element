@@ -117,7 +117,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             protocol: {
                 type: String,
-                notify: true
+                notify: true,
+                observer: '_protocolChanged'
             },
             /**
              * The current recognition service host
@@ -129,7 +130,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             host: {
                 type: String,
-                notify: true
+                notify: true,
+                observer: '_hostChanged'
             },
             /**
              * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
@@ -551,6 +553,39 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _penParametersChanged: function (penParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setPenParameters(penParameters);
+            }
+        },
+        /**
+         * Protocol changed
+         *
+         * @private
+         * @method _protocolChanged
+         */
+        _protocolChanged: function (protocol) {
+            if (this._inkPaper) {
+                this._inkPaper.setProtocol(protocol);
+            }
+        },
+        /**
+         * Pen parameters changed
+         *
+         * @private
+         * @method _penParametersChanged
+         */
+        _penParametersChanged: function (penParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setPenParameters(penParameters);
+            }
+        },
+        /**
+         * Host changed
+         *
+         * @private
+         * @method _hostChanged
+         */
+        _hostChanged: function (host) {
+            if (this._inkPaper) {
+                this._inkPaper.setHost(host);
             }
         }
 
