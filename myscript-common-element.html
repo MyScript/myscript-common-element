@@ -325,6 +325,16 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
         },
         /**
+         * Get available languages
+         *
+         * @method getAvailableLanguages
+         */
+        getAvailableLanguages: function (inputMode) {
+            if (this._inkPaper) {
+                this._inkPaper.getAvailableLanguages(inputMode);
+            }
+        },
+        /**
          * Get parent
          *
          * @private
@@ -336,10 +346,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
             return this.parentNode;
         },
-        attached: function () {
-            this.async(this.notifyResize, 1);
-
-            var conf = {
+        ready: function () {
+            this._inputArea = this.querySelector('#myscript-input-area');
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, {
                 host: this.host,
                 protocol: this.protocol,
                 type : this.type,
@@ -356,12 +365,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 musicParameters : this.musicParameters,
                 analyzerParameters : this.analyzerParameters,
                 penParameters: this.penParameters
-            };
-
-            this._inkPaper = new MyScript.InkPaper(this._inputArea, conf);
-        },
-        ready: function () {
-            this._inputArea = this.querySelector('#myscript-input-area');
+            });
         },
         /**
          * Resize listener
