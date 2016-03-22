@@ -78,6 +78,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             type: {
                 type: String,
                 notify: true,
+                value: MyScript.RecognitionType.TEXT,
                 observer: '_typeChanged'
             },
             /**
@@ -91,7 +92,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             language: {
                 type: String,
                 notify: true,
-                value: "en_US",
+                value: 'en_US',
                 observer: '_languageChanged'
             },
             /**
@@ -118,6 +119,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             protocol: {
                 type: String,
                 notify: true,
+                value: MyScript.Protocol.REST,
                 observer: '_protocolChanged'
             },
             /**
@@ -131,6 +133,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             host: {
                 type: String,
                 notify: true,
+                value: 'cloud.myscript.com',
                 observer: '_hostChanged'
             },
             /**
@@ -143,6 +146,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             timeout: {
                 type: Number,
                 notify: true,
+                value: 2000,
                 observer: '_timeoutChanged'
             },
             /**
@@ -156,7 +160,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             applicationkey: {
                 type: String,
                 notify: true,
-                observer: '_applicationkeyChanged'
+                observer: '_applicationKeyChanged'
             },
             /**
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
@@ -169,7 +173,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             hmackey: {
                 type: String,
                 notify: true,
-                observer: '_hmackeyChanged'
+                observer: '_hmacKeyChanged'
             },
             /**
              * Parameter to typeset, or not, the result onto the ink paper.<br>
@@ -182,6 +186,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             typeset: {
                 type: Boolean,
                 notify: true,
+                value: false,
                 observer: '_typesetChanged'
             },
             /**
@@ -420,7 +425,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _applicationKeyChanged
          */
-        _applicationkeyChanged: function (applicationKey) {
+        _applicationKeyChanged: function (applicationKey) {
             if (this._inkPaper) {
                 this._inkPaper.setApplicationKey(applicationKey);
             }
@@ -431,7 +436,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @private
          * @method _hmacKeyChanged
          */
-        _hmackeyChanged: function (hmacKey) {
+        _hmacKeyChanged: function (hmacKey) {
             if (this._inkPaper) {
                 this._inkPaper.setHmacKey(hmacKey);
             }
