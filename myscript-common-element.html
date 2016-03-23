@@ -189,6 +189,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 value: false,
                 observer: '_typesetChanged'
             },
+            precision: {
+                type: Number,
+                notify: true,
+                observer: '_precisionChanged'
+            },
             /**
              * Recognition parameters for the text recognition.<br>
              *
@@ -363,6 +368,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 applicationKey : this.applicationkey,
                 hmacKey : this.hmackey,
                 typeset: this.typeset,
+                precision: this.precision,
                 components : this.components,
                 textParameters : this.textParameters,
                 mathParameters : this.mathParameters,
@@ -595,6 +601,18 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _hostChanged: function (host) {
             if (this._inkPaper) {
                 this._inkPaper.setHost(host);
+            }
+        },
+        /**
+         * Precision changed
+         *
+         * @private
+         * @method _precisionChanged
+         */
+        _precisionChanged: function (precision) {
+            if (this._inkPaper) {
+                this._inkPaper.setPrecision(precision);
+                this._inkPaper.setPrecision(precision);
             }
         }
 
