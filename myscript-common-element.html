@@ -69,6 +69,32 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          */
         properties: {
             /**
+             * The current recognition service host
+             *
+             * @attribute host
+             * @type String
+             * @default 'cloud.myscript.com'
+             */
+            host: {
+                type: String,
+                notify: true,
+                value: 'cloud.myscript.com',
+                observer: '_hostChanged'
+            },
+            /**
+             * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
+             *
+             * @attribute protocol
+             * @type String
+             * @default 'REST'
+             */
+            protocol: {
+                type: String,
+                notify: true,
+                value: MyScript.Protocol.REST,
+                observer: '_protocolChanged'
+            },
+            /**
              * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
              *
              * @attribute type
@@ -80,6 +106,32 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 notify: true,
                 value: MyScript.RecognitionType.TEXT,
                 observer: '_typeChanged'
+            },
+            /**
+             * Application key to use for recognition on MyScript handwriting recognition server.<br>
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
+             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
+             *
+             * @attribute applicationkey
+             * @type String
+             */
+            applicationkey: {
+                type: String,
+                notify: true,
+                observer: '_applicationKeyChanged'
+            },
+            /**
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
+             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
+             *
+             * @attribute hmackey
+             * @type String
+             */
+            hmackey: {
+                type: String,
+                notify: true,
+                observer: '_hmacKeyChanged'
             },
             /**
              * The current recognition language (e.g. en_US, fr_FR, ...)
@@ -109,34 +161,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_resulttypesChanged'
             },
             /**
-             * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
-             *
-             * @private
-             * @attribute protocol
-             * @type String
-             * @default 'REST'
-             */
-            protocol: {
-                type: String,
-                notify: true,
-                value: MyScript.Protocol.REST,
-                observer: '_protocolChanged'
-            },
-            /**
-             * The current recognition service host
-             *
-             * @private
-             * @attribute host
-             * @type String
-             * @default 'cloud.myscript.com'
-             */
-            host: {
-                type: String,
-                notify: true,
-                value: 'cloud.myscript.com',
-                observer: '_hostChanged'
-            },
-            /**
              * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
              *
              * @attribute timeout, only use for HTTP
@@ -148,32 +172,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 notify: true,
                 value: 2000,
                 observer: '_timeoutChanged'
-            },
-            /**
-             * Application key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
-             *
-             * @attribute applicationkey
-             * @type String
-             */
-            applicationkey: {
-                type: String,
-                notify: true,
-                observer: '_applicationKeyChanged'
-            },
-            /**
-             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
-             *
-             * @attribute hmackey
-             * @type String
-             */
-            hmackey: {
-                type: String,
-                notify: true,
-                observer: '_hmacKeyChanged'
             },
             /**
              * Parameter to typeset, or not, the result onto the ink paper.<br>
@@ -188,11 +186,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 notify: true,
                 value: false,
                 observer: '_typesetChanged'
-            },
-            precision: {
-                type: Number,
-                notify: true,
-                observer: '_precisionChanged'
             },
             /**
              * Recognition parameters for the text recognition.<br>
@@ -368,7 +361,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 applicationKey : this.applicationkey,
                 hmacKey : this.hmackey,
                 typeset: this.typeset,
-                precision: this.precision,
                 components : this.components,
                 textParameters : this.textParameters,
                 mathParameters : this.mathParameters,
@@ -601,18 +593,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _hostChanged: function (host) {
             if (this._inkPaper) {
                 this._inkPaper.setHost(host);
-            }
-        },
-        /**
-         * Precision changed
-         *
-         * @private
-         * @method _precisionChanged
-         */
-        _precisionChanged: function (precision) {
-            if (this._inkPaper) {
-                this._inkPaper.setPrecision(precision);
-                this._inkPaper.setPrecision(precision);
             }
         }
 
