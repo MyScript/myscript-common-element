@@ -268,7 +268,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             components: {
                 type: Array,
                 notify: true,
-                value: []
+                value: [],
+                observer: '_componentsChanged'
             }
         },
         behaviors: [
@@ -593,6 +594,17 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _hostChanged: function (host) {
             if (this._inkPaper) {
                 this._inkPaper.setHost(host);
+            }
+        },
+        /**
+         * Components changed
+         *
+         * @param components
+         * @private
+         */
+        _componentsChanged: function (components) {
+            if (this._inkPaper) {
+                this._inkPaper.setComponents(components);
             }
         }
 
