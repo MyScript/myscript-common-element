@@ -25,7 +25,6 @@
         "myscript": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#master"
     },
     "devDependencies": {
-        "iron-component-page": "PolymerElements/iron-component-page#1.1.x",
-        "web-component-tester": "*"
+        "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
     }
 }

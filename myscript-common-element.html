@@ -1,6 +1,6 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-common-element/blob/master/LICENSE
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
@@ -8,22 +8,12 @@ LICENSE: github.com/MyScriptWebComponents/myscript-common-element/blob/master/LI
 <!--
 The `myscript-common-element` is a web component wrapper around MyScriptJS InkPaper.
 
-##### Example
-
     <myscript-common-element
-        protocol="WebSocket"
-        type="TEXT"
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
     </myscript-common-element>
 
 @demo
-@group MyScript Elements
-@element myscript-common-element
-@blurb MyScript InkPaper to help developer for integrate handwriting recognition.
-@status beta
-@homepage https://github.com/MyScript/myscript-common-element/
-
 -->
 <dom-module id="myscript-common-element">
     <style>
@@ -59,10 +49,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         properties: {
             /**
              * The current recognition service host
-             *
-             * @attribute host
-             * @type String
-             * @default 'cloud.myscript.com'
              */
             host: {
                 type: String,
@@ -71,11 +57,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_hostChanged'
             },
             /**
-             * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
-             *
-             * @attribute protocol
-             * @type String
-             * @default 'REST'
+             * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+             * @default 'WebSocket'
              */
             protocol: {
                 type: String,
@@ -84,10 +67,36 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_protocolChanged'
             },
             /**
+             * The recognition timeout, only use for HTTP.
+             */
+            timeout: {
+                type: Number,
+                notify: true,
+                value: 2000,
+                observer: '_timeoutChanged'
+            },
+            /**
+             * Application key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+             * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+             */
+            applicationkey: {
+                type: String,
+                notify: true,
+                observer: '_applicationKeyChanged'
+            },
+            /**
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+             * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+             */
+            hmackey: {
+                type: String,
+                notify: true,
+                observer: '_hmacKeyChanged'
+            },
+            /**
              * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
-             *
-             * @attribute type
-             * @type String
              * @default 'TEXT'
              */
             type: {
@@ -97,38 +106,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_typeChanged'
             },
             /**
-             * Application key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
-             *
-             * @attribute applicationkey
-             * @type String
-             */
-            applicationkey: {
-                type: String,
-                notify: true,
-                observer: '_applicationKeyChanged'
-            },
-            /**
-             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
-             *
-             * @attribute hmackey
-             * @type String
-             */
-            hmackey: {
-                type: String,
-                notify: true,
-                observer: '_hmacKeyChanged'
-            },
-            /**
              * The current recognition language (e.g. en_US, fr_FR, ...)
-             *
+             * @private
              * @deprecated Use text-parameters.language instead of this property
-             * @attribute language
-             * @type String
-             * @default 'en_US'
              */
             language: {
                 type: String,
@@ -138,10 +118,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
-             *
+             * @private
              * @deprecated Use math-parameters.resultTypes or music-parameters.resultTypes instead of this property
-             * @attribute resulttypes
-             * @type Array
              */
             resulttypes: {
                 type: Array,
@@ -150,25 +128,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_resulttypesChanged'
             },
             /**
-             * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
-             *
-             * @attribute timeout, only use for HTTP
-             * @type Number
-             * @default 2000
-             */
-            timeout: {
-                type: Number,
-                notify: true,
-                value: 2000,
-                observer: '_timeoutChanged'
-            },
-            /**
-             * Parameter to typeset, or not, the result onto the ink paper.<br>
-             * <b>Warning</b> : For some recognition types, such as TEXT or MATH, this param will never be applied as
-             * typesetting is not available for these recognitions.
-             *
-             * @attribute typeset
-             * @type Boolean
+             * Parameter to typeset, or not, the result onto the ink paper.<br /><br />
+             * <b>Warning</b> : For some recognition types, such as TEXT or MATH, this param will never be applied as typesetting is not available for these recognitions.
              */
             typeset: {
                 type: Boolean,
@@ -177,10 +138,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_typesetChanged'
             },
             /**
-             * Recognition parameters for the text recognition.<br>
-             *
-             * @attribute text-parameters
-             * @type Object
+             * Recognition parameters for the text recognition.
+             * @default {}
              */
             textParameters: {
                 type: Object,
@@ -189,10 +148,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_textParametersChanged'
             },
             /**
-             * Recognition parameters for the math recognition.<br>
-             *
-             * @attribute math-parameters
-             * @type Object
+             * Recognition parameters for the math recognition.
+             * @default {}
              */
             mathParameters: {
                 type: Object,
@@ -201,10 +158,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_mathParametersChanged'
             },
             /**
-             * Recognition parameters for the shape recognition.<br>
-             *
-             * @attribute shape-parameters
-             * @type Object
+             * Recognition parameters for the shape recognition.
+             * @default {}
              */
             shapeParameters: {
                 type: Object,
@@ -213,10 +168,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_shapeParametersChanged'
             },
             /**
-             * Recognition parameters for the music recognition.<br>
-             *
-             * @attribute music-parameters
-             * @type Object
+             * Recognition parameters for the music recognition.
+             * @default {}
              */
             musicParameters: {
                 type: Object,
@@ -225,10 +178,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_musicParametersChanged'
             },
             /**
-             * Recognition parameters for the analyzer recognition.<br>
-             *
-             * @attribute analyzer-parameters
-             * @type Object
+             * Recognition parameters for the analyzer recognition.
+             * @default {}
              */
             analyzerParameters: {
                 type: Object,
@@ -238,9 +189,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Pen parameters for the handwriting.<br>
-             *
-             * @attribute pen-parameters
-             * @type Object
+             * @private
+             * @default {}
              */
             penParameters: {
                 type: Object,
@@ -249,16 +199,37 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_penParametersChanged'
             },
             /**
-             * Recognition input components.<br>
-             *
-             * @attribute components
-             * @type Array
+             * Recognition input components.
              */
             components: {
                 type: Array,
                 notify: true,
                 value: [],
                 observer: '_componentsChanged'
+            },
+            /**
+             * True if undo is available
+             */
+            canUndo: {
+                type: Boolean,
+                notify: true,
+                value: false
+            },
+            /**
+             * True if redo is available
+             */
+            canRedo: {
+                type: Boolean,
+                notify: true,
+                value: false
+            },
+            /**
+             * True if there is something to clear
+             */
+            canClear: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeCanClear(canUndo, canRedo)'
             }
         },
         behaviors: [
@@ -269,8 +240,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Clear all context
-         *
-         * @method clear
          */
         clear: function () {
             if (this._inkPaper) {
@@ -280,7 +249,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         /**
          * Delete all context
          * @deprecated Use clear instead of delete
-         * @method delete
+         * @private
          */
         delete: function () {
             if (this._inkPaper) {
@@ -289,8 +258,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Undo action, and launch recognition if timeout is set
-         *
-         * @method undo
          */
         undo: function () {
             if (this._inkPaper) {
@@ -299,8 +266,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Redo action, and launch recognition if timeout is set
-         *
-         * @method redo
          */
         redo: function () {
             if (this._inkPaper) {
@@ -309,8 +274,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Launch recognition
-         *
-         * @method recognize
          */
         recognize: function () {
             if (this._inkPaper) {
@@ -319,8 +282,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Get available languages
-         *
-         * @method getAvailableLanguages
          */
         getAvailableLanguages: function (inputMode) {
             if (this._inkPaper) {
@@ -329,9 +290,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Get parent
-         *
          * @private
-         * @method parent
          */
         get parent() {
             if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
@@ -362,9 +321,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Resize listener
-         *
-         * @private
-         * @method _onResize
          */
         _onResize: function () {
             if (this._inkPaper) {
@@ -380,18 +336,16 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Changed listener
-         *
-         * @private
-         * @method _onChanged
          */
         _onChanged: function (e) {
+            if (e.detail) {
+                this.canUndo = e.detail.canUndo;
+                this.canRedo = e.detail.canRedo;
+            }
             this.fire(e.type, e.detail);
         },
         /**
          * Success listener
-         *
-         * @private
-         * @method _onSuccess
          */
         _onSuccess: function (e) {
             this.fire(e.type, e.detail);
@@ -399,19 +353,19 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Failure listener
-         *
-         * @private
-         * @method _onFailure
          */
         _onFailure: function (e) {
             this.fire(e.type, e.detail);
             this.fire('error', e.detail);
         },
         /**
+         * Compute can clear from undo/redo
+         */
+        _computeCanClear: function (canUndo, canRedo) {
+            return canUndo || canRedo;
+        },
+        /**
          * Application key changed observer
-         *
-         * @private
-         * @method _applicationKeyChanged
          */
         _applicationKeyChanged: function (applicationKey) {
             if (this._inkPaper) {
@@ -420,9 +374,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * HMAC key changed observer
-         *
-         * @private
-         * @method _hmacKeyChanged
          */
         _hmacKeyChanged: function (hmacKey) {
             if (this._inkPaper) {
@@ -431,9 +382,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Timeout changed observer
-         *
-         * @private
-         * @method _timeoutChanged
          */
         _timeoutChanged: function (timeout) {
             if (this._inkPaper) {
@@ -442,9 +390,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Recognition type changed observer
-         *
-         * @private
-         * @method _typeChanged
          */
         _typeChanged: function (type) {
             if (this._inkPaper) {
@@ -453,9 +398,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Recognition language changed observer
-         *
-         * @private
-         * @method _languageChanged
          */
         _languageChanged: function (language) {
             if (this._inkPaper) {
@@ -465,9 +407,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Math Recognition result types changed observer
-         *
-         * @private
-         * @method _resulttypesChanged
          */
         _resulttypesChanged: function (resultTypes) {
             if (this._inkPaper) {
@@ -477,9 +416,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Typeset result param changed
-         *
-         * @private
-         * @method _typesetChanged
          */
         _typesetChanged: function (typeset) {
             if (this._inkPaper) {
@@ -488,9 +424,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Text recognition parameters changed
-         *
-         * @private
-         * @method _textParametersChanged
          */
         _textParametersChanged: function (textParameters) {
             if (this._inkPaper) {
@@ -499,9 +432,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Math recognition parameters changed
-         *
-         * @private
-         * @method _mathParametersChanged
          */
         _mathParametersChanged: function (mathParameters) {
             if (this._inkPaper) {
@@ -510,9 +440,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Shape recognition parameters changed
-         *
-         * @private
-         * @method _shapeParametersChanged
          */
         _shapeParametersChanged: function (shapeParameters) {
             if (this._inkPaper) {
@@ -521,9 +448,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Music recognition parameters changed
-         *
-         * @private
-         * @method _musicParametersChanged
          */
         _musicParametersChanged: function (musicParameters) {
             if (this._inkPaper) {
@@ -532,9 +456,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Analyzer recognition parameters changed
-         *
-         * @private
-         * @method _analyzerParametersChanged
          */
         _analyzerParametersChanged: function (analyzerParameters) {
             if (this._inkPaper) {
@@ -543,9 +464,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Pen parameters changed
-         *
-         * @private
-         * @method _penParametersChanged
          */
         _penParametersChanged: function (penParameters) {
             if (this._inkPaper) {
@@ -554,9 +472,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Protocol changed
-         *
-         * @private
-         * @method _protocolChanged
          */
         _protocolChanged: function (protocol) {
             if (this._inkPaper) {
@@ -565,9 +480,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Pen parameters changed
-         *
-         * @private
-         * @method _penParametersChanged
          */
         _penParametersChanged: function (penParameters) {
             if (this._inkPaper) {
@@ -576,9 +488,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Host changed
-         *
-         * @private
-         * @method _hostChanged
          */
         _hostChanged: function (host) {
             if (this._inkPaper) {
@@ -587,9 +496,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Components changed
-         *
-         * @param components
-         * @private
          */
         _componentsChanged: function (components) {
             if (this._inkPaper) {

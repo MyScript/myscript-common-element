@@ -43,8 +43,6 @@
         window.addEventListener('WebComponentsReady', function () {
             document.querySelector('body').removeAttribute('unresolved');
 
-            var inkPaper = document.querySelector('myscript-common-element');
-
             template.host = 'webdemo.myscript.com';
             template.applicationKey = '9faa1259-48ba-44c4-9857-b3c86d986f94';
             template.hmacKey = 'fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0';
@@ -52,24 +50,6 @@
                 doBeautification: true,
                 rejectDetectionSensitivity: 0
             });
-
-            template.canUndo = template.canRedo = template.canClear = false;
-            template._onChanged = function(e) {
-                if (e.detail) {
-                    template.canUndo = e.detail.canUndo;
-                    template.canRedo = e.detail.canRedo;
-                    template.canClear = e.detail.canUndo || e.detail.canRedo;
-                }
-            };
-            template.delete = function () {
-                inkPaper.clear();
-            };
-            template.undo = function () {
-                inkPaper.undo();
-            };
-            template.redo = function () {
-                inkPaper.redo();
-            };
         });
     })(document);
 </script>
