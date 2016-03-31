@@ -10,25 +10,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 
 ##### Example
 
-    var recognized = function (e) {
-        result.innerHTML = e.detail.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
-    };
-
-    var error = function (e) {
-        if (e) {
-            result.innerHTML = e;
-        }
-    };
-    ...
     <myscript-common-element
         protocol="WebSocket"
         type="TEXT"
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        on-error="error"
-        on-result="recognized">
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
     </myscript-common-element>
 
+@demo
 @group MyScript Elements
 @element myscript-common-element
 @blurb MyScript InkPaper to help developer for integrate handwriting recognition.

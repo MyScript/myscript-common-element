@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>myscript-math-web demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-common-element.html">
+
+</head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    myscript-common-element {
+        height: 100%;
+    }
+</style>
+<body unresolved>
+<template id="app" is="dom-bind">
+    <myscript-common-element host="[[ host ]]"
+                             type="SHAPE"
+                             applicationkey="[[ applicationKey ]]"
+                             hmackey="[[ hmacKey ]]"
+                             shape-parameters="[[ _shapeParameters ]]"
+                             typeset="true"
+                             on-changed="_onChanged">
+    </myscript-common-element>
+</template>
+</body>
+<script>
+    (function (document) {
+        'use strict';
+        var template = document.querySelector('#app');
+        template.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+
+            var inkPaper = document.querySelector('myscript-common-element');
+
+            template.host = 'webdemo.myscript.com';
+            template.applicationKey = '9faa1259-48ba-44c4-9857-b3c86d986f94';
+            template.hmacKey = 'fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0';
+            template._shapeParameters = new MyScript.ShapeParameter({
+                doBeautification: true,
+                rejectDetectionSensitivity: 0
+            });
+
+            template.canUndo = template.canRedo = template.canClear = false;
+            template._onChanged = function(e) {
+                if (e.detail) {
+                    template.canUndo = e.detail.canUndo;
+                    template.canRedo = e.detail.canRedo;
+                    template.canClear = e.detail.canUndo || e.detail.canRedo;
+                }
+            };
+            template.delete = function () {
+                inkPaper.clear();
+            };
+            template.undo = function () {
+                inkPaper.undo();
+            };
+            template.redo = function () {
+                inkPaper.redo();
+            };
+        });
+    })(document);
+</script>
+</html>
