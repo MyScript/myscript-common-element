@@ -4,6 +4,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../myscript/myscript.html">
 <!--
 The `myscript-common-element` is a web component wrapper around MyScriptJS InkPaper.
@@ -26,6 +27,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
     </style>
     <template>
         <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
+        <paper-toast class="fit-bottom"></paper-toast>
     </template>
 </dom-module>
 <script>
@@ -280,6 +282,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         ready: function () {
             this._inputArea = this.querySelector('#myscript-input-area');
+            this._paperToast = this.querySelector('paper-toast');
             this._inkPaper = new MyScript.InkPaper(this._inputArea, {
                 host: this.host,
                 protocol: this.protocol,
@@ -324,6 +327,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         _onError: function (e) {
             this.fire(e.type, e.detail);
+            this._paperToast.text = e.detail.message;
+            this._paperToast.show();
         },
         _computeCanClear: function (canUndo, canRedo) {
             return canUndo || canRedo;
