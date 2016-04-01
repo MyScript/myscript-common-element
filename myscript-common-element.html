@@ -25,7 +25,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         }
     </style>
     <template>
-        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-failure="_onFailure"></div>
+        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
     </template>
 </dom-module>
 <script>
@@ -33,17 +33,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         is: 'myscript-common-element',
         /**
          * Fired when a recognition result is successfully received.
-         *
          * @event myscript-common-element-result
          */
         /**
          * Fired when a recognition error occurred.
-         *
          * @event error
          */
         /**
          * Fired when the content of the InkPaper changes.
-         *
          * @event changed
          */
         properties: {
@@ -52,7 +49,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             host: {
                 type: String,
-                notify: true,
                 value: 'cloud.myscript.com',
                 observer: '_hostChanged'
             },
@@ -62,7 +58,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             protocol: {
                 type: String,
-                notify: true,
                 value: MyScript.Protocol.REST,
                 observer: '_protocolChanged'
             },
@@ -71,7 +66,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             timeout: {
                 type: Number,
-                notify: true,
                 value: 2000,
                 observer: '_timeoutChanged'
             },
@@ -82,7 +76,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             applicationkey: {
                 type: String,
-                notify: true,
                 observer: '_applicationKeyChanged'
             },
             /**
@@ -92,7 +85,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             hmackey: {
                 type: String,
-                notify: true,
                 observer: '_hmacKeyChanged'
             },
             /**
@@ -101,29 +93,26 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             type: {
                 type: String,
-                notify: true,
                 value: MyScript.RecognitionType.TEXT,
                 observer: '_typeChanged'
             },
             /**
-             * The current recognition language (e.g. en_US, fr_FR, ...)
+             * <b>Deprecated</b>: Use textParameters.language instead of this property<br />
              * @private
-             * @deprecated Use text-parameters.language instead of this property
+             * @deprecated Use textParameters.language instead of this property
              */
             language: {
                 type: String,
-                notify: true,
                 value: 'en_US',
                 observer: '_languageChanged'
             },
             /**
-             * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
+             * <b>Deprecated</b>: Use mathParameters.resultTypes or music-parameters.resultTypes instead of this property<br />
              * @private
-             * @deprecated Use math-parameters.resultTypes or music-parameters.resultTypes instead of this property
+             * @deprecated Use mathParameters.resultTypes or music-parameters.resultTypes instead of this property
              */
             resulttypes: {
                 type: Array,
-                notify: true,
                 value: [],
                 observer: '_resulttypesChanged'
             },
@@ -133,17 +122,15 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             typeset: {
                 type: Boolean,
-                notify: true,
                 value: false,
                 observer: '_typesetChanged'
             },
             /**
              * Recognition parameters for the text recognition.
-             * @default {}
+             * @default {{language: 'en_US', textInputMode: 'CURSIVE'}}
              */
             textParameters: {
                 type: Object,
-                notify: true,
                 value: new MyScript.TextParameter(),
                 observer: '_textParametersChanged'
             },
@@ -153,7 +140,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             mathParameters: {
                 type: Object,
-                notify: true,
                 value: new MyScript.MathParameter(),
                 observer: '_mathParametersChanged'
             },
@@ -163,7 +149,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             shapeParameters: {
                 type: Object,
-                notify: true,
                 value: new MyScript.ShapeParameter(),
                 observer: '_shapeParametersChanged'
             },
@@ -173,7 +158,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             musicParameters: {
                 type: Object,
-                notify: true,
                 value: new MyScript.MusicParameter(),
                 observer: '_musicParametersChanged'
             },
@@ -183,7 +167,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             analyzerParameters: {
                 type: Object,
-                notify: true,
                 value: new MyScript.AnalyzerParameter(),
                 observer: '_analyzerParametersChanged'
             },
@@ -194,7 +177,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             penParameters: {
                 type: Object,
-                notify: true,
                 value: new MyScript.PenParameters(),
                 observer: '_penParametersChanged'
             },
@@ -203,7 +185,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              */
             components: {
                 type: Array,
-                notify: true,
                 value: [],
                 observer: '_componentsChanged'
             },
@@ -225,6 +206,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * True if there is something to clear
+             * @default false
              */
             canClear: {
                 type: Boolean,
@@ -247,14 +229,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
         },
         /**
-         * Delete all context
+         * <b>Deprecated</b>: Use clear instead of delete<br />
          * @deprecated Use clear instead of delete
          * @private
          */
         delete: function () {
-            if (this._inkPaper) {
-                this._inkPaper.clear();
-            }
+            this.clear();
         },
         /**
          * Undo action, and launch recognition if timeout is set
@@ -319,9 +299,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 penParameters: this.penParameters
             });
         },
-        /**
-         * Resize listener
-         */
         _onResize: function () {
             if (this._inkPaper) {
 
@@ -334,9 +311,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 }
             }
         },
-        /**
-         * Changed listener
-         */
         _onChanged: function (e) {
             if (e.detail) {
                 this.canUndo = e.detail.canUndo;
@@ -344,164 +318,102 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
             this.fire(e.type, e.detail);
         },
-        /**
-         * Success listener
-         */
         _onSuccess: function (e) {
             this.fire(e.type, e.detail);
             this.fire('myscript-common-element-result', e.detail);
         },
-        /**
-         * Failure listener
-         */
-        _onFailure: function (e) {
+        _onError: function (e) {
             this.fire(e.type, e.detail);
-            this.fire('error', e.detail);
         },
-        /**
-         * Compute can clear from undo/redo
-         */
         _computeCanClear: function (canUndo, canRedo) {
             return canUndo || canRedo;
         },
-        /**
-         * Application key changed observer
-         */
         _applicationKeyChanged: function (applicationKey) {
             if (this._inkPaper) {
                 this._inkPaper.setApplicationKey(applicationKey);
             }
         },
-        /**
-         * HMAC key changed observer
-         */
         _hmacKeyChanged: function (hmacKey) {
             if (this._inkPaper) {
                 this._inkPaper.setHmacKey(hmacKey);
             }
         },
-        /**
-         * Timeout changed observer
-         */
         _timeoutChanged: function (timeout) {
             if (this._inkPaper) {
                 this._inkPaper.setTimeout(timeout);
             }
         },
-        /**
-         * Recognition type changed observer
-         */
         _typeChanged: function (type) {
             if (this._inkPaper) {
                 this._inkPaper.setType(type);
             }
         },
-        /**
-         * Recognition language changed observer
-         */
         _languageChanged: function (language) {
             if (this._inkPaper) {
                 this._inkPaper.getTextParameters().setLanguage(language);
                 this._inkPaper.setTextParameters(this._inkPaper.getTextParameters());
             }
         },
-        /**
-         * Math Recognition result types changed observer
-         */
         _resulttypesChanged: function (resultTypes) {
             if (this._inkPaper) {
                 this._inkPaper.getMathParameters().setResultTypes(resultTypes);
                 this._inkPaper.setMathParameters(this._inkPaper.getMathParameters());
             }
         },
-        /**
-         * Typeset result param changed
-         */
         _typesetChanged: function (typeset) {
             if (this._inkPaper) {
                 this._inkPaper.setTypeset(typeset);
             }
         },
-        /**
-         * Text recognition parameters changed
-         */
         _textParametersChanged: function (textParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setTextParameters(textParameters);
             }
         },
-        /**
-         * Math recognition parameters changed
-         */
         _mathParametersChanged: function (mathParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setMathParameters(mathParameters);
             }
         },
-        /**
-         * Shape recognition parameters changed
-         */
         _shapeParametersChanged: function (shapeParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setShapeParameters(shapeParameters);
             }
         },
-        /**
-         * Music recognition parameters changed
-         */
         _musicParametersChanged: function (musicParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setMusicParameters(musicParameters);
             }
         },
-        /**
-         * Analyzer recognition parameters changed
-         */
         _analyzerParametersChanged: function (analyzerParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setAnalyzerParameters(analyzerParameters);
             }
         },
-        /**
-         * Pen parameters changed
-         */
         _penParametersChanged: function (penParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setPenParameters(penParameters);
             }
         },
-        /**
-         * Protocol changed
-         */
         _protocolChanged: function (protocol) {
             if (this._inkPaper) {
                 this._inkPaper.setProtocol(protocol);
             }
         },
-        /**
-         * Pen parameters changed
-         */
         _penParametersChanged: function (penParameters) {
             if (this._inkPaper) {
                 this._inkPaper.setPenParameters(penParameters);
             }
         },
-        /**
-         * Host changed
-         */
         _hostChanged: function (host) {
             if (this._inkPaper) {
                 this._inkPaper.setHost(host);
             }
         },
-        /**
-         * Components changed
-         */
         _componentsChanged: function (components) {
             if (this._inkPaper) {
                 this._inkPaper.setComponents(components);
             }
         }
-
     });
 </script>
