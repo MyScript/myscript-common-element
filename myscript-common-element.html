@@ -4,6 +4,8 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../myscript/myscript.html">
 <!--
@@ -11,7 +13,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 
     <myscript-common-element
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        timeout="2000"
+        typeset="true"
+        shape-parameters="{
+            doBeautification: true
+        }">
     </myscript-common-element>
 
 @demo
@@ -23,9 +30,25 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             position: relative;
             min-height: 300px;
             min-width: 400px;
+            --paper-fab-background: #00A7CF;
+            --paper-fab-keyboard-focus-background: #00A7CF;
+        }
+        .buttons {
+            float: left;
+            display: flex;
+            display: -webkit-flex;
+        }
+        paper-fab {
+            z-index: 3;
         }
     </style>
     <template>
+        <div class="buttons" hidden="[[ hidebuttons ]]">
+            <paper-fab mini icon="delete" title="clear" on-tap="clear" disabled="[[ !canClear ]]" hidden="[[ _disableTrash ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canUndo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canRedo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="send" title="recognize" on-tap="recognize" disabled="[[ !canClear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
+        </div>
         <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
@@ -214,6 +237,28 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 type: Boolean,
                 notify: true,
                 computed: '_computeCanClear(canUndo, canRedo)'
+            },
+            /**
+             * If set to true, hide the buttons (Trash, Undo, Redo).
+             */
+            hidebuttons: {
+                type: Boolean,
+                value: false
+            },
+            _disableUndoRedo: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableUndoRedo(hidebuttons)'
+            },
+            _disableTrash: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableTrash(hidebuttons)'
+            },
+            _disableRecognize: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableRecognize(hidebuttons,timeout,protocol)'
             }
         },
         behaviors: [
@@ -328,10 +373,20 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _onError: function (e) {
             this.fire(e.type, e.detail);
             this._paperToast.text = e.detail.message;
+            this._paperToast.fitIn =
             this._paperToast.show();
         },
         _computeCanClear: function (canUndo, canRedo) {
             return canUndo || canRedo;
+        },
+        _computeDisableUndoRedo: function (hidebuttons) {
+            return hidebuttons;
+        },
+        _computeDisableTrash: function (hidebuttons) {
+            return hidebuttons;
+        },
+        _computeDisableRecognize: function (hidebuttons,timeout,protocol) {
+            return hidebuttons || (protocol === MyScript.Protocol.WS) || (timeout >= 0);
         },
         _applicationKeyChanged: function (applicationKey) {
             if (this._inkPaper) {

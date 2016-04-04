@@ -26,8 +26,12 @@
                              type="SHAPE"
                              applicationkey="[[ applicationKey ]]"
                              hmackey="[[ hmacKey ]]"
-                             shape-parameters="[[ _shapeParameters ]]"
+                             timeout="2000"
                              typeset="true"
+                             shape-parameters="{
+                                 doBeautification: true,
+                                 rejectDetectionSensitivity: 0
+                             }"
                              on-changed="_onChanged">
     </myscript-common-element>
 </template>
@@ -46,10 +50,6 @@
             template.host = 'webdemo.myscript.com';
             template.applicationKey = '9faa1259-48ba-44c4-9857-b3c86d986f94';
             template.hmacKey = 'fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0';
-            template._shapeParameters = new MyScript.ShapeParameter({
-                doBeautification: true,
-                rejectDetectionSensitivity: 0
-            });
         });
     })(document);
 </script>
