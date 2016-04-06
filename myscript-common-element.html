@@ -16,7 +16,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         timeout="2000"
         typeset="true"
-        shape-parameters="{
+        shapeparameters="{
             doBeautification: true
         }">
     </myscript-common-element>
@@ -44,10 +44,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
     </style>
     <template>
         <div class="buttons" hidden="[[ hidebuttons ]]">
-            <paper-fab mini icon="delete" title="clear" on-tap="clear" disabled="[[ !canClear ]]" hidden="[[ _disableTrash ]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canUndo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canRedo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
-            <paper-fab mini icon="send" title="recognize" on-tap="recognize" disabled="[[ !canClear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
+            <paper-fab mini icon="delete" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ _disableClear ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="send" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
         </div>
         <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
         <paper-toast class="fit-bottom"></paper-toast>
@@ -122,9 +122,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_typeChanged'
             },
             /**
-             * <b>Deprecated</b>: Use textParameters.language instead of this property<br />
+             * <b>Deprecated</b>: Use textparameters.language instead of this property<br />
              * @private
-             * @deprecated Use textParameters.language instead of this property
+             * @deprecated Use textparameters.language instead of this property
              */
             language: {
                 type: String,
@@ -132,14 +132,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_languageChanged'
             },
             /**
-             * <b>Deprecated</b>: Use mathParameters.resultTypes or music-parameters.resultTypes instead of this property<br />
+             * <b>Deprecated</b>: Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property<br />
              * @private
-             * @deprecated Use mathParameters.resultTypes or music-parameters.resultTypes instead of this property
+             * @deprecated Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property
              */
             resulttypes: {
                 type: Array,
                 value: [],
-                observer: '_resulttypesChanged'
+                observer: '_resultTypesChanged'
             },
             /**
              * Parameter to typeset, or not, the result onto the ink paper.<br /><br />
@@ -154,7 +154,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * Recognition parameters for the text recognition.
              * @default {{language: 'en_US', textInputMode: 'CURSIVE'}}
              */
-            textParameters: {
+            textparameters: {
                 type: Object,
                 value: new MyScript.TextParameter(),
                 observer: '_textParametersChanged'
@@ -163,7 +163,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * Recognition parameters for the math recognition.
              * @default {}
              */
-            mathParameters: {
+            mathparameters: {
                 type: Object,
                 value: new MyScript.MathParameter(),
                 observer: '_mathParametersChanged'
@@ -172,7 +172,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * Recognition parameters for the shape recognition.
              * @default {}
              */
-            shapeParameters: {
+            shapeparameters: {
                 type: Object,
                 value: new MyScript.ShapeParameter(),
                 observer: '_shapeParametersChanged'
@@ -181,7 +181,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * Recognition parameters for the music recognition.
              * @default {}
              */
-            musicParameters: {
+            musicparameters: {
                 type: Object,
                 value: new MyScript.MusicParameter(),
                 observer: '_musicParametersChanged'
@@ -190,20 +190,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * Recognition parameters for the analyzer recognition.
              * @default {}
              */
-            analyzerParameters: {
+            analyzerparameters: {
                 type: Object,
                 value: new MyScript.AnalyzerParameter(),
                 observer: '_analyzerParametersChanged'
-            },
-            /**
-             * Pen parameters for the handwriting.<br>
-             * @private
-             * @default {}
-             */
-            penParameters: {
-                type: Object,
-                value: new MyScript.PenParameters(),
-                observer: '_penParametersChanged'
             },
             /**
              * Recognition input components.
@@ -215,28 +205,31 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * True if undo is available
+             * @private
              */
-            canUndo: {
+            canundo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
             /**
              * True if redo is available
+             * @private
              */
-            canRedo: {
+            canredo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
             /**
              * True if there is something to clear
+             * @private
              * @default false
              */
-            canClear: {
+            canclear: {
                 type: Boolean,
                 notify: true,
-                computed: '_computeCanClear(canUndo, canRedo)'
+                computed: '_computeCanClear(canundo, canredo)'
             },
             /**
              * If set to true, hide the buttons (Trash, Undo, Redo).
@@ -250,10 +243,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 notify: true,
                 computed: '_computeDisableUndoRedo(hidebuttons)'
             },
-            _disableTrash: {
+            _disableClear: {
                 type: Boolean,
                 notify: true,
-                computed: '_computeDisableTrash(hidebuttons)'
+                computed: '_computeDisableClear(hidebuttons)'
             },
             _disableRecognize: {
                 type: Boolean,
@@ -339,12 +332,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 hmacKey : this.hmackey,
                 typeset: this.typeset,
                 components : this.components,
-                textParameters : this.textParameters,
-                mathParameters : this.mathParameters,
-                shapeParameters : this.shapeParameters,
-                musicParameters : this.musicParameters,
-                analyzerParameters : this.analyzerParameters,
-                penParameters: this.penParameters
+                textParameters : this.textparameters,
+                mathParameters : this.mathparameters,
+                shapeParameters : this.shapeparameters,
+                musicParameters : this.musicparameters,
+                analyzerParameters : this.analyzerparameters
             });
         },
         _onResize: function () {
@@ -361,8 +353,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         _onChanged: function (e) {
             if (e.detail) {
-                this.canUndo = e.detail.canUndo;
-                this.canRedo = e.detail.canRedo;
+                this.canundo = e.detail.canUndo;
+                this.canredo = e.detail.canRedo;
             }
             this.fire(e.type, e.detail);
         },
@@ -382,7 +374,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _computeDisableUndoRedo: function (hidebuttons) {
             return hidebuttons;
         },
-        _computeDisableTrash: function (hidebuttons) {
+        _computeDisableClear: function (hidebuttons) {
             return hidebuttons;
         },
         _computeDisableRecognize: function (hidebuttons,timeout,protocol) {
@@ -414,7 +406,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 this._inkPaper.setTextParameters(this._inkPaper.getTextParameters());
             }
         },
-        _resulttypesChanged: function (resultTypes) {
+        _resultTypesChanged: function (resultTypes) {
             if (this._inkPaper) {
                 this._inkPaper.getMathParameters().setResultTypes(resultTypes);
                 this._inkPaper.setMathParameters(this._inkPaper.getMathParameters());
@@ -450,19 +442,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 this._inkPaper.setAnalyzerParameters(analyzerParameters);
             }
         },
-        _penParametersChanged: function (penParameters) {
-            if (this._inkPaper) {
-                this._inkPaper.setPenParameters(penParameters);
-            }
-        },
         _protocolChanged: function (protocol) {
             if (this._inkPaper) {
                 this._inkPaper.setProtocol(protocol);
-            }
-        },
-        _penParametersChanged: function (penParameters) {
-            if (this._inkPaper) {
-                this._inkPaper.setPenParameters(penParameters);
             }
         },
         _hostChanged: function (host) {
