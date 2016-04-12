@@ -15,10 +15,7 @@ clean:
 prepare:
 	@git remote add github $(GITHUB) > /dev/null; true
 	@git fetch --tags
-	@bower link && \
-	bower link myscript && \
-	bower install
-
+	@bower install
 
 build:
 
