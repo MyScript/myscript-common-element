@@ -238,6 +238,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 type: Boolean,
                 value: false
             },
+            /**
+             * @private
+             */
+            ssl: {
+                type: Boolean,
+                value: true,
+                observer: '_sslChanged'
+            },
             _disableUndoRedo: {
                 type: Boolean,
                 notify: true,
@@ -324,6 +332,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             this._inkPaper = new MyScript.InkPaper(this._inputArea, {
                 host: this.host,
                 protocol: this.protocol,
+                ssl: this.ssl,
                 type : this.type,
                 width : this.offsetWidth,
                 height : this.offsetHeight,
@@ -455,6 +464,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         _componentsChanged: function (components) {
             if (this._inkPaper) {
                 this._inkPaper.setComponents(components);
+            }
+        },
+        _sslChanged: function (ssl) {
+            if (this._inkPaper) {
+                this._inkPaper.setSSL(ssl);
             }
         }
     });
