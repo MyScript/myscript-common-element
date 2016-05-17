@@ -20,12 +20,12 @@
         height: 100%;
     }
 </style>
-<body unresolved>
-<template id="app" is="dom-bind">
-    <myscript-common-element host="[[ host ]]"
+<body touch-action="none">
+
+    <myscript-common-element host="webdemo.myscript.com"
                              type="SHAPE"
-                             applicationkey="[[ applicationKey ]]"
-                             hmackey="[[ hmacKey ]]"
+                             applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
+                             hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
                              timeout="2000"
                              typeset="true"
                              shapeparameters="{
@@ -34,23 +34,11 @@
                              }"
                              on-changed="_onChanged">
     </myscript-common-element>
-</template>
 </body>
 <script>
     (function (document) {
         'use strict';
-        var template = document.querySelector('#app');
-        template.addEventListener('template-bound', function () {
-            console.log('Our app is ready to rock!');
-        });
-        // See https://github.com/Polymer/polymer/issues/1381
-        window.addEventListener('WebComponentsReady', function () {
-            document.querySelector('body').removeAttribute('unresolved');
 
-            template.host = 'webdemo.myscript.com';
-            template.applicationKey = '9faa1259-48ba-44c4-9857-b3c86d986f94';
-            template.hmacKey = 'fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0';
-        });
     })(document);
 </script>
 </html>
