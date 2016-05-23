@@ -133,6 +133,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * <b>Deprecated</b>: Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property<br />
+             * @type {Array<String>}
              * @private
              * @deprecated Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property
              */
@@ -152,6 +153,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Recognition parameters for the text recognition.
+             * @type {{language: String, textInputMode: String, resultDetail: String, contentTypes: Array<String>, subsetKnowledges: Array<String>, userResources: Array<String>, userLkWords: Array<String>, textProperties: {textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}}
              * @default {{language: 'en_US', textInputMode: 'CURSIVE'}}
              */
             textparameters: {
@@ -161,6 +163,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Recognition parameters for the math recognition.
+             * @type {{resultTypes: Array<String>, columnarOperation: Boolean, userResources: Array<String>, scratchOutDetectionSensitivity: Number}}
              * @default {}
              */
             mathparameters: {
@@ -170,6 +173,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Recognition parameters for the shape recognition.
+             * @type {{doBeautification: Boolean, rejectDetectionSensitivity: Boolean, userResources: Array<String>}}
              * @default {}
              */
             shapeparameters: {
@@ -179,6 +183,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Recognition parameters for the music recognition.
+             * @type {{resultTypes: Array<String>, userResources: Array<String>, scratchOutDetectionSensitivity: Number, divisions: Number, staff: {count: Number, gap: Number, top: Number}}}
              * @default {}
              */
             musicparameters: {
@@ -188,6 +193,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Recognition parameters for the analyzer recognition.
+             * @type {{coordinateResolution: Number}}
              * @default {}
              */
             analyzerparameters: {
@@ -197,6 +203,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * Recognition input components.
+             * @type {Array<{type: String}>}
              */
             components: {
                 type: Array,
@@ -239,6 +246,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 value: false
             },
             /**
+             * True if SSL is activated, false otherwise
              * @private
              */
             ssl: {
@@ -246,16 +254,25 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 value: true,
                 observer: '_sslChanged'
             },
+            /**
+             * True if the undo/redo feature is disabled, false otherwise
+             */
             _disableUndoRedo: {
                 type: Boolean,
                 notify: true,
                 computed: '_computeDisableUndoRedo(hidebuttons)'
             },
+            /**
+             * True if the clear feature is disabled, false otherwise
+             */
             _disableClear: {
                 type: Boolean,
                 notify: true,
                 computed: '_computeDisableClear(hidebuttons)'
             },
+            /**
+             * True if the recognize feature is disabled, false otherwise
+             */
             _disableRecognize: {
                 type: Boolean,
                 notify: true,
@@ -310,6 +327,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Get available languages
+         * @param {String} inputMode Optional recognition input mode
          */
         getAvailableLanguages: function (inputMode) {
             if (this._inkPaper) {
