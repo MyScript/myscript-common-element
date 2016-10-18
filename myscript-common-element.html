@@ -21,7 +21,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         }">
     </myscript-common-element>
 
-@demo
+@demo demo/index.html
 -->
 <dom-module id="myscript-common-element">
     <style>
@@ -61,6 +61,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         is: 'myscript-common-element',
         /**
          * Fired when a recognition result is successfully received.
+         *
          * @event myscript-common-element-result
          */
         /**
@@ -74,17 +75,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         properties: {
             /**
              * <b>not mutable</b><br />
-             * The current recognition service host
-             */
-            host: {
-                type: String,
-                value: 'cloud.myscript.com',
-                observer: '_hostChanged'
-            },
-            /**
-             * <b>not mutable</b><br />
              * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-             * @default 'WebSocket'
+             * @type String
+             * @default 'REST'
              */
             protocol: {
                 type: String,
@@ -93,7 +86,20 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             },
             /**
              * <b>not mutable</b><br />
-             * The recognition timeout, only use for HTTP.
+             * The current recognition service host.
+             * @type String
+             * @default 'cloud.myscript.com'
+             */
+            host: {
+                type: String,
+                value: 'cloud.myscript.com',
+                observer: '_hostChanged'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * The recognition timeout, only use in REST mode.
+             * @type Number
+             * @default 2000
              */
             timeout: {
                 type: Number,
@@ -105,6 +111,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * Application key to use for recognition on MyScript handwriting recognition server.<br />
              * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
              * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+             * @type String
              */
             applicationkey: {
                 type: String,
@@ -115,6 +122,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
              * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
              * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+             * @type String
              */
             hmackey: {
                 type: String,
@@ -222,6 +230,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * True if undo is available
              * @private
+             * @type Boolean
+             * @default false
              */
             canundo: {
                 type: Boolean,
@@ -231,6 +241,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * True if redo is available
              * @private
+             * @type Boolean
+             * @default false
              */
             canredo: {
                 type: Boolean,
@@ -240,6 +252,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * True if there is something to clear
              * @private
+             * @type Boolean
              * @default false
              */
             canclear: {
@@ -250,6 +263,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * <b>not mutable</b><br />
              * If set to true, hide the buttons (Trash, Undo, Redo).
+             * @type Boolean
+             * @default false
              */
             hidebuttons: {
                 type: Boolean,
@@ -258,6 +273,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * True if SSL is activated, false otherwise
              * @private
+             * @type Boolean
+             * @default true
              */
             ssl: {
                 type: Boolean,
