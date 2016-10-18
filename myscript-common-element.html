@@ -73,6 +73,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          */
         properties: {
             /**
+             * <b>not mutable</b><br />
              * The current recognition service host
              */
             host: {
@@ -81,6 +82,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_hostChanged'
             },
             /**
+             * <b>not mutable</b><br />
              * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
              * @default 'WebSocket'
              */
@@ -90,6 +92,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_protocolChanged'
             },
             /**
+             * <b>not mutable</b><br />
              * The recognition timeout, only use for HTTP.
              */
             timeout: {
@@ -98,6 +101,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_timeoutChanged'
             },
             /**
+             * <b>not mutable</b><br />
              * Application key to use for recognition on MyScript handwriting recognition server.<br />
              * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
              * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
@@ -107,6 +111,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_applicationKeyChanged'
             },
             /**
+             * <b>not mutable</b><br />
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
              * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
              * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
@@ -116,6 +121,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_hmacKeyChanged'
             },
             /**
+             * <b>not mutable</b><br />
              * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
              * @default 'TEXT'
              */
@@ -242,6 +248,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 computed: '_computeCanClear(canundo, canredo)'
             },
             /**
+             * <b>not mutable</b><br />
              * If set to true, hide the buttons (Trash, Undo, Redo).
              */
             hidebuttons: {
