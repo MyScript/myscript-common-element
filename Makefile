@@ -4,7 +4,7 @@ ALL: clean prepare docker test
 
 .PHONY: ALL \
 	purge clean prepare \
-	watch dev
+	watch dev docs
 
 purge:
 	@rm -rf bower_components/
