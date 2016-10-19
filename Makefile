@@ -27,7 +27,7 @@ watch:
 dev:
 	@polyserve
 
-doc:
+docs:
 	@rm -rf docs/components/* && mkdir -p docs/components
-	@cd docs && cp bower install -q ..
-	@cp -r bower_components/* docs/components
+	@cd docs && bower install -q ../../myscript-common-element
+	@cp -r bower_components/* docs/components/
