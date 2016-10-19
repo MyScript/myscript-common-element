@@ -29,4 +29,4 @@ dev:
 
 doc:
 	@rm -rf docs && mkdir -p docs
-	@sh gp-custom.sh
+	@cd docs && cp -r ${src}/bower_components/* components
