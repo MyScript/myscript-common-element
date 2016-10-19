@@ -28,5 +28,6 @@ dev:
 	@polyserve
 
 doc:
-	@rm -rf docs && mkdir -p docs
-	@cd docs && cp -r ${src}/bower_components/* components
+	@rm -rf docs/components/* && mkdir -p docs/components
+	@cd docs && cp bower install -q ..
+	@cp -r bower_components/* docs/components
