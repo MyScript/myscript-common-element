@@ -31,20 +31,22 @@
     "Gruntfile.js",
     "build.json",
     "dist/docs",
-    "dist/samples"
+    "dist/samples",
+    "docs"
   ],
   "dependencies": {
     "cryptojslib": "3.1.x",
     "q": "1.4.x",
     "pepjs": "0.4.x"
   },
-  "_release": "c7491f5852",
+  "version": "1.2.2",
+  "_release": "1.2.2",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "c7491f58523563641b8cbeac636209921b0dc115"
+    "type": "version",
+    "tag": "v1.2.2",
+    "commit": "3a9c0db60d9f3b1c2c92712cc62f69da2ef07b50"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
-  "_target": "master",
+  "_target": "1.2.2",
   "_originalSource": "myscript"
 }
