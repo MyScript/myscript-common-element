@@ -39,14 +39,13 @@
     "q": "1.4.x",
     "pepjs": "0.4.x"
   },
-  "version": "1.2.2",
-  "_release": "1.2.2",
+  "_release": "f13fbaa707",
   "_resolution": {
-    "type": "version",
-    "tag": "v1.2.2",
-    "commit": "5bf7f3d78d10d241059e07e59c43a8660348b7ad"
+    "type": "branch",
+    "branch": "master",
+    "commit": "f13fbaa707d3eea0792b90c963d7d100e0373204"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
-  "_target": "1.2.2",
+  "_target": "master",
   "_originalSource": "myscript"
 }
