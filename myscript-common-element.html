@@ -400,26 +400,27 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             if(this.strokewidth){
                 this._penParameters.width = this.strokewidth;
             }
-
-            this._inkPaper = new MyScript.InkPaper(this._inputArea, {
-                host: this.host,
-                protocol: this.protocol,
-                ssl: this.ssl,
-                type : this.type,
-                width : this.offsetWidth,
-                height : this.offsetHeight,
-                timeout : this.timeout,
-                applicationKey : this.applicationkey,
-                hmacKey : this.hmackey,
-                typeset: this.typeset,
-                components : this.components,
-                textParameters : this.textparameters,
-                mathParameters : this.mathparameters,
-                shapeParameters : this.shapeparameters,
-                musicParameters : this.musicparameters,
-                analyzerParameters : this.analyzerparameters,
-                penParameters :  this._penParameters
-            });
+            if(!this._inkPaper) {
+                this._inkPaper = new MyScript.InkPaper(this._inputArea, {
+                    host: this.host,
+                    protocol: this.protocol,
+                    ssl: this.ssl,
+                    type: this.type,
+                    width: this.offsetWidth,
+                    height: this.offsetHeight,
+                    timeout: this.timeout,
+                    applicationKey: this.applicationkey,
+                    hmacKey: this.hmackey,
+                    typeset: this.typeset,
+                    components: this.components,
+                    textParameters: this.textparameters,
+                    mathParameters: this.mathparameters,
+                    shapeParameters: this.shapeparameters,
+                    musicParameters: this.musicparameters,
+                    analyzerParameters: this.analyzerparameters,
+                    penParameters: this._penParameters
+                });
+            }
         },
         _onResize: function () {
             if (this._inkPaper) {
