@@ -52,8 +52,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
     </style>
     <template>
         <style>
-            @import url("../myscript/dist/myscript.min.css");
-
             :host {
                 display: block;
                 position: relative;
@@ -76,7 +74,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 float: left;
                 display: flex;
                 display: -webkit-flex;
-                z-index: 2;
+                z-index: 25;
                 background-color: transparent;
                 padding: 6px;
             }
@@ -86,7 +84,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 margin: 6px;
             }
 
-            #myscript-input-area {
+            #inkPaper {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -94,8 +92,32 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 width: 100%;
             }
 
+            .serverunreachable {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                display: inline-block;
+                vertical-align: top;
+                text-align: center;
+                color: #1A9FFF;
+            }
+
+            .error-msg {
+                position: absolute;
+                margin: auto;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 200px;
+                height: 200px;
+                border-radius: 3px;
+                z-index: 1;
+            }
         </style>
-        <div class="buttons" hidden="[[ hidebuttons ]]">
+        <div class="buttons" hidden="{{ _hideButtons() }}">
             <paper-fab mini src="undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]"
                        hidden="[[ _disableUndoRedo ]]"></paper-fab>
             <paper-fab mini src="redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]"
@@ -105,11 +127,37 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             <paper-fab mini src="send.svg" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]"
                        hidden="[[ _disableRecognize ]]"></paper-fab>
         </div>
-        <div id="myscript-input-area"></div>
+        <div class="serverunreachable" hidden>
+            <div class="error-msg" hidden><p class="detail-msg">MyScript recognition server is not reachable. Please
+                reload once you are
+                connected</p><img
+                src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4IiB2aWV3Qm94PSIwIDAgNjEyIDYxMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNjEyIDYxMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnIGlkPSJjbG91ZC1vZmYiPgoJCTxwYXRoIGQ9Ik00OTQuNywyMjkuNWMtMTcuODUxLTg2LjctOTQuMzUxLTE1My0xODguNy0xNTNjLTM4LjI1LDAtNzMuOTUsMTAuMi0xMDIsMzAuNmwzOC4yNSwzOC4yNSAgICBjMTcuODUtMTIuNzUsNDAuOC0xNy44NSw2My43NS0xNy44NWM3Ni41LDAsMTQwLjI1LDYzLjc1LDE0MC4yNSwxNDAuMjV2MTIuNzVoMzguMjVjNDMuMzUsMCw3Ni41LDMzLjE1LDc2LjUsNzYuNSAgICBjMCwyOC4wNS0xNS4zLDUzLjU1LTQwLjgsNjYuM2wzOC4yNSwzOC4yNUM1OTEuNiw0MzguNiw2MTIsNDAwLjM1LDYxMiwzNTdDNjEyLDI5MC43LDU1OC40NSwyMzQuNiw0OTQuNywyMjkuNXogTTc2LjUsMTA5LjY1ICAgIGw3MS40LDY4Ljg1QzY2LjMsMTgzLjYsMCwyNDkuOSwwLDMzMS41YzAsODQuMTUsNjguODUsMTUzLDE1MywxNTNoMjk4LjM1bDUxLDUxbDMzLjE1LTMzLjE1TDEwOS42NSw3Ni41TDc2LjUsMTA5LjY1eiAgICAgTTE5Ni4zNSwyMjkuNWwyMDQsMjA0SDE1M2MtNTYuMSwwLTEwMi00NS45LTEwMi0xMDJjMC01Ni4xLDQ1LjktMTAyLDEwMi0xMDJIMTk2LjM1eiIgZmlsbD0iIzFhOWZmZiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="/>
+            </div>
+        </div>
+        <div id="inkPaper" hidden="[[ detached ]]"></div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script src="../myscript/dist/myscript.min.js"></script>
     <script>
+        /**
+         * Uncomment the function body during development. Should not be activated in production.
+         * @param string
+         * @param object
+         * @constructor
+         */
+        function LOG(string, object) {
+            if (object) {
+                console.log(string, object);
+            } else {
+                console.log(string);
+            }
+        }
+
+        /**
+         * Function returning the root dom element whatever shadow or shady dom is used.
+         * @param domElement
+         * @returns {*}
+         */
         function qsWrapper(domElement) {
             if (domElement.shadowRoot) {
                 return domElement.shadowRoot;
@@ -117,48 +165,134 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 return domElement;
             }
         }
+
+        /**
+         * Update the undo redo clear state.
+         * @param commonElement
+         * @param eventDetail
+         */
         function updateUndoRedoClearState(commonElement, eventDetail) {
             commonElement.canclear = eventDetail.canClear;
             commonElement.canundo = eventDetail.canUndo;
             commonElement.canredo = eventDetail.canRedo;
         }
 
+        /**
+         * Handle the error and display it to the user.
+         * @param commonElement
+         * @param eventDetail
+         */
         function manageError(commonElement, eventDetail) {
-            console.log("Error detected");
-            if (e.detail && e.detail.message) {
-                const paperToast = commonElement.shadowRoot.querySelector('paper-toast');
-                paperToast.text = e.detail.message;
+            LOG("Error detected");
+            if (eventDetail && eventDetail.recoverable === false) {
+                if (eventDetail.serverMessage && eventDetail.serverMessage.error && eventDetail.serverMessage.error.result && eventDetail.serverMessage.error.result.error && (eventDetail.serverMessage.error.result.error === 'InvalidApplicationKeyException' || eventDetail.serverMessage.error.result.error === "InvalidHMACSignatureException")) {
+                    qsWrapper(commonElement).querySelector('.detail-msg').innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
+                }
+                qsWrapper(commonElement).querySelector('.serverunreachable').style['z-index'] = 30;
+                qsWrapper(commonElement).querySelector('.serverunreachable').removeAttribute('hidden');
+                qsWrapper(commonElement).querySelector('.error-msg').style['z-index'] = 30;
+                qsWrapper(commonElement).querySelector('.error-msg').removeAttribute('hidden');
+                qsWrapper(commonElement).querySelector('#inkPaper').style['opacity'] = 0.6;
+            } else if (eventDetail && eventDetail.message) {
+                const paperToast = qsWrapper(commonElement).querySelector('paper-toast');
+                paperToast.text = eventDetail.message;
                 paperToast.fitIn = paperToast.show();
+            } else {
+                LOG('Unmanaged error', eventDetail);
             }
         }
+
+        // FIXME No need of a class method there
+        function manageSuccess(commonElement, eventDetail) {
+            console.log("Sucess detected");
+            this.fire(e.type, e.detail);
+            this.fire('myscript-common-element-result', e.detail);
+        }
+
+        /**
+         * Build the options to pass to inkpaper.
+         * @param commonElement
+         * @returns {{}}
+         */
+        function buildOptionsFromElementAttributes(commonElement) {
+            var options = {};
+            if (commonElement.options) {
+                options = commonElement.options;
+            }
+            options.recognitionParams = {};
+            options.recognitionParams.type = commonElement.type;
+            options.recognitionParams.protocol = commonElement.protocol;
+            if (options.recognitionParams.protocol === 'REST') {
+                options.recognitionParams.triggerRecognitionOn = 'QUIET_PERIOD';
+            } else {
+                options.recognitionParams.triggerRecognitionOn = 'PEN_UP';
+            }
+            options.recognitionParams.apiVersion = commonElement.apiversion;
+            options.recognitionParams.server = {};
+            options.recognitionParams.server.scheme = commonElement.scheme;
+            options.recognitionParams.server.host = commonElement.host;
+            options.recognitionParams.server.applicationKey = commonElement.applicationkey;
+            options.recognitionParams.server.hmacKey = commonElement.hmackey;
+            options.recognitionParams.server.scheme = commonElement.scheme;
+            return options;
+        }
+
+        /**
+         * Update the style option of ink paper reflecting the common element attributs.
+         * @param commonElement
+         */
+        function updateStyleOptionsFromElementAttributes(commonElement) {
+            if (commonElement.inkPaper) {
+                commonElement.inkPaper.customStyle.strokeStyle.color = commonElement.strokecolor;
+                commonElement.inkPaper.customStyle.strokeStyle.width = commonElement.strokewidth;
+            }
+        }
+
+        /**
+         * Attach the element to the dom. This is the most critical part of the component.
+         * @param commonElementParam
+         */
+        function attachedElementToDom(commonElementParam) {
+            const commonElement = commonElementParam;
+            const rootNode = qsWrapper(commonElement);
+            var options = buildOptionsFromElementAttributes(commonElement);
+            commonElement.myScriptInkPaperDomElement = rootNode.querySelector('#inkPaper');
+
+            const optionsOverload = {
+                renderingParams: { renderer: 'canvas' },
+                recognitionParams: { type: 'MATH' }
+            };
+
+            commonElement.inkPaper = MyScript.register(commonElement.myScriptInkPaperDomElement, options);
+            commonElement.options = commonElement.inkPaper.options;
+            updateStyleOptionsFromElementAttributes(commonElement);
+
+            // Manage change events
+            commonElement.myScriptInkPaperDomElement.addEventListener('change', function (event) {
+                LOG("change intercepted", event);
+                updateUndoRedoClearState(commonElement, event.detail);
+            });
+
+            // Manage error events
+            commonElement.myScriptInkPaperDomElement.addEventListener('error', function (event) {
+                LOG("error intercepted", event);
+                manageError(commonElement, event.detail);
+            });
+        }
+
+        // Creating the component.
         Polymer({
                     is: 'myscript-common-element',
-
                     properties: {
                         /**
-                         * TODO
-                         */
-                        open: {
-                            type: Boolean,
-                            value: true,
-                            notify: true,
-                            observer: '_openChanged'
-                        },
-
-                        /**
-                         * TODO
-                         */
-                        options: {
-                            type: Object,
-
-                        },
-                        /**
+                         * <b>not mutable</b><br />
                          * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
                          * @default 'TEXT'
                          */
                         type: {
                             type: String,
-                            value: 'TEXT',
+                            reflectToAttribute: true,
+                            value: 'TEXT'
                         },
                         /**
                          * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
@@ -167,16 +301,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         protocol: {
                             type: String,
-                            value: 'REST',
-                        },
-                        /**
-                         * Recogntion API version to use
-                         * @type String
-                         * @default 'V3'
-                         */
-                        apiversion: {
-                            type: String,
-                            value: 'V3',
+                            reflectToAttribute: true,
+                            value: 'REST'
                         },
                         /**
                          * Scheme to use to connect to MyScript Cloud or Server. (https or http)
@@ -186,7 +312,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         scheme: {
                             type: String,
-                            value: 'https',
+                            reflectToAttribute: true,
+                            value: 'https'
                         },
                         /**
                          * The current recognition service host.
@@ -195,10 +322,30 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         host: {
                             type: String,
-                            value: 'cloud.myscript.com',
+                            reflectToAttribute: true,
+                            value: 'cloud.myscript.com'
                         },
                         /**
-                         * <b>not mutable</b><br />
+                         * Recogntion API version to use (eg V3 or V4)
+                         * @type String
+                         * @default 'V3'
+                         */
+                        apiversion: {
+                            type: String,
+                            reflectToAttribute: true,
+                            value: 'V3'
+                        },
+                        /**
+                         * The recognition timeout, only use in REST mode.
+                         * @type Number
+                         * @default 2000
+                         */
+                        timeout: {
+                            type: Number,
+                            reflectToAttribute: true,
+                            value: 2000
+                        },
+                        /**
                          * Application key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                          * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
@@ -206,9 +353,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         applicationkey: {
                             type: String,
+                            reflectToAttribute: true
                         },
                         /**
-                         * <b>not mutable</b><br />
                          * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
                          * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
@@ -216,6 +363,23 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         hmackey: {
                             type: String,
+                            reflectToAttribute: true
+                        },
+                        /**
+                         * TODO
+                         */
+                        detached: {
+                            type: Boolean,
+                            value: false,
+                            notify: true,
+                            reflectToAttribute: true,
+                            observer: '_detachedChanged'
+                        },
+                        /**
+                         * TODO
+                         */
+                        inkPaper: {
+                            type: Object
                         },
                         /**
                          * Set the stroke color
@@ -224,6 +388,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         strokecolor: {
                             type: String,
                             value: '#1580CD',
+                            reflectToAttribute: true,
                             observer: '_strokecolorChanged'
                         },
                         /**
@@ -233,6 +398,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         strokewidth: {
                             type: Number,
                             value: 4,
+                            reflectToAttribute: true,
                             observer: '_strokewidthChanged'
                         },
                         /**
@@ -243,7 +409,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         canundo: {
                             type: Boolean,
-                            value: false
+                            value: false,
+                            reflectToAttribute: true,
+                            notify: true
                         },
                         /**
                          * True if redo is available
@@ -253,7 +421,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         canredo: {
                             type: Boolean,
-                            value: false
+                            value: false,
+                            reflectToAttribute: true,
+                            notify: true
                         },
                         /**
                          * True if there is something to clear
@@ -263,7 +433,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         canclear: {
                             type: Boolean,
-                            value: false
+                            value: false,
+                            reflectToAttribute: true,
+                            notify: true
                         },
                         /**
                          * If set to true, hide the buttons (Trash, Undo, Redo).
@@ -272,6 +444,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         hidebuttons: {
                             type: Boolean,
+                            reflectToAttribute: true,
                             value: false
                         },
 
@@ -280,6 +453,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         _disableUndoRedo: {
                             type: Boolean,
+                            reflectToAttribute: true,
                             value: false
                         },
                         /**
@@ -287,6 +461,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         _disableClear: {
                             type: Boolean,
+                            reflectToAttribute: true,
                             value: false
                         },
                         /**
@@ -294,6 +469,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                          */
                         _disableRecognize: {
                             type: Boolean,
+                            reflectToAttribute: true,
                             value: true
                         }
                     },
@@ -302,58 +478,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                     ],
                     listeners: {
                         'iron-resize': '_onResize'
-                    },
-                    _openChanged: function (oldValue, newValue, uncatched) {
-                        console.log('open changed', oldValue, newValue, uncatched);
                     }
                     ,
-                    //Will be renamed connected with pure custom element support
-                    attached: function () {
-                        const self = this;
-                        console.log('connectedCallback');
-                        const rootNode = qsWrapper(this);
-                        //const shadowRoot = this.attachShadow({mode: 'open'});
-                        console.log(qsWrapper(this));
-                        if (!this.inkPaper) {
-                            this.myScriptInkPaperDomElement = rootNode.querySelector('#myscript-input-area');
 
-                            const options = {
-                                renderingParams: { renderer: 'canvas' },
-                                recognitionParams: { type: 'MATH' }
-                            };
-                            this.inkPaper = MyScript.register(this.myScriptInkPaperDomElement, options);
-
-                            // Manage change events
-                            this.myScriptInkPaperDomElement.addEventListener('change', function (event) {
-                                console.log("change intercepted", event);
-                                updateUndoRedoClearState(self, event.detail);
-                            })
-                            ;
-
-                            // Manage error events
-                            this.myScriptInkPaperDomElement.addEventListener('error', function (event) {
-                                console.log("error intercepted", event);
-                                manageError(self, event.detail);
-                            })
-                            ;
-                        }
-                    },
-                    disconnectedCallback: function () {
-                        console.log('disconnectedCallback fire');
-                    }
-                    ,
-                    /*attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-                     console.log('attributeChangedCallback', attributeName, oldValue, newValue, namespace);
-                     this[attributeName] = newValue;
-                     }*/
-                    _attributeModifiedCallback: function (oldValue, newValue) {
-                        console.log('_attributeModifiedCallback', att1, att2);
-                    }
-                    ,
-                    _selectedChanged: function (selected, oldSelected) {
-                        console.log('selected change');
-                    }
-                    ,
                     /**
                      * Clear all context
                      */
@@ -404,35 +531,58 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                             return this.inkPaper.getStats();
                         }
                     },
-                    _onResize: function () {
-                        if (this._inkPaper) {
-
-                            if (this.offsetWidth && (this.offsetWidth > 0)) {
-                                this._inkPaper.setWidth(this.offsetWidth);
-                            }
-
-                            if (this.offsetHeight && (this.offsetHeight > 0)) {
-                                this._inkPaper.setHeight(this.offsetHeight);
-                            }
+                    /**
+                     * Update the stroke color.
+                     * @param newStrokecolor
+                     * @private
+                     */
+                    _strokecolorChanged: function (newStrokecolor) {
+                        LOG('_strokecolorChanged', newStrokecolor);
+                        updateStyleOptionsFromElementAttributes(commonElement);
+                    },
+                    /**
+                     * Update the stroke width.
+                     * @param newStrokewidth
+                     * @private
+                     */
+                    _strokewidthChanged: function (newStrokewidth) {
+                        LOG('_strokewidthChanged', newStrokewidth);
+                        updateStyleOptionsFromElementAttributes(commonElement);
+                    },
+                    /**
+                     * Manage the resizing of the component.
+                     * @param event
+                     * @private
+                     */
+                    _onResize: function (event) {
+                        console.log('Resizing', event);
+                        if (this.inkPaper) {
+                            this.inkPaper.resize();
                         }
                     },
-                    // FIXME No need of a class method there
-                    onSuccess: function (e) {
-                        console.log("Sucess detected");
-                        this.fire(e.type, e.detail);
-                        this.fire('myscript-common-element-result', e.detail);
+                    _detachedChanged: function (newValue) {
+                        LOG('detached changed', newValue);
+                        this.detached = newValue;
+                        if (this.detached !== true && this._connected === true) {
+                            attachedElementToDom(this);
+                        }
                     },
-                    _strokecolorChanged: function (newStrokecolor) {
-                        // TODO
+                    /**
+                     * Compute if buttons should be display or not.
+                     * @returns {Boolean}
+                     * @private
+                     */
+                    _hideButtons: function () {
+                        return this.hidebuttons || this.detached;
                     },
-                    _strokewidthChanged: function (newStrokewidth) {
-
-                    },
-                    _onResize: function(event){
-                      console.log('Resizing', event);
-                      if(this.inkPaper){
-                        this.inkPaper.resize();
-                      }
+                    //Will be renamed connected with pure custom element support
+                    attached: function () {
+                        LOG('attached');
+                        this._connected = true;
+                        // Uncomment when options objects is filled properly
+                        if (this.detached !== true) {
+                            attachedElementToDom(this);
+                        }
                     }
                 }
         )

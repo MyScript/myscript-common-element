@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- This sample is not currently working. The style is not import from MyScriptJS -->
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
@@ -6,8 +7,14 @@
     <meta name="mobile-web-app-capable" content="yes">
 
     <title>myscript-math-web demo</title>
-
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script>
+        /* this script must run before Polymer is imported */
+        window.Polymer = {
+            dom: 'shadow',
+            lazyRegister: true
+        };
+    </script>
     <link rel="import" href="../myscript-common-element.html">
 </head>
 <style>
@@ -25,13 +32,12 @@
 </style>
 <body touch-action="none">
 
-<myscript-common-element
-    host="cloud-internal-stable.visionobjects.com"
-    type="SHAPE"
-    applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
-    hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
-    timeout="2000"
-    typeset="true">
+<myscript-common-element host="cloud-internal-stable.visionobjects.com"
+                         type="SHAPE"
+                         applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
+                         hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
+                         timeout="2000"
+                         typeset="true">
 </myscript-common-element>
 </body>
 </html>
