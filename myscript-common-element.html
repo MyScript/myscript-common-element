@@ -117,7 +117,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 z-index: 1;
             }
         </style>
-        <div class="buttons" hidden="{{ _hideButtons() }}">
+        <div class="buttons" hidden="[[ _hideButtons(hidebuttons, detached) ]]">
             <paper-fab mini src="undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]"
                        hidden="[[ _disableUndoRedo ]]"></paper-fab>
             <paper-fab mini src="redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]"
@@ -192,7 +192,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 qsWrapper(commonElement).querySelector('.serverunreachable').removeAttribute('hidden');
                 qsWrapper(commonElement).querySelector('.error-msg').style['z-index'] = 30;
                 qsWrapper(commonElement).querySelector('.error-msg').removeAttribute('hidden');
-                qsWrapper(commonElement).querySelector('#inkPaper').style['opacity'] = 0.6;
+                qsWrapper(commonElement).querySelector('#inkPaper').style['opacity'] = 0.2;
+                commonElement.hidebuttons = true;
             } else if (eventDetail && eventDetail.message) {
                 const paperToast = qsWrapper(commonElement).querySelector('paper-toast');
                 paperToast.text = eventDetail.message;
@@ -202,9 +203,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
         }
 
-        // FIXME No need of a class method there
-        function manageSuccess(commonElement, eventDetail) {
-            console.log("Sucess detected");
+        function manageRecognition(commonElement, eventDetail) {
+            LOG("Sucess detected");
             this.fire(e.type, e.detail);
             this.fire('myscript-common-element-result', e.detail);
         }
@@ -271,12 +271,20 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             commonElement.myScriptInkPaperDomElement.addEventListener('change', function (event) {
                 LOG("change intercepted", event);
                 updateUndoRedoClearState(commonElement, event.detail);
+                commonElement.dispatchEvent(new CustomEvent('change', { detail: event.detail }));
             });
+            // Manage result events
+            commonElement.myScriptInkPaperDomElement.addEventListener('result', function (event) {
+                LOG("result intercepted", event);
+                commonElement.dispatchEvent(new CustomEvent('result', { detail: event.detail }));
+            });
+
 
             // Manage error events
             commonElement.myScriptInkPaperDomElement.addEventListener('error', function (event) {
                 LOG("error intercepted", event);
                 manageError(commonElement, event.detail);
+                commonElement.dispatchEvent(new CustomEvent('error', { detail: event.detail }));
             });
         }
 
@@ -445,7 +453,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         hidebuttons: {
                             type: Boolean,
                             reflectToAttribute: true,
-                            value: false
+                            value: false,
+                            notify: true
                         },
 
                         /**
@@ -538,7 +547,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      */
                     _strokecolorChanged: function (newStrokecolor) {
                         LOG('_strokecolorChanged', newStrokecolor);
-                        updateStyleOptionsFromElementAttributes(commonElement);
+                        updateStyleOptionsFromElementAttributes(this);
                     },
                     /**
                      * Update the stroke width.
@@ -547,7 +556,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      */
                     _strokewidthChanged: function (newStrokewidth) {
                         LOG('_strokewidthChanged', newStrokewidth);
-                        updateStyleOptionsFromElementAttributes(commonElement);
+                        updateStyleOptionsFromElementAttributes(this);
                     },
                     /**
                      * Manage the resizing of the component.
@@ -572,8 +581,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @returns {Boolean}
                      * @private
                      */
-                    _hideButtons: function () {
-                        return this.hidebuttons || this.detached;
+                    _hideButtons: function (hidebuttons, detached) {
+                        return hidebuttons || detached;
                     },
                     //Will be renamed connected with pure custom element support
                     attached: function () {

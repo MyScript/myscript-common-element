@@ -10,7 +10,7 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-common-element.html">
 </head>
-<style>
+<style is="custom-style">
     html, body {
         position: absolute;
         height: 100%;
@@ -22,16 +22,28 @@
     myscript-common-element {
         height: 100%;
     }
+
+    #result{
+        --paper-toast-background-color: #1A9FFF;
+        --paper-toast-color: white;
+    }
 </style>
 <body touch-action="none">
-
+<paper-toast id="result" class="fit-top"></paper-toast>
 <myscript-common-element
     host="cloud-internal-stable.visionobjects.com"
-    type="SHAPE"
+    type="MATH"
     applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
     hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
     timeout="2000"
     typeset="true">
 </myscript-common-element>
+<script>
+    document.querySelector('myscript-common-element').addEventListener('result', function (event) {
+        const paperToast = document.querySelector('#result');
+        paperToast.text = 'Recogntion object contains : ' + JSON.stringify(event.detail.result);
+        paperToast.fitIn = paperToast.show();
+    });
+</script>
 </body>
 </html>
