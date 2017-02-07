@@ -184,9 +184,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @param eventDetail
          */
         function manageError(commonElement, eventDetail) {
-            LOG("Error detected");
+            LOG('common Error detected');
             if (eventDetail && eventDetail.recoverable === false) {
-                if (eventDetail.serverMessage && eventDetail.serverMessage.error && eventDetail.serverMessage.error.result && eventDetail.serverMessage.error.result.error && (eventDetail.serverMessage.error.result.error === 'InvalidApplicationKeyException' || eventDetail.serverMessage.error.result.error === "InvalidHMACSignatureException")) {
+                if (eventDetail.serverMessage && eventDetail.serverMessage.error && eventDetail.serverMessage.error.result && eventDetail.serverMessage.error.result.error && (eventDetail.serverMessage.error.result.error === 'InvalidApplicationKeyException' || eventDetail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
                     qsWrapper(commonElement).querySelector('.detail-msg').innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
                 }
                 qsWrapper(commonElement).querySelector('.serverunreachable').style['z-index'] = 30;
@@ -200,7 +200,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 paperToast.text = eventDetail.message;
                 paperToast.fitIn = paperToast.show();
             } else {
-                LOG('Unmanaged error', eventDetail);
+                LOG('common Unmanaged error', eventDetail);
             }
         }
 
@@ -264,13 +264,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 
             // Manage change events
             commonElement.myScriptInkPaperDomElement.addEventListener('change', function (event) {
-                LOG("change intercepted", event);
+                LOG('common change intercepted', event);
                 updateUndoRedoClearState(commonElement, event.detail);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-change', { detail: event.detail }));
             });
             // Manage result events
             commonElement.myScriptInkPaperDomElement.addEventListener('result', function (event) {
-                LOG("result intercepted", event);
+                LOG('common result intercepted', event);
                 // Just forwarding event there.
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-result', { detail: event.detail }));
             });
@@ -278,7 +278,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 
             // Manage error events
             commonElement.myScriptInkPaperDomElement.addEventListener('error', function (event) {
-                LOG("error intercepted", event);
+                LOG('common error intercepted', event);
                 manageError(commonElement, event.detail);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-error', { detail: event.detail }));
             });
@@ -576,7 +576,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @private
                      */
                     _strokecolorChanged: function (newStrokecolor) {
-                        LOG('_strokecolorChanged', newStrokecolor);
+                        LOG('common _strokecolorChanged', newStrokecolor);
                         updateStyleOptionsFromElementAttributes(this);
                     },
                     /**
@@ -585,11 +585,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @private
                      */
                     _strokewidthChanged: function (newStrokewidth) {
-                        LOG('_strokewidthChanged', newStrokewidth);
+                        LOG('common _strokewidthChanged', newStrokewidth);
                         updateStyleOptionsFromElementAttributes(this);
                     },
                     _unloadedChanged: function (newValue) {
-                        LOG('unloaded changed', newValue);
+                        LOG('common unloaded changed', newValue);
                         this.unloaded = newValue;
                         if (this.unloaded !== true && this._connected === true) {
                             attachedElementToDom(this);
@@ -601,7 +601,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @private
                      */
                     _onResize: function (event) {
-                        console.log('Resizing', event);
+                        console.log('common resizing', event);
                         if (this.inkpaper) {
                             this.inkpaper.resize();
                         }
@@ -616,7 +616,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                     },
                     //Will be renamed connected with pure custom element support
                     attached: function () {
-                        LOG('attached');
+                        LOG('common attached');
                         this._connected = true;
                         // Uncomment when options objects is filled properly
                         if (this.unloaded !== true) {
