@@ -9,43 +9,42 @@
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-common-element.html">
+    <link rel="stylesheet" href="demo.css">
 </head>
-<style>
-    html, body {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    myscript-common-element {
-        height: 100%;
-    }
-</style>
 <body touch-action="none">
 <div id="waiting">myscript-common-element will be loaded in 3 seconds with customs params.</div>
-<myscript-common-element detached>
+<myscript-common-element host="cloud-internal-stable.visionobjects.com" unloaded>
 </myscript-common-element>
-
 <script>
     window.addEventListener("load", function (event) {
         window.setTimeout(function () {
             var waitingDiv = document.querySelector('#waiting');
             waitingDiv.parentNode.removeChild(waitingDiv);
             console.log("All resources finished loading! Starting to init myscript-common-element");
-            var configuration = {
-                type: 'MATH',
-                host: 'cloud-internal-stable.visionobjects.com',
+            var mycustomconfiguration = {
+                type: 'ANALYZER',
                 applicationKey: '64e1afbf-f3a7-4d04-bce1-24b05ee0b2d6',
                 hmacKey: '88d81b71-13cd-41a0-9206-ba367c21900f'
             };
             var myscriptCommonElement = document.querySelector('myscript-common-element');
-            myscriptCommonElement.setAttribute('type', configuration.type);
-            myscriptCommonElement.setAttribute('host', configuration.host);
-            myscriptCommonElement.applicationkey = configuration.applicationKey;
-            myscriptCommonElement.hmackey = configuration.hmacKey;
-            myscriptCommonElement.detached = false;
+            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+            myscriptCommonElement.setAttribute('type', mycustomconfiguration.type);
+            myscriptCommonElement.applicationkey = mycustomconfiguration.applicationKey;
+            myscriptCommonElement.hmackey = mycustomconfiguration.hmacKey;
+            // Testing if options are taken into account
+            myscriptCommonElement.options = {
+                recognitionParams: {
+                    analyzerParameter: {
+                        textParameter: {
+                            textProperties: {},
+                            language: 'en_US',
+                            textInputMode: 'CURSIVE'
+                        }
+                    }
+                }
+            };
+
+            myscriptCommonElement.unloaded = false;
             console.log("myscript-common-element should be displayed");
         }, 3000);
     });
