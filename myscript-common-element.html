@@ -290,6 +290,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
          * @event myscript-common-element-change
          */
         /**
+         * Fired when a clear is fire.
+         *
+         * @event myscript-common-element-clear
+         */
+        /**
          * Fired when the delete action is done.
          *
          * @event myscript-common-element-result
@@ -526,6 +531,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                     clear: function () {
                         if (this.inkpaper) {
                             this.inkpaper.clear();
+                            this.dispatchEvent(new CustomEvent('this.myscript-common-element-clear'));
                         }
                     },
                     /**
