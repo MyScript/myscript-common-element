@@ -117,15 +117,15 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 z-index: 1;
             }
         </style>
-        <div class="buttons" hidden="[[ _hideButtons(hidebuttons, unloaded) ]]">
+        <div class="buttons" hidden="[[ hideButtons(hidebuttons, unloaded) ]]">
             <paper-fab mini src="undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]"
-                       hidden="[[ _disableundoredo ]]"></paper-fab>
+                       hidden="[[ disableundoredo ]]"></paper-fab>
             <paper-fab mini src="redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]"
-                       hidden="[[ _disableundoredo ]]"></paper-fab>
+                       hidden="[[ disableundoredo ]]"></paper-fab>
             <paper-fab mini src="trash.svg" title="clear" on-tap="clear" disabled="[[ !canclear ]]"
-                       hidden="[[ _disableclear ]]"></paper-fab>
+                       hidden="[[ disableclear ]]"></paper-fab>
             <paper-fab mini src="send.svg" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]"
-                       hidden="[[ _disablerecognize ]]"></paper-fab>
+                       hidden="[[ disablerecognize ]]"></paper-fab>
         </div>
         <div class="serverunreachable" hidden>
             <div class="error-msg" hidden><p class="detail-msg">MyScript recognition server is not reachable. Please
@@ -395,7 +395,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                             value: false,
                             notify: true,
                             reflectToAttribute: true,
-                            observer: '_unloadedChanged'
+                            observer: 'unloadedChanged'
                         },
                         /**
                          * The underlying inkpaper created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
@@ -420,7 +420,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                             type: String,
                             value: '#1580CD',
                             reflectToAttribute: true,
-                            observer: '_strokecolorChanged'
+                            observer: 'strokecolorChanged'
                         },
                         /**
                          * Set the stroke width
@@ -430,7 +430,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                             type: Number,
                             value: 4,
                             reflectToAttribute: true,
-                            observer: '_strokewidthChanged'
+                            observer: 'strokewidthChanged'
                         },
                         /**
                          * True if undo is available
@@ -495,7 +495,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         /**
                          * True if the undo/redo feature is disabled, false otherwise
                          */
-                        _disableundoredo: {
+                        disableundoredo: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: false
@@ -503,7 +503,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         /**
                          * True if the clear feature is disabled, false otherwise
                          */
-                        _disableclear: {
+                        disableclear: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: false
@@ -511,7 +511,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         /**
                          * True if the recognize feature is disabled, false otherwise
                          */
-                        _disablerecognize: {
+                        disablerecognize: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: true
@@ -521,7 +521,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         Polymer.IronResizableBehavior
                     ],
                     listeners: {
-                        'iron-resize': '_onResize'
+                        'iron-resize': 'onResize'
                     }
                     ,
 
@@ -581,8 +581,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @param newStrokecolor
                      * @private
                      */
-                    _strokecolorChanged: function (newStrokecolor) {
-                        LOG('common _strokecolorChanged', newStrokecolor);
+                    strokecolorChanged: function (newStrokecolor) {
+                        LOG('common strokecolorChanged', newStrokecolor);
                         updateStyleOptionsFromElementAttributes(this);
                     },
                     /**
@@ -590,14 +590,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @param newStrokewidth
                      * @private
                      */
-                    _strokewidthChanged: function (newStrokewidth) {
-                        LOG('common _strokewidthChanged', newStrokewidth);
+                    strokewidthChanged: function (newStrokewidth) {
+                        LOG('common strokewidthChanged', newStrokewidth);
                         updateStyleOptionsFromElementAttributes(this);
                     },
-                    _unloadedChanged: function (newValue) {
+                    unloadedChanged: function (newValue) {
                         LOG('common unloaded changed', newValue);
                         this.unloaded = newValue;
-                        if (this.unloaded !== true && this._connected === true) {
+                        if (this.unloaded !== true && this.connected === true) {
                             attachedElementToDom(this);
                         }
                     },
@@ -606,7 +606,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @param event
                      * @private
                      */
-                    _onResize: function (event) {
+                    onResize: function (event) {
                         console.log('common resizing', event);
                         if (this.inkpaper) {
                             this.inkpaper.resize();
@@ -617,13 +617,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                      * @returns {Boolean}
                      * @private
                      */
-                    _hideButtons: function (hidebuttons, loaded) {
+                    hideButtons: function (hidebuttons, loaded) {
                         return hidebuttons || loaded;
                     },
                     //Will be renamed connected with pure custom element support
                     attached: function () {
                         LOG('common attached');
-                        this._connected = true;
+                        this.connected = true;
                         // Uncomment when options objects is filled properly
                         if (this.unloaded !== true) {
                             attachedElementToDom(this);
