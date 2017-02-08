@@ -20,7 +20,7 @@
     "docs"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.7.x",
+    "polymer": "Polymer/polymer#1.8.x",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#1.0.x",
     "iron-icons": "PolymerElements/iron-icons#1.2.x",
     "paper-fab": "PolymerElements/paper-fab#1.2.x",
@@ -31,6 +31,6 @@
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
   "resolutions": {
-    "polymer": "1.7.x"
+    "polymer": "1.8.x"
   }
 }
