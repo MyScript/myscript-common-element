@@ -13,7 +13,7 @@
 </head>
 <body touch-action="none">
 <div id="waiting">myscript-common-element will be loaded in 3 seconds with customs params.</div>
-<myscript-common-element host="cloud-internal-stable.visionobjects.com" unloaded>
+<myscript-common-element host="webdemoapi.myscript.com" unloaded>
 </myscript-common-element>
 <script>
     window.addEventListener("load", function (event) {
@@ -21,10 +21,11 @@
             var waitingDiv = document.querySelector('#waiting');
             waitingDiv.parentNode.removeChild(waitingDiv);
             console.log("All resources finished loading! Starting to init myscript-common-element");
+            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
             var mycustomconfiguration = {
                 type: 'ANALYZER',
-                applicationKey: '64e1afbf-f3a7-4d04-bce1-24b05ee0b2d6',
-                hmacKey: '88d81b71-13cd-41a0-9206-ba367c21900f'
+                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
             };
             var myscriptCommonElement = document.querySelector('myscript-common-element');
             // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
