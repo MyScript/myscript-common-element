@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="demo.css">
 </head>
 <style is="custom-style">
+    .ms-ink-paper canvas.ms-rendering-canvas {
+        z-index: 10;
+        background: no-repeat url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg);
+        background-size: cover;
+    }
+
     myscript-common-element {
         --myscript-common-element-button-background : #ff7314;
         --myscript-common-element-button-focus-background : #ff7314;
@@ -25,7 +31,8 @@
     type="MATH"
     applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
     hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
-    timeout="2000">
+    strokecolor="white"
+    strokewidth="10">
 </myscript-common-element>
 
 </body>
