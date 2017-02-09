@@ -562,15 +562,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         }
                     },
                     /**
-                     * Get available languages
-                     * @param {String} inputMode Optional recognition input mode
-                     */
-                    getAvailableLanguages: function (inputMode) {
-                        if (this.inkpaper) {
-                            this.inkpaper.getAvailableLanguages(inputMode);
-                        }
-                    },
-                    /**
                      * Return the stats allowing to monitor what ink size is send to the server.
                      * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
                      */
