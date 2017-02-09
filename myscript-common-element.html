@@ -214,7 +214,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             if (commonElement.options) {
                 options = commonElement.options;
             }
-            if(!options.recognitionParams){
+            if (!options.recognitionParams) {
                 options.recognitionParams = {};
             }
             options.recognitionParams.type = commonElement.type;
@@ -253,10 +253,17 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             const commonElement = commonElementParam;
             const rootNode = qsWrapper(commonElement);
             var options = buildOptionsFromElementAttributes(commonElement);
+
+            var customStyle = {
+                strokeStyle: {
+                    color: commonElement.strokecolor,
+                    width: commonElement.strokewidth
+                }
+            };
+
             commonElement.myScriptInkPaperDomElement = rootNode.querySelector('#inkPaperDomElement');
-            commonElement.inkpaper = MyScript.register(commonElement.myScriptInkPaperDomElement, options);
+            commonElement.inkpaper = MyScript.register(commonElement.myScriptInkPaperDomElement, options, customStyle);
             commonElement.options = commonElement.inkpaper.options;
-            updateStyleOptionsFromElementAttributes(commonElement);
 
             // Manage change events
             commonElement.myScriptInkPaperDomElement.addEventListener('change', function (event) {
