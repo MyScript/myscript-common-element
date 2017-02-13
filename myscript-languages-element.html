@@ -27,7 +27,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
          * @param languagesElement
          * @returns {{}}
          */
-        function buildOptionsFromElementAttributes(languagesElement) {
+        function languagesBuildOptionsFromElementAttributes(languagesElement) {
             var options = {};
             if (languagesElement.options) {
                 options = languagesElement.options;
@@ -48,12 +48,16 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
          * Attach the element to the dom. This is the most critical part of the component.
          * @param languagesElementParam
          */
-        function attachedElementToDom(languagesElementParam) {
+        function languagesAttachedElementToDom(languagesElementParam) {
             const languagesElement = languagesElementParam;
-            languagesElement.options = buildOptionsFromElementAttributes(languagesElement);
+            languagesElement.options = languagesBuildOptionsFromElementAttributes(languagesElement);
 
             MyScript.getAvailableLanguageList(languagesElement.options, languagesElement.sortByValue).then(function (res) {
-                languagesElement.languages = res.result;
+                languagesElement.languages = [];
+
+                for(var i in res.result)
+                    languagesElement.languages.push({'value': i, 'description': res.result[i]});
+
                 languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
             });
 
@@ -148,7 +152,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         LOG('common unloaded changed', newValue);
                         this.unloaded = newValue;
                         if (this.unloaded !== true && this.connected === true) {
-                            attachedElementToDom(this);
+                            languagesAttachedElementToDom(this);
                         }
                     },
                     //Will be renamed connected with pure custom element support
@@ -157,7 +161,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         this.connected = true;
                         // Uncomment when options objects is filled properly
                         if (this.unloaded !== true) {
-                            attachedElementToDom(this);
+                            languagesAttachedElementToDom(this);
                         }
                     }
                 }

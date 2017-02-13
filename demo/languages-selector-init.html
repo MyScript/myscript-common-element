@@ -66,7 +66,7 @@
                 var languages = evt.detail;
                 for (var i in languages) {
                     var language = languages[i];
-                    languageElement.options[languageElement.options.length] = new Option(language, i, true, currentLanguage === i);
+                    languageElement.options[languageElement.options.length] = new Option(language.value, language.key, true, currentLanguage === language.key);
                     languageElement.disabled = false;
                 }
             });
