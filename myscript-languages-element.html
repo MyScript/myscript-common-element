@@ -53,11 +53,11 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
             languagesElement.options = languagesBuildOptionsFromElementAttributes(languagesElement);
 
             MyScript.getAvailableLanguageList(languagesElement.options, languagesElement.sortByValue).then(function (res) {
-                languagesElement.languages = [];
-
-                for(var i in res.result)
-                    languagesElement.languages.push({'value': i, 'description': res.result[i]});
-
+                var langList = [];
+                for (var i in res.result) {
+                    langList.push({ 'value': i, 'description': res.result[i] });
+                }
+                languagesElement.languages = langList;
                 languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
             });
 
@@ -123,9 +123,9 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         /**
                          * Languages List
                          */
-                        languages:{
-                          type: Object,
-                          notify: true
+                        languages: {
+                            type: Array,
+                            notify: true
                         },
                         /**
                          * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
