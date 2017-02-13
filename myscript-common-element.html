@@ -264,25 +264,44 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             commonElement.inkpaper = MyScript.register(commonElement.myScriptInkPaperDomElement, options, customStyle);
             commonElement.options = commonElement.inkpaper.options;
 
-            // Manage change events
-            commonElement.myScriptInkPaperDomElement.addEventListener('change', function (event) {
+            commonElement.currentListeners = [];
+            const changeListener = function (event) {
                 LOG('common change intercepted', event);
                 updateUndoRedoClearState(commonElement, event.detail);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-change', { detail: event.detail }));
-            });
+            };
+            // Manage change events
+            commonElement.myScriptInkPaperDomElement.addEventListener('change', changeListener);
+            commonElement.currentListeners.push({ type: 'change', func: changeListener });
             // Manage result events
-            commonElement.myScriptInkPaperDomElement.addEventListener('result', function (event) {
+            const resultListener = function (event) {
                 LOG('common result intercepted', event);
                 // Just forwarding event there.
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-result', { detail: event.detail }));
-            });
-
+            };
+            commonElement.myScriptInkPaperDomElement.addEventListener('result', resultListener);
+            commonElement.currentListeners.push({ type: 'result', func: resultListener });
 
             // Manage error events
-            commonElement.myScriptInkPaperDomElement.addEventListener('error', function (event) {
+            const errorListener = function (event) {
                 LOG('common error intercepted', event);
                 manageError(commonElement, event.detail);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-error', { detail: event.detail }));
+            };
+            commonElement.myScriptInkPaperDomElement.addEventListener('error', errorListener);
+            commonElement.currentListeners.push({ type: 'error', func: errorListener });
+            commonElement.inkpaper.resize();
+        }
+
+        /**
+         * Remove listners when common element is unloaded.
+         */
+        function commonUnload(commonElement) {
+            commonElement.inkpaper.clear();
+            commonElement.myScriptInkPaperDomElement.innerHTML = '';
+            commonElement.myScriptInkPaperDomElement.outerHTML = commonElement.myScriptInkPaperDomElement.outerHTML;
+            commonElement.currentListeners.forEach(function (eventListener) {
+                commonElement.myScriptInkPaperDomElement.removeEventListener(eventListener.type, eventListener.func);
             });
         }
 
@@ -593,6 +612,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                         this.unloaded = newValue;
                         if (this.unloaded !== true && this.connected === true) {
                             attachedElementToDom(this);
+                        } else if (this.myScriptInkPaperDomElement) {
+                            // Unregister listeners and remove the existing inkPaper.
+                            commonUnload(this)
+
                         }
                     },
                     /**
