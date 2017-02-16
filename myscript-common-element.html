@@ -293,9 +293,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             commonElement.inkpaper.resize();
         }
 
-        /**
-         * Remove listners when common element is unloaded.
-         */
+        /** Remove listeners when common element is unloaded. */
         function commonUnload(commonElement) {
             commonElement.inkpaper.clear();
             commonElement.myScriptInkPaperDomElement.innerHTML = '';
@@ -305,27 +303,28 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             });
         }
 
-        /**
-         * Fired when state of canundo / canredo / canclear / canrecognize
-         *
-         * @event myscript-common-element-change
-         */
-        /**
-         * Fired when a clear is fire.
-         *
-         * @event myscript-common-element-clear
-         */
-        /**
-         * Fired when the delete action is done.
-         *
-         * @event myscript-common-element-result
-         */
-        /**
-         * Fired when a recognition error occurred.
-         * @event myscript-common-element-error
-         */
+
         Polymer({
                     is: 'myscript-common-element',
+                    /**
+                     * Fired when state of canundo / canredo / canclear / canrecognize
+                     *
+                     * @event myscript-common-element-change
+                     */
+                    /**
+                     * Fired when clear button is press
+                     *
+                     * @event myscript-common-element-clear
+                     */
+                    /**
+                     * Fired when the delete action is done.
+                     *
+                     * @event myscript-common-element-result
+                     */
+                    /**
+                     * Fired when a recognition error occurred.
+                     * @event myscript-common-element-error
+                     */
                     properties: {
                         /**
                          * <b>not mutable</b><br />
