@@ -10,6 +10,7 @@
 - inkpaper aread only attributes allow you to access to the underlying inkPaper object create when myscipt-common-element custom element is attached to the DOM  (see [MyScriptJS documentation]() for more details )
 - unloaded attribute ease the integration with other front-end frameworks or when you want to programmaticly set options and other attributs. Add the unloaded attribut into your markup and remove it in your JS logic when all attributes are set 
 ### Breaking changes :
+- tiemout property has be renammed to recognitiontriggerdelay
 - existing events have been removed. See custom elment docs to discover new behavior.
 - resulttypes, language, typeset, textparameters, mathparameters, shapeparameters, musicparameters, analyzerparameters  is not longuer expose. Use options to 
 - ssl attributes have been removed. Use sheme attribute instead.

@@ -218,10 +218,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
             options.recognitionParams.type = commonElement.type;
             options.recognitionParams.protocol = commonElement.protocol;
+            options.recognitionParams.recognitionTriggerDelay = commonElement.recognitiontriggerdelay;
+            options.recognitionParams.recognitionProcessDelay = commonElement.recognitionprocessdelay;
             if (options.recognitionParams.protocol === 'REST') {
-                options.recognitionParams.triggerRecognitionOn = 'QUIET_PERIOD';
+                options.recognitionParams.recognitionTriggerOn = 'QUIET_PERIOD';
             } else {
-                options.recognitionParams.triggerRecognitionOn = 'PEN_UP';
+                options.recognitionParams.recognitionTriggerOn = 'PEN_UP';
             }
             options.recognitionParams.apiVersion = commonElement.apiversion;
             options.recognitionParams.server = {};
@@ -378,14 +380,24 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                             value: 'V3'
                         },
                         /**
-                         * The recognition timeout, only use in REST mode.
+                         * Delay without any user input before asking for recognition, only use in REST mode.
                          * @type Number
                          * @default 2000
                          */
-                        timeout: {
+                        recognitiontriggerdelay: {
                             type: Number,
                             reflectToAttribute: true,
                             value: 2000
+                        },
+                        /**
+                         * Delay without any recognition result received before processing the last one received, only use in WEBSOKET mode.
+                         * @type Number
+                         * @default 2000
+                         */
+                        recognitionprocessdelay: {
+                            type: Number,
+                            reflectToAttribute: true,
+                            value: 1000
                         },
                         /**
                          * Application key to use for recognition on MyScript handwriting recognition server.<br />
