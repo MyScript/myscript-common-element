@@ -33,7 +33,7 @@
   "resolutions": {
     "polymer": "1.8.x"
   },
-  "_source": "/home/padewitte/projets/webcomponents/myscript-common-element",
+  "_source": "/home/fxg/projects/webcomponents/myscript-common-element",
   "_target": "*",
   "_originalSource": "../../myscript-common-element",
   "_direct": true
