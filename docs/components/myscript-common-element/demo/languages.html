@@ -42,12 +42,10 @@
     document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
       var languageElement=  document.getElementById('language');
       var currentLanguage = 'en_US';
-      var languages = evt.detail;
-      for (var i in languages) {
-        var language = languages[i];
-        languageElement.options[languageElement.options.length] = new Option(language.description, language.value, true, currentLanguage === language.value);
+      Object.keys(evt.detail).forEach(function (key) {
+        languageElement.options[languageElement.options.length] = new Option(evt.detail[key], key, true, currentLanguage === key);
         languageElement.disabled = false;
-      }
+      });
     });
 </script>
 </body>
