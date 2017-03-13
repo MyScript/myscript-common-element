@@ -70,7 +70,7 @@
             console.log("myscript-languages-element should be loaded");
 
             myscriptLanguagesElement.addEventListener('myscript-languages-element-result', function (evt) {
-                var currentLanguage = myscriptLanguagesElement.configuration.recognitionParams.analyzerParameter.textParameter.language;
+                var currentLanguage = myscriptLanguagesElement.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
                 Object.keys(evt.detail).forEach(function (key) {
                     languageElement.options[languageElement.options.length] = new Option(evt.detail[key], key, true, currentLanguage === key);
                     languageElement.disabled = false;

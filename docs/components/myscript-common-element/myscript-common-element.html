@@ -104,8 +104,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 <paper-fab mini src="send.svg" title="typeset" on-tap="typeset" disabled="[[ !cantypeset ]]"
                            hidden="[[ disabletypeset ]]"></paper-fab>
             </div>
-            <div id="editorDomElement"></div>
         </template>
+        <div id="editorDomElement" hidden="[[ detached ]]"></div>
         <div class="serverunreachable" hidden>
             <div class="error-msg" hidden><p class="detail-msg">MyScript recognition server is not reachable. Please
                 reload once you are
@@ -428,7 +428,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             reflectToAttribute: true
                         },
                         /**
-                         * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
+                         * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
                          * (see demo/programmatic-init.html for a better understanding)
                          */
                         unloaded: {
@@ -639,13 +639,15 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         LOG('common strokewidthChanged', newStrokewidth);
                         updateCustomStyleFromElementAttributes(this);
                     },
-                    unloadedChanged: function (unloaded) {
-                        LOG('common unloaded changed', unloaded);
-                        if (unloaded !== true && this.connected === true) {
+                    unloadedChanged: function (newValue) {
+                        LOG('common unloaded changed', newValue);
+                        this.unloaded = newValue;
+                        if (this.unloaded !== true && this.connected === true) {
                             attachElementToDom(this);
                         } else if (this.editorDomElement) {
-                            // Unregister listeners and remove the existing editor.
+                            // Unregister listeners and remove the existing inkPaper.
                             detachElementFromDom(this)
+
                         }
                     },
                     /**
@@ -663,7 +665,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     attached: function () {
                         LOG('common attached');
                         this.connected = true;
-                        // Uncomment when configuration objects is filled properly
+                        // Uncomment when options objects is filled properly
                         if (this.unloaded !== true) {
                             attachElementToDom(this);
                         }
