@@ -173,14 +173,16 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
         /**
          * Update the undo redo clear state.
          * @param commonElement
-         * @param eventDetail
+         * @param event
          */
-        function updateUndoRedoClearState(commonElement, eventDetail) {
-            commonElement.canclear = eventDetail.canClear;
-            commonElement.canundo = eventDetail.canUndo;
-            commonElement.canredo = eventDetail.canRedo;
-            commonElement.canrecognize = eventDetail.canUndo && eventDetail.canClear;
-            commonElement.cantypeset = eventDetail.canUndo && eventDetail.canClear;
+        function changeEventHandler(commonElement, event) {
+          if (event.detail) {
+              commonElement.canclear = event.detail.canClear;
+              commonElement.canundo = event.detail.canUndo;
+              commonElement.canredo = event.detail.canRedo;
+              commonElement.canrecognize = event.detail.canUndo && event.detail.canClear;
+              commonElement.cantypeset = event.detail.canUndo && event.detail.canClear;
+          }
         }
 
         /**
@@ -254,28 +256,17 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
 
         /**
          * Attach the element to the dom. This is the most critical part of the component.
-         * @param commonElementParam
+         * @param commonElement
          */
-        function attachElementToDom(commonElementParam) {
-            const commonElement = commonElementParam;
+        function attachElementToDom(commonElement) {
             const rootNode = qsWrapper(commonElement);
-            var configuration = buildConfigurationFromElementAttributes(commonElement);
-
-            var customStyle = {
-                strokeStyle: {
-                    color: commonElement.strokecolor,
-                    width: commonElement.strokewidth
-                }
-            };
 
             commonElement.editorDomElement = rootNode.querySelector('#editorDomElement');
-            commonElement.editor = MyScript.register(commonElement.editorDomElement, configuration, customStyle);
-            commonElement.configuration = commonElement.editor.configuration;
 
             // Manage change events
             function changeListener(event) {
                 LOG('common ' + event.type + ' event intercepted', event);
-                updateUndoRedoClearState(commonElement, event.detail);
+                changeEventHandler(commonElement, event);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
             }
 
@@ -306,17 +297,28 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             Object.keys(commonElement.currentListeners).forEach(function (type) {
                 commonElement.editorDomElement.addEventListener(type, commonElement.currentListeners[type])
             });
-            commonElement.editor.resize();
+            commonElement.editor = MyScript.register(commonElement.editorDomElement, buildConfigurationFromElementAttributes(commonElement), {
+                strokeStyle: {
+                    color: commonElement.strokecolor,
+                    width: commonElement.strokewidth
+                }
+            });
+            LOG('common-element attached');
         }
 
         /** Remove listeners when common element is unloaded. */
         function detachElementFromDom(commonElement) {
             commonElement.editor.clear();
-            commonElement.editorDomElement.innerHTML = '';
-            commonElement.editorDomElement.outerHTML = commonElement.editorDomElement.outerHTML;
             Object.keys(commonElement.currentListeners).forEach(function (type) {
                 commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
             });
+            LOG('common-element detached');
+        }
+
+        function changeConfiguration(commonElement) {
+            if (commonElement.editor) {
+                commonElement.editor.configuration = buildConfigurationFromElementAttributes(commonElement);
+            }
         }
 
 
@@ -459,7 +461,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          */
                         unloaded: {
                             type: Boolean,
-                            value: false,
+                            value: true,
                             notify: true,
                             reflectToAttribute: true,
                             observer: 'unloadedChanged'
@@ -667,13 +669,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     unloadedChanged: function (newValue) {
                         LOG('common unloaded changed', newValue);
-                        this.unloaded = newValue;
-                        if (this.unloaded !== true && this.connected === true) {
-                            attachElementToDom(this);
-                        } else if (this.editorDomElement) {
-                            // Unregister listeners and remove the existing inkPaper.
-                            detachElementFromDom(this)
-
+                        if (this.editorDomElement && newValue !== true) {
+                            changeConfiguration(this);
                         }
                     },
                     /**
@@ -689,12 +686,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     //Will be renamed connected with pure custom element support
                     attached: function () {
-                        LOG('common attached');
-                        this.connected = true;
-                        // Uncomment when options objects is filled properly
-                        if (this.unloaded !== true) {
-                            attachElementToDom(this);
-                        }
+                        LOG('attached callback');
+                        attachElementToDom(this);
+                    },
+                    detached: function () {
+                        LOG('detached callback');
+                        detachElementFromDom(this);
                     }
                 }
         );
