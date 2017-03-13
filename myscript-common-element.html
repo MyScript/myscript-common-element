@@ -207,7 +207,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 paperToast.text = eventDetail.message;
                 paperToast.fitIn = paperToast.show();
             } else {
-                LOG('common Unmanaged error', eventDetail);
+                LOG('common not managed error', eventDetail);
             }
         }
 
@@ -244,13 +244,23 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
         }
 
         /**
-         * Update the style option of ink paper reflecting the common element attributs.
+         * Update the style option of ink paper reflecting the common element attributes.
          * @param commonElement
          */
         function updateCustomStyleFromElementAttributes(commonElement) {
             if (commonElement.editor) {
                 commonElement.editor.customStyle.strokeStyle.color = commonElement.strokecolor;
                 commonElement.editor.customStyle.strokeStyle.width = commonElement.strokewidth;
+            }
+        }
+
+        /**
+         * Change the editor configuration.
+         * @param commonElement
+         */
+        function changeConfiguration(commonElement) {
+            if (commonElement.editor) {
+                commonElement.editor.configuration = buildConfigurationFromElementAttributes(commonElement);
             }
         }
 
@@ -303,7 +313,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     width: commonElement.strokewidth
                 }
             });
+            commonElement.unloaded = false;
             LOG('common-element attached');
+            this.initializing = false;
         }
 
         /** Remove listeners when common element is unloaded. */
@@ -312,13 +324,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             Object.keys(commonElement.currentListeners).forEach(function (type) {
                 commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
             });
+            commonElement.unloaded = true;
             LOG('common-element detached');
-        }
-
-        function changeConfiguration(commonElement) {
-            if (commonElement.editor) {
-                commonElement.editor.configuration = buildConfigurationFromElementAttributes(commonElement);
-            }
         }
 
 
@@ -665,11 +672,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      */
                     strokewidthChanged: function (newStrokewidth) {
                         LOG('common strokewidthChanged', newStrokewidth);
-                        updateCustomStyleFromElementAttributes(this);
+                        if (this.editorDomElement && !this.initializing) {
+                            updateCustomStyleFromElementAttributes(this);
+                        }
                     },
                     unloadedChanged: function (newValue) {
                         LOG('common unloaded changed', newValue);
-                        if (this.editorDomElement && newValue !== true) {
+                        if (this.editorDomElement && !this.initializing && newValue !== true) {
                             changeConfiguration(this);
                         }
                     },
@@ -686,6 +695,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     //Will be renamed connected with pure custom element support
                     attached: function () {
+                        this.initializing = true;
                         LOG('attached callback');
                         attachElementToDom(this);
                     },
