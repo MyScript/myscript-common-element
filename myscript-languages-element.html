@@ -52,7 +52,10 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
             languagesElement.configuration = languagesBuildConfigurationFromElementAttributes(languagesElement);
 
             MyScript.getAvailableLanguageList(languagesElement.configuration, languagesElement.sortByValue).then(function (res) {
-              languagesElement.languages = res.result;
+                languagesElement.languages = [];
+                Object.keys(res.result).forEach(function (key) {
+                    languagesElement.languages.push({ 'value': key, 'description': res.result[key] });
+                });
                 languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
             });
 

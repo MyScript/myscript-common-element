@@ -71,8 +71,8 @@
 
             myscriptLanguagesElement.addEventListener('myscript-languages-element-result', function (evt) {
                 var currentLanguage = myscriptLanguagesElement.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
-                Object.keys(evt.detail).forEach(function (key) {
-                    languageElement.options[languageElement.options.length] = new Option(evt.detail[key], key, true, currentLanguage === key);
+                evt.detail.forEach(function (language) {
+                    languageElement.options[languageElement.options.length] = new Option(language.description, language.value, true, currentLanguage === language.value);
                     languageElement.disabled = false;
                 });
             });
