@@ -315,7 +315,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             });
             commonElement.unloaded = false;
             LOG('common-element attached');
-            this.initializing = false;
         }
 
         /** Remove listeners when common element is unloaded. */
@@ -698,6 +697,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         this.initializing = true;
                         LOG('attached callback');
                         attachElementToDom(this);
+                        this.initializing = false;
                     },
                     detached: function () {
                         LOG('detached callback');
