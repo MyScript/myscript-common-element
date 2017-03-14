@@ -29,12 +29,13 @@
     </style>
 </head>
 <body touch-action="none">
-<select id="language" disabled></select>
-<myscript-languages-element scheme="https"
-                            host="cloud-internal-stable.visionobjects.com"
-                            applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
-                            sortByValue>
-</myscript-languages-element>
+    <select id="language" disabled></select>
+    <myscript-languages-element scheme="https"
+                                host="cloud-internal-stable.visionobjects.com"
+                                applicationkey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
+                                sortByValue>
+    </myscript-languages-element>
+</body>
 <script>
     var currentLanguage = 'en_US';
     var languageSelect = document.getElementById('language');
@@ -46,5 +47,4 @@
         languageSelect.disabled = false;
     });
 </script>
-</body>
 </html>

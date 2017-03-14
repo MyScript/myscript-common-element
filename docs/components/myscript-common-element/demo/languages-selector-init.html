@@ -5,7 +5,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-math-web demo</title>
+    <title>myscript-languages-element demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-languages-element.html">
@@ -29,9 +29,13 @@
     </style>
 </head>
 <body touch-action="none">
-<div id="waiting">myscript-languages-element will be loaded in 3 seconds with customs params.</div>
-<select id="language" disabled></select>
-<myscript-languages-element host="cloud-internal-stable.visionobjects.com" unloaded></myscript-languages-element>
+    <div id="waiting">myscript-languages-element will be loaded in 3 seconds with customs params.</div>
+    <select id="language" disabled></select>
+    <myscript-languages-element
+        host="cloud-internal-stable.visionobjects.com"
+        unloaded>
+    </myscript-languages-element>
+</body>
 <script>
     window.addEventListener("load", function (event) {
         window.setTimeout(function () {
@@ -77,5 +81,4 @@
         }, 3000);
     });
 </script>
-</body>
 </html>
