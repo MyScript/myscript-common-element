@@ -30,7 +30,13 @@
             myscriptCommonElement.unloaded = true;
             console.log("myscript-common-element should not be displayed");
             myscriptCommonElement.configuration = {
-                timestampFloatPrecision: 2
+                recognitionParams: {
+                    v3: {
+                        mathParameter: {
+                            resultTypes: ['OFFICEOPENXMLMATH']
+                        }
+                    }
+                }
             };
             myscriptCommonElement.unloaded = false;
             console.log("myscript-common-element should be displayed with a new precision of stroke capure.");

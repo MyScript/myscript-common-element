@@ -42,8 +42,8 @@
     document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
       var languageElement=  document.getElementById('language');
       var currentLanguage = 'en_US';
-      Object.keys(evt.detail).forEach(function (key) {
-        languageElement.options[languageElement.options.length] = new Option(evt.detail[key], key, true, currentLanguage === key);
+      evt.detail.forEach(function (language) {
+        languageElement.options[languageElement.options.length] = new Option(language.description, language.value, true, currentLanguage === language.value);
         languageElement.disabled = false;
       });
     });
