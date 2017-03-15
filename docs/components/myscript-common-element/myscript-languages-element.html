@@ -27,39 +27,50 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
          * @param languagesElement
          * @returns {{}}
          */
-        function languagesBuildConfigurationFromElementAttributes(languagesElement) {
-            var configuration = {};
-            if (languagesElement.configuration) {
-                configuration = languagesElement.configuration;
+        function buildLanguagesConfiguration(languagesElement) {
+            if (!languagesElement.configuration) {
+                languagesElement.configuration = {};
             }
-            if (!configuration.recognitionParams) {
-                configuration.recognitionParams = {};
+            languagesElement.configuration.recognitionTriggerDelay = languagesElement.recognitiontriggerdelay;
+            languagesElement.configuration.recognitionProcessDelay = languagesElement.recognitionprocessdelay;
+            if (languagesElement.protocol === 'REST') {
+                languagesElement.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+            } else {
+                languagesElement.configuration.recognitionTriggerOn = 'POINTER_UP';
             }
-            configuration.recognitionParams.type = languagesElement.type;
-            configuration.recognitionParams.server = {};
-            configuration.recognitionParams.server.scheme = languagesElement.scheme;
-            configuration.recognitionParams.server.host = languagesElement.host;
-            configuration.recognitionParams.server.applicationKey = languagesElement.applicationkey;
-            configuration.recognitionParams.server.scheme = languagesElement.scheme;
-            return configuration;
+            if (!languagesElement.configuration.recognitionParams) {
+                languagesElement.configuration.recognitionParams = {};
+            }
+            languagesElement.configuration.recognitionParams.type = languagesElement.type;
+            languagesElement.configuration.recognitionParams.protocol = languagesElement.protocol;
+            languagesElement.configuration.recognitionParams.apiVersion = languagesElement.apiversion;
+            if (!languagesElement.configuration.recognitionParams.server) {
+                languagesElement.configuration.recognitionParams.server = {};
+            }
+            languagesElement.configuration.recognitionParams.server.scheme = languagesElement.scheme;
+            languagesElement.configuration.recognitionParams.server.host = languagesElement.host;
+            languagesElement.configuration.recognitionParams.server.applicationKey = languagesElement.applicationkey;
+            languagesElement.configuration.recognitionParams.server.hmacKey = languagesElement.hmackey;
+            languagesElement.configuration.recognitionParams.server.scheme = languagesElement.scheme;
+            return languagesElement.configuration;
         }
 
         /**
          * Attach the element to the dom. This is the most critical part of the component.
          * @param languagesElement
          */
-        function languagesAttachedElementToDom(languagesElement) {
-            languagesElement.configuration = languagesBuildConfigurationFromElementAttributes(languagesElement);
+        function getLanguages(languagesElement) {
+            languagesElement.configuration = buildLanguagesConfiguration(languagesElement);
 
-            MyScript.getAvailableLanguageList(languagesElement.configuration, languagesElement.sortByValue).then(function (res) {
+            MyScript.getAvailableLanguageList(languagesElement.configuration, languagesElement.sortbyvalue).then(function (res) {
                 languagesElement.languages = [];
                 Object.keys(res.result).forEach(function (key) {
                     languagesElement.languages.push({ 'value': key, 'description': res.result[key] });
                 });
                 languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
             });
-
         }
+
 
         Polymer({
                     is: 'myscript-languages-element',
@@ -113,7 +124,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         /**
                          * Language list sorts by values parameter. If false, language list sort by canonical name
                          */
-                        sortByValue: {
+                        sortbyvalue: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: true
@@ -146,24 +157,19 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                             notify: true
                         }
                     },
-                    unloadedChanged: function (newValue) {
-                        LOG('common unloaded changed', newValue);
-                        this.unloaded = newValue;
-                        if (this.unloaded !== true && this.connected === true) {
-                            languagesAttachedElementToDom(this);
+                    unloadedChanged: function (unloaded) {
+                        LOG('languages-element unloaded changed', unloaded);
+                        if (this.connected === true && unloaded !== true) {
+                            getLanguages(this);
                         }
                     },
-                    //Will be renamed connected with pure custom element support
+                    // Will be renamed connected with pure custom element support
                     attached: function () {
-                        LOG('common attached');
+                        LOG('languages-element attached callback');
+                        getLanguages(this);
                         this.connected = true;
-                        // Uncomment when configuration objects is filled properly
-                        if (this.unloaded !== true) {
-                            languagesAttachedElementToDom(this);
-                        }
                     }
                 }
-        )
-        ;
+        );
     </script>
 </dom-module>

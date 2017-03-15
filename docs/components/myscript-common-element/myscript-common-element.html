@@ -150,13 +150,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
          * @param event
          */
         function changeEventHandler(commonElement, event) {
-          if (event.detail) {
-              commonElement.canclear = event.detail.canClear;
-              commonElement.canundo = event.detail.canUndo;
-              commonElement.canredo = event.detail.canRedo;
-              commonElement.canrecognize = event.detail.canUndo && event.detail.canClear;
-              commonElement.cantypeset = event.detail.canUndo && event.detail.canClear;
-          }
+            if (event.detail) {
+                commonElement.canclear = event.detail.canClear;
+                commonElement.canundo = event.detail.canUndo;
+                commonElement.canredo = event.detail.canRedo;
+                commonElement.canrecognize = event.detail.canUndo && event.detail.canClear;
+                commonElement.cantypeset = event.detail.canUndo && event.detail.canClear;
+            }
         }
 
         /**
@@ -248,21 +248,21 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
 
             // Manage change events
             function changeListener(event) {
-                LOG('common ' + event.type + ' event intercepted', event);
+                LOG('editor ' + event.type + ' event intercepted', event);
                 changeEventHandler(commonElement, event);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
             }
 
             // Manage result events
             function resultListener(event) {
-                LOG('common ' + event.type + ' event intercepted', event);
+                LOG('editor ' + event.type + ' event intercepted', event);
                 // Just forwarding event there.
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
             }
 
             // Manage error events
             function errorListener(event) {
-                LOG('common ' + event.type + ' event intercepted', event);
+                LOG('editor ' + event.type + ' event intercepted', event);
                 manageError(commonElement, event.detail);
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
             }
@@ -286,7 +286,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     width: commonElement.strokewidth
                 }
             });
-            commonElement.unloaded = false;
+            commonElement.configuration = commonElement.editor.configuration;
             LOG('common-element attached');
         }
 
@@ -295,7 +295,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             Object.keys(commonElement.currentListeners).forEach(function (type) {
                 commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
             });
-            commonElement.unloaded = true;
             LOG('common-element detached');
         }
 
@@ -439,7 +438,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          */
                         unloaded: {
                             type: Boolean,
-                            value: true,
+                            value: false,
                             notify: true,
                             reflectToAttribute: true,
                             observer: 'unloadedChanged'
@@ -647,9 +646,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             updateCustomStyleFromElementAttributes(this);
                         }
                     },
-                    unloadedChanged: function (newValue) {
-                        LOG('common-element unloaded changed', newValue);
-                        if (this.editorDomElement && !this.initializing && newValue !== true) {
+                    unloadedChanged: function (unloaded) {
+                        LOG('common-element unloaded changed', unloaded);
+                        if (this.editorDomElement && !this.initializing && unloaded !== true) {
                             changeCommonConfiguration(this);
                         }
                     },
