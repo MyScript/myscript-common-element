@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
-    <div id="waiting">myscript-common-element will be unloaded in 3 seconds.</div>
     <myscript-common-element
         host="webdemoapi.myscript.com"
         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
@@ -22,27 +21,25 @@
     </myscript-common-element>
 </body>
 <script>
-    window.addEventListener("load", function (event) {
-        window.setTimeout(function () {
-            var waitingDiv = document.querySelector('#waiting');
-            waitingDiv.parentNode.removeChild(waitingDiv);
-            console.log("All resources finished loading! Unloading myscript-common-element");
-            var myscriptCommonElement = document.querySelector('myscript-common-element');
-            myscriptCommonElement.unloaded = true;
-            console.log("myscript-common-element should not be displayed");
-            myscriptCommonElement.configuration = {
-                recognitionParams: {
-                    v3: {
-                        mathParameter: {
-                            resultTypes: ['OFFICEOPENXMLMATH']
+    window.addEventListener("load", function () {
+        var configurationChanged = false;
+        var myscriptCommonElement = document.querySelector('myscript-common-element');
+        myscriptCommonElement.addEventListener("myscript-common-element-load", function () {
+            if (!configurationChanged) {
+                console.log("All resources finished loading! Unloading myscript-common-element");
+                myscriptCommonElement.configuration = {
+                    recognitionParams: {
+                        v3: {
+                            mathParameter: {
+                                resultTypes: ['OFFICEOPENXMLMATH']
+                            }
                         }
                     }
-                }
-            };
-            myscriptCommonElement.unloaded = false;
-            console.log("myscript-common-element should be displayed with a new precision of stroke capure.");
-
-        }, 3000);
+                };
+                myscriptCommonElement.unloaded = true;
+            }
+            configurationChanged = true;
+        });
     });
 </script>
 </html>
