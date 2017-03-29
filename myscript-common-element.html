@@ -735,10 +735,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     unloadedChanged: function (unloaded) {
                         LOG('common-element unloaded changed', unloaded);
+                        buildCommonConfiguration(this);
                         if (this.editorDomElement && !this.initializing) {
                             if (unloaded === true) {
                                 qsWrapper(this).querySelector('.error-msg').setAttribute('hidden', 'true');
-                                changeCommonConfiguration(this);
+                                this.editor.configuration = this.configuration;
                             }
                         }
                     },

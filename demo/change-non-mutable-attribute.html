@@ -22,24 +22,18 @@
 </body>
 <script>
     window.addEventListener("load", function () {
-        var configurationChanged = false;
         var myscriptCommonElement = document.querySelector('myscript-common-element');
-        myscriptCommonElement.addEventListener("myscript-common-element-load", function () {
-            if (!configurationChanged) {
-                console.log("All resources finished loading! Unloading myscript-common-element");
-                myscriptCommonElement.configuration = {
-                    recognitionParams: {
-                        v3: {
-                            mathParameter: {
-                                resultTypes: ['OFFICEOPENXMLMATH']
-                            }
-                        }
+        console.log("All resources finished loading! Unloading myscript-common-element");
+        myscriptCommonElement.configuration = {
+            recognitionParams: {
+                v3: {
+                    mathParameter: {
+                        resultTypes: ['OFFICEOPENXMLMATH']
                     }
-                };
-                myscriptCommonElement.unloaded = true;
+                }
             }
-            configurationChanged = true;
-        });
+        };
+        myscriptCommonElement.unloaded = true;
     });
 </script>
 </html>
