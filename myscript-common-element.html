@@ -14,12 +14,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
 
     <myscript-common-element
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        timeout="2000"
-        typeset="true"
-        shapeparameters="{
-            doBeautification: true
-        }">
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
     </myscript-common-element>
 
 @demo demo/index.html
@@ -172,10 +167,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                            hidden="[[ disableundoredo ]]"></paper-fab>
                 <paper-fab mini src="trash.svg" title="clear" on-tap="clear" disabled="[[ !canclear ]]"
                            hidden="[[ disableclear ]]"></paper-fab>
-                <paper-fab mini src="send.svg" title="recognize" on-tap="recognize" disabled="[[ !canrecognize ]]"
-                           hidden="[[ disablerecognize ]]"></paper-fab>
-                <paper-fab mini src="send.svg" title="typeset" on-tap="typeset" disabled="[[ !cantypeset ]]"
-                           hidden="[[ disabletypeset ]]"></paper-fab>
+                <paper-fab mini src="send.svg" title="export" on-tap="askForExport" disabled="[[ !canexport ]]"
+                           hidden="[[ disableexport ]]"></paper-fab>
+                <paper-fab mini src="send.svg" title="typeset" on-tap="convert" disabled="[[ !canconvert ]]"
+                           hidden="[[ disableconvert ]]"></paper-fab>
             </div>
         </template>
         <div id="editorDomElement" class="ms-editor" hidden="[[ detached ]]"></div>
@@ -219,8 +214,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 commonElement.canclear = event.detail.canClear;
                 commonElement.canundo = event.detail.canUndo;
                 commonElement.canredo = event.detail.canRedo;
-                commonElement.canrecognize = event.detail.canUndo && event.detail.canClear;
-                commonElement.cantypeset = event.detail.canUndo && event.detail.canClear;
+                commonElement.canexport = event.detail.canUndo && event.detail.canClear;
+                commonElement.canconvert = event.detail.canUndo && event.detail.canClear;
             }
         }
 
@@ -253,12 +248,13 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
         }
 
         /**
-         * Handle the result and display it to the user.
+         * Handle the exports and display it to the user.
          * @param commonElement
          * @param eventDetail
          */
-        function manageResult(commonElement, eventDetail) {
-            LOG('common result detected');
+        function manageExports(commonElement, eventDetail) {
+            LOG('common exports detected');
+            commonElement.exports = eventDetail ? eventDetail.exports : {};
             qsWrapper(commonElement).querySelector('.error-msg').setAttribute('hidden', 'true');
         }
 
@@ -307,62 +303,37 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
         }
 
         /**
-         * Change the editor configuration.
-         * @param commonElement
-         */
-        function changeCommonConfiguration(commonElement) {
-            if (commonElement.editor) {
-                commonElement.editor.configuration = buildCommonConfiguration(commonElement);
-            }
-        }
-
-        /**
          * Attach the element to the dom. This is the most critical part of the component.
          * @param commonElement
          */
         function attachCommonElementToDom(commonElement) {
             commonElement.editorDomElement = qsWrapper(commonElement).querySelector('#editorDomElement');
 
-            // Manage load events
-            function loadListener(event) {
+            function editorListener(event) {
                 LOG('editor ' + event.type + ' event intercepted', event);
-                commonElement.unloaded = false;
-                commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
-            }
-
-            // Manage change events
-            function changeListener(event) {
-                LOG('editor ' + event.type + ' event intercepted', event);
-                changeEventHandler(commonElement, event);
-                commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
-            }
-
-            // Manage result events
-            function resultListener(event) {
-                LOG('editor ' + event.type + ' event intercepted', event);
-                manageResult(commonElement, event.detail);
-                commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
-            }
-
-            // Manage error events
-            function errorListener(event) {
-                LOG('editor ' + event.type + ' event intercepted', event);
-                manageError(commonElement, event.detail);
+                switch (event.type) {
+                    case 'load':
+                        commonElement.unloaded = false;
+                        break;
+                    case 'change':
+                        changeEventHandler(commonElement, event);
+                        break;
+                    case 'exported':
+                        manageExports(commonElement, event.detail);
+                        break;
+                    case 'error':
+                        manageError(commonElement, event.detail);
+                        break;
+                    default:
+                        break;
+                }
+                // Just forwarding event there.
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
             }
 
             commonElement.currentListeners = {};
-            ['load'].forEach(function (type) {
-                commonElement.currentListeners[type] = loadListener;
-            });
-            ['undo', 'redo', 'clear', 'typeset', 'recognize', 'change'].forEach(function (type) {
-                commonElement.currentListeners[type] = changeListener;
-            });
-            ['result'].forEach(function (type) {
-                commonElement.currentListeners[type] = resultListener;
-            });
-            ['error'].forEach(function (type) {
-                commonElement.currentListeners[type] = errorListener;
+            ['load', 'undo', 'redo', 'clear', 'convert', 'export', 'change', 'exported', 'error'].forEach(function (type) {
+                commonElement.currentListeners[type] = editorListener;
             });
             Object.keys(commonElement.currentListeners).forEach(function (type) {
                 commonElement.editorDomElement.addEventListener(type, commonElement.currentListeners[type])
@@ -404,14 +375,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @event myscript-common-element-clear
                      */
                     /**
-                     * Fired when typeset button is press
+                     * Fired when convert button is press
                      *
-                     * @event myscript-common-element-typeset
+                     * @event myscript-common-element-convert
                      */
                     /**
-                     * Fired when recognize button is press
+                     * Fired when export button is press
                      *
-                     * @event myscript-common-element-recognize
+                     * @event myscript-common-element-export
                      */
                     /**
                      * Fired when state of underlying model change
@@ -419,9 +390,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @event myscript-common-element-change
                      */
                     /**
-                     * Fired when a recognition result is received.
+                     * Fired when exports are received.
                      *
-                     * @event myscript-common-element-result
+                     * @event myscript-common-element-exported
                      */
                     /**
                      * Fired when a recognition error occurred.
@@ -490,7 +461,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 2000
                         },
                         /**
-                         * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
+                         * Delay without any recognition exports received before processing the last one received, only use in WEBSOCKET mode.
                          * @type Number
                          * @default 2000
                          */
@@ -607,7 +578,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          * @type Boolean
                          * @default false
                          */
-                        canrecognize: {
+                        canexport: {
                             type: Boolean,
                             value: false,
                             reflectToAttribute: true,
@@ -642,20 +613,28 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: false
                         },
                         /**
-                         * True if the recognize feature is disabled, false otherwise
+                         * True if the export feature is disabled, false otherwise
                          */
-                        disablerecognize: {
+                        disableexport: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: true
                         },
                         /**
-                         * True if the typeset feature is disabled, false otherwise
+                         * True if the convert feature is disabled, false otherwise
                          */
-                        disabletypeset: {
+                        disableconvert: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: true
+                        },
+                        /**
+                         * Exports.
+                         * @type {Object<String, Object>} Attributes depends on configuration.
+                         */
+                        exports: {
+                            type: Object,
+                            notify: true
                         }
                     },
                     behaviors: [
@@ -691,17 +670,17 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     /**
                      * Launch recognition
                      */
-                    recognize: function () {
+                    askForExport: function () {
                         if (this.editor) {
-                            this.editor.recognize();
+                            this.editor.askForExport();
                         }
                     },
                     /**
-                     * Launch typeset
+                     * Launch convert
                      */
-                    typeset: function () {
+                    convert: function () {
                         if (this.editor) {
-                            this.editor.typeset();
+                            this.editor.convert();
                         }
                     },
                     /**
