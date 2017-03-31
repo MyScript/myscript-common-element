@@ -644,7 +644,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                                     break;
                             }
                             // Just forwarding event there.
-                            commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
+                            commonElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
                         }
 
                         const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
