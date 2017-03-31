@@ -553,6 +553,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     unloadedChanged: function (unloaded) {
                         LOG('common-element unloaded changed', unloaded);
+                        this.exports = undefined;
                         this.buildConfiguration();
                         if (this.editorDomElement && !this.initializing) {
                             if (unloaded === true) {
@@ -632,6 +633,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                                     commonElement.exports = event.detail ? event.detail.exports : {};
                                     commonElement.errorElement.setAttribute('hidden', 'true');
                                 }
+                                    break;
+                                case MyScript.Constants.EventType.CLEAR:
+                                    commonElement.exports = {};
                                     break;
                                 case MyScript.Constants.EventType.ERROR:
                                     commonElement.manageError(event, commonElement);
