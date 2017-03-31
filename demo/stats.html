@@ -29,7 +29,7 @@
 </body>
 <script>
     const paperToast = document.querySelector('#result');
-    document.querySelector('myscript-common-element').addEventListener('myscript-common-element-change', function (event) {
+    document.querySelector('myscript-common-element').addEventListener('change', function (event) {
         paperToast.text = 'Stats for this input are : ' + JSON.stringify(document.querySelector('myscript-common-element').getStats());
         paperToast.fitIn = paperToast.show();
     });
