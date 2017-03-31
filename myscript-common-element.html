@@ -191,19 +191,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             }
         }
 
-        /**
-         * Function returning the root dom element whatever shadow or shady dom is used.
-         * @param domElement
-         * @returns {*}
-         */
-        function qsWrapper(domElement) {
-            if (domElement.shadowRoot) {
-                return domElement.shadowRoot;
-            } else {
-                return domElement;
-            }
-        }
-
         Polymer({
                     is: 'myscript-common-element',
                     /**
@@ -546,7 +533,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      */
                     strokecolorChanged: function (newStrokecolor) {
                         LOG('common-element strokecolorChanged', newStrokecolor);
-                        this.updateCustomStyleFromElementAttributes(this);
+                        if (this.editorDomElement && !this.initializing) {
+                            this.buildCustomStyle();
+                            this.editor.customStyle = this.customStyle;
+                        }
+
                     },
                     /**
                      * Update the stroke width.
@@ -556,15 +547,16 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     strokewidthChanged: function (newStrokewidth) {
                         LOG('common-element strokewidthChanged', newStrokewidth);
                         if (this.editorDomElement && !this.initializing) {
-                            this.updateCustomStyleFromElementAttributes(this);
+                            this.buildCustomStyle();
+                            this.editor.customStyle = this.customStyle;
                         }
                     },
                     unloadedChanged: function (unloaded) {
                         LOG('common-element unloaded changed', unloaded);
-                        this.buildCommonConfiguration(this);
+                        this.buildConfiguration();
                         if (this.editorDomElement && !this.initializing) {
                             if (unloaded === true) {
-                                qsWrapper(this).querySelector('.error-msg').setAttribute('hidden', 'true');
+                                this.errorElement.setAttribute('hidden', 'true');
                                 this.editor.configuration = this.configuration;
                             }
                         }
@@ -582,38 +574,67 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     // Will be renamed connected with pure custom element support
                     attached: function () {
+
+                        /**
+                         * Function returning the root dom element whatever shadow or shady dom is used.
+                         * @param domElement
+                         * @returns {Element}
+                         */
+                        function qsWrapper(domElement) {
+                            if (domElement.shadowRoot) {
+                                return domElement.shadowRoot;
+                            } else {
+                                return domElement;
+                            }
+                        }
+
                         this.initializing = true;
                         LOG('common-element attached callback');
-                        this.attachCommonElementToDom(this);
+                        this.editorDomElement = qsWrapper(this).querySelector('#editorDomElement');
+                        this.errorElement = qsWrapper(this).querySelector('.error-msg');
+                        this.paperToast = qsWrapper(this).querySelector('paper-toast');
+
+                        // Attach the event listener before register editor
+                        this.attachListener(this);
+
+                        this.editor = MyScript.register(this.editorDomElement, this.buildConfiguration(), this.buildCustomStyle());
+                        this.configuration = this.editor.configuration;
+
+                        LOG('common-element attached');
                         this.initializing = false;
                     },
                     detached: function () {
                         LOG('common-element detached callback');
-                        this.detachCommonElementFromDom(this);
+                        this.detachListener(this);
+                        LOG('common-element detached');
                     },
-
                     /**
-                     * Attach the element to the dom. This is the most critical part of the component.
-                     * @param commonElement
                      * @private
                      */
-                    attachCommonElementToDom: function (commonElement) {
-                        commonElement.editorDomElement = qsWrapper(commonElement).querySelector('#editorDomElement');
-
+                    attachListener: function (commonElement) {
                         function editorListener(event) {
                             LOG('editor ' + event.type + ' event intercepted', event);
                             switch (event.type) {
                                 case MyScript.Constants.EventType.LOADED:
                                     commonElement.unloaded = false;
                                     break;
-                                case MyScript.Constants.EventType.CHANGED:
-                                    commonElement.changeEventHandler(commonElement, event);
+                                case MyScript.Constants.EventType.CHANGED:{
+                                    if (event.detail) {
+                                        commonElement.canclear = event.detail.canClear;
+                                        commonElement.canundo = event.detail.canUndo;
+                                        commonElement.canredo = event.detail.canRedo;
+                                        commonElement.canexport = event.detail.canUndo && event.detail.canClear;
+                                        commonElement.canconvert = event.detail.canUndo && event.detail.canClear;
+                                    }
+                                }
                                     break;
-                                case MyScript.Constants.EventType.EXPORTED:
-                                    commonElement.manageExports(commonElement, event.detail);
+                                case MyScript.Constants.EventType.EXPORTED: {
+                                    commonElement.exports = event.detail ? event.detail.exports : {};
+                                    commonElement.errorElement.setAttribute('hidden', 'true');
+                                }
                                     break;
                                 case MyScript.Constants.EventType.ERROR:
-                                    commonElement.manageError(commonElement, event.detail);
+                                    commonElement.manageError(event, commonElement);
                                     break;
                                 default:
                                     break;
@@ -633,127 +654,89 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         Object.keys(commonElement.currentListeners).forEach(function (type) {
                             commonElement.editorDomElement.addEventListener(type, commonElement.currentListeners[type])
                         });
-                        commonElement.editor = MyScript.register(commonElement.editorDomElement, commonElement.buildCommonConfiguration(commonElement), {
-                            strokeStyle: {
-                                color: commonElement.strokecolor,
-                                width: commonElement.strokewidth
-                            }
-                        });
-                        commonElement.configuration = commonElement.editor.configuration;
-                        LOG('common-element attached');
                     },
 
                     /**
-                     * Remove listeners when common element is unloaded.
                      * @private
                      */
-                    detachCommonElementFromDom: function (commonElement) {
+                    detachListener: function (commonElement) {
                         Object.keys(commonElement.currentListeners).forEach(function (type) {
                             commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
                         });
-                        LOG('common-element detached');
                     },
 
                     /**
-                     * Update the style option of ink paper reflecting the common element attributes.
-                     * @param commonElement
                      * @private
                      */
-                    updateCustomStyleFromElementAttributes: function (commonElement) {
-                        if (commonElement.editor) {
-                            commonElement.editor.customStyle.strokeStyle.color = commonElement.strokecolor;
-                            commonElement.editor.customStyle.strokeStyle.width = commonElement.strokewidth;
+                    buildCustomStyle: function () {
+                        if (!this.customStyle) {
+                            this.customStyle = {};
                         }
+                        if (!this.customStyle.strokeStyle) {
+                            this.customStyle.strokeStyle = {};
+                        }
+                        this.customStyle.strokeStyle.color = this.strokecolor;
+                        this.customStyle.strokeStyle.width = this.strokewidth;
+                        return this.customStyle;
                     },
 
                     /**
-                     * Build the configuration to pass to editor.
                      * @private
-                     * @param commonElement
-                     * @returns {{}}
                      */
-                    buildCommonConfiguration: function (commonElement) {
-                        if (!commonElement.configuration) {
-                            commonElement.configuration = {};
+                    buildConfiguration: function () {
+                        if (!this.configuration) {
+                            this.configuration = {};
                         }
-                        commonElement.configuration.recognitionTriggerDelay = commonElement.recognitiontriggerdelay;
-                        commonElement.configuration.recognitionProcessDelay = commonElement.recognitionprocessdelay;
-                        if (commonElement.protocol === 'REST') {
-                            commonElement.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                        this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                        this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                        if (this.protocol === 'REST') {
+                            this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
                         } else {
-                            commonElement.configuration.recognitionTriggerOn = 'POINTER_UP';
+                            this.configuration.recognitionTriggerOn = 'POINTER_UP';
                         }
-                        if (!commonElement.configuration.recognitionParams) {
-                            commonElement.configuration.recognitionParams = {};
+                        if (!this.configuration.recognitionParams) {
+                            this.configuration.recognitionParams = {};
                         }
-                        commonElement.configuration.recognitionParams.type = commonElement.type;
-                        commonElement.configuration.recognitionParams.protocol = commonElement.protocol;
-                        commonElement.configuration.recognitionParams.apiVersion = commonElement.apiversion;
-                        if (!commonElement.configuration.recognitionParams.server) {
-                            commonElement.configuration.recognitionParams.server = {};
+                        this.configuration.recognitionParams.type = this.type;
+                        this.configuration.recognitionParams.protocol = this.protocol;
+                        this.configuration.recognitionParams.apiVersion = this.apiversion;
+                        if (!this.configuration.recognitionParams.server) {
+                            this.configuration.recognitionParams.server = {};
                         }
-                        commonElement.configuration.recognitionParams.server.scheme = commonElement.scheme;
-                        commonElement.configuration.recognitionParams.server.host = commonElement.host;
-                        commonElement.configuration.recognitionParams.server.applicationKey = commonElement.applicationkey;
-                        commonElement.configuration.recognitionParams.server.hmacKey = commonElement.hmackey;
-                        commonElement.configuration.recognitionParams.server.scheme = commonElement.scheme;
-                        return commonElement.configuration;
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        this.configuration.recognitionParams.server.host = this.host;
+                        this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                        this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        return this.configuration;
                     },
 
                     /**
-                     * Handle the exports and display it to the user.
                      * @private
-                     * @param commonElement
-                     * @param eventDetail
                      */
-                    manageExports: function (commonElement, eventDetail) {
-                        LOG('common exports detected');
-                        commonElement.exports = eventDetail ? eventDetail.exports : {};
-                        qsWrapper(commonElement).querySelector('.error-msg').setAttribute('hidden', 'true');
-                    },
-
-                    /**
-                     * Handle the error and display it to the user.
-                     * @private
-                     * @param commonElement
-                     * @param eventDetail
-                     */
-                    manageError: function (commonElement, eventDetail) {
+                    manageError: function (event, commonElement) {
                         LOG('common error detected');
-                        if (eventDetail && eventDetail.recoverable === false) {
-                            if (eventDetail.serverMessage &&
-                                eventDetail.serverMessage.error &&
-                                eventDetail.serverMessage.error.result &&
-                                eventDetail.serverMessage.error.result.error &&
-                                (eventDetail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
-                                eventDetail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
-                                qsWrapper(commonElement).querySelector('.error-msg').innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
-                            } else {
-                                qsWrapper(commonElement).querySelector('.error-msg').innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
-                            }
-                            qsWrapper(commonElement).querySelector('.error-msg').removeAttribute('hidden');
-                        } else if (eventDetail && eventDetail.message) {
-                            const paperToast = qsWrapper(commonElement).querySelector('paper-toast');
-                            paperToast.text = eventDetail.message;
-                            paperToast.fitIn = paperToast.show();
-                        } else {
-                            LOG('common not managed error', eventDetail);
-                        }
-                    },
-
-                    /**
-                     * Update the undo redo clear state.
-                     * @private
-                     * @param commonElement
-                     * @param event
-                     */
-                    changeEventHandler: function (commonElement, event) {
                         if (event.detail) {
-                            commonElement.canclear = event.detail.canClear;
-                            commonElement.canundo = event.detail.canUndo;
-                            commonElement.canredo = event.detail.canRedo;
-                            commonElement.canexport = event.detail.canUndo && event.detail.canClear;
-                            commonElement.canconvert = event.detail.canUndo && event.detail.canClear;
+                            if (event.detail.recoverable === false) {
+                                if (event.detail.serverMessage &&
+                                    event.detail.serverMessage.error &&
+                                    event.detail.serverMessage.error.result &&
+                                    event.detail.serverMessage.error.result.error &&
+                                    (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
+                                    event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
+                                    commonElement.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
+                                } else {
+                                    commonElement.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
+                                }
+                                commonElement.errorElement.removeAttribute('hidden');
+                            } else if (event.detail.message) {
+                                commonElement.paperToast.text = event.detail.message;
+                                commonElement.paperToast.fitIn = commonElement.paperToast.show();
+                            } else {
+                                LOG('common not managed error', event);
+                            }
+                        } else {
+                            LOG('common not managed error', event);
                         }
                     }
                 }
