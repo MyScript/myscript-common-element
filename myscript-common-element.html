@@ -312,16 +312,16 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             function editorListener(event) {
                 LOG('editor ' + event.type + ' event intercepted', event);
                 switch (event.type) {
-                    case 'load':
+                    case MyScript.Constants.EventType.LOADED:
                         commonElement.unloaded = false;
                         break;
-                    case 'change':
+                    case MyScript.Constants.EventType.CHANGED:
                         changeEventHandler(commonElement, event);
                         break;
-                    case 'exported':
+                    case MyScript.Constants.EventType.EXPORTED:
                         manageExports(commonElement, event.detail);
                         break;
-                    case 'error':
+                    case MyScript.Constants.EventType.ERROR:
                         manageError(commonElement, event.detail);
                         break;
                     default:
@@ -331,8 +331,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
             }
 
+            const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
+                return MyScript.Constants.EventType[key];
+            });
+
             commonElement.currentListeners = {};
-            ['load', 'undo', 'redo', 'clear', 'convert', 'export', 'change', 'exported', 'error'].forEach(function (type) {
+            eventTypes.forEach(function (type) {
                 commonElement.currentListeners[type] = editorListener;
             });
             Object.keys(commonElement.currentListeners).forEach(function (type) {
