@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="16px" height="16px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="trash" fill="none" fill-rule="evenodd">
+    <g id="clean" fill="none" fill-rule="evenodd">
         <g transform="translate(3.000000, 2.000000)">
             <path d="M0,3 L12,3" stroke-linecap="round" stroke-linejoin="round"></path>
             <path

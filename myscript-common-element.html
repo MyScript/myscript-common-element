@@ -159,14 +159,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
         </div>
         <template is="dom-if" if="[[ !hidebuttons ]]">
             <nav>
+                <paper-fab mini src="clear.svg" title="clear" on-tap="clear"
+                           disabled="[[ !canclear ]]" hidden="[[ disableclear ]]">
+                </paper-fab>
                 <paper-fab mini src="undo.svg" title="undo" on-tap="undo"
                            disabled="[[ !canundo ]]" hidden="[[ disableundoredo ]]">
                 </paper-fab>
                 <paper-fab mini src="redo.svg" title="redo" on-tap="redo"
                            disabled="[[ !canredo ]]" hidden="[[ disableundoredo ]]">
-                </paper-fab>
-                <paper-fab mini src="trash.svg" title="clear" on-tap="clear"
-                           disabled="[[ !canclear ]]" hidden="[[ disableclear ]]">
                 </paper-fab>
                 <paper-fab mini src="export.svg" title="export" on-tap="askForExport"
                            disabled="[[ !canexport ]]" hidden="[[ disableexport ]]">
