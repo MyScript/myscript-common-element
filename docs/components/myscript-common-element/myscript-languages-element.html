@@ -7,7 +7,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 <dom-module id="myscript-languages-element">
     <script src="../myscript/dist/myscript.min.js"></script>
     <script>
-
         /**
          * Uncomment the function body during development. Should not be activated in production.
          * @param string
@@ -21,56 +20,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                 console.log(string);
             }
         }
-
-        /**
-         * Build the configuration to pass to editor.
-         * @param languagesElement
-         * @returns {{}}
-         */
-        function buildLanguagesConfiguration(languagesElement) {
-            if (!languagesElement.configuration) {
-                languagesElement.configuration = {};
-            }
-            languagesElement.configuration.recognitionTriggerDelay = languagesElement.recognitiontriggerdelay;
-            languagesElement.configuration.recognitionProcessDelay = languagesElement.recognitionprocessdelay;
-            if (languagesElement.protocol === 'REST') {
-                languagesElement.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
-            } else {
-                languagesElement.configuration.recognitionTriggerOn = 'POINTER_UP';
-            }
-            if (!languagesElement.configuration.recognitionParams) {
-                languagesElement.configuration.recognitionParams = {};
-            }
-            languagesElement.configuration.recognitionParams.type = languagesElement.type;
-            languagesElement.configuration.recognitionParams.protocol = languagesElement.protocol;
-            languagesElement.configuration.recognitionParams.apiVersion = languagesElement.apiversion;
-            if (!languagesElement.configuration.recognitionParams.server) {
-                languagesElement.configuration.recognitionParams.server = {};
-            }
-            languagesElement.configuration.recognitionParams.server.scheme = languagesElement.scheme;
-            languagesElement.configuration.recognitionParams.server.host = languagesElement.host;
-            languagesElement.configuration.recognitionParams.server.applicationKey = languagesElement.applicationkey;
-            languagesElement.configuration.recognitionParams.server.hmacKey = languagesElement.hmackey;
-            languagesElement.configuration.recognitionParams.server.scheme = languagesElement.scheme;
-            return languagesElement.configuration;
-        }
-
-        /**
-         * Attach the element to the dom. This is the most critical part of the component.
-         * @param languagesElement
-         */
-        function getLanguages(languagesElement) {
-            languagesElement.configuration = buildLanguagesConfiguration(languagesElement);
-
-            MyScript.getAvailableLanguageList(languagesElement.configuration, languagesElement.sortbyvalue).then(function (res) {
-                languagesElement.languages = [];
-                Object.keys(res.result).forEach(function (key) {
-                    languagesElement.languages.push({ 'value': key, 'description': res.result[key] });
-                });
-                languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
-            });
-        }
-
 
         Polymer({
                     is: 'myscript-languages-element',
@@ -142,7 +91,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                          */
                         unloaded: {
                             type: Boolean,
-                            value: false,
+                            value: true,
                             notify: true,
                             reflectToAttribute: true,
                             observer: 'unloadedChanged'
@@ -159,15 +108,68 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                     },
                     unloadedChanged: function (unloaded) {
                         LOG('languages-element unloaded changed', unloaded);
-                        if (this.connected === true && unloaded !== true) {
-                            getLanguages(this);
+                        if (this.connected === true && unloaded === true) {
+                            this.getLanguages(this);
                         }
                     },
                     // Will be renamed connected with pure custom element support
                     attached: function () {
                         LOG('languages-element attached callback');
-                        getLanguages(this);
                         this.connected = true;
+                        this.unloadedChanged(this.unloaded);
+                    },
+
+                    /**
+                     * Build the configuration to pass to editor.
+                     * @private
+                     */
+                    buildConfiguration: function () {
+                        if (!this.configuration) {
+                            this.configuration = {};
+                        }
+                        this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                        this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                        if (this.protocol === 'REST') {
+                            this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                        } else {
+                            this.configuration.recognitionTriggerOn = 'POINTER_UP';
+                        }
+                        if (!this.configuration.recognitionParams) {
+                            this.configuration.recognitionParams = {};
+                        }
+                        this.configuration.recognitionParams.type = this.type;
+                        this.configuration.recognitionParams.protocol = this.protocol;
+                        this.configuration.recognitionParams.apiVersion = this.apiversion;
+                        if (!this.configuration.recognitionParams.server) {
+                            this.configuration.recognitionParams.server = {};
+                        }
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        this.configuration.recognitionParams.server.host = this.host;
+                        this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                        this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        return this.configuration;
+                    },
+
+                    /**
+                     * @private
+                     */
+                    getLanguages: function (languageElement) {
+                        MyScript.getAvailableLanguageList(languageElement.buildConfiguration(), languageElement.sortbyvalue)
+                            .then(function (res) {
+                                var languages = [];
+                                Object.keys(res.result).forEach(function (key) {
+                                    languages.push({ 'value': key, 'description': res.result[key] });
+                                });
+                                languageElement.languages = languages;
+                                languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
+                                languageElement.unloaded = false;
+                            })
+                            .catch(function (err){
+                                languageElement.languages = [];
+                                languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
+                                languageElement.unloaded = false;
+                            });
                     }
                 }
         );

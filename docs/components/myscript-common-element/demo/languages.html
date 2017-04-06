@@ -39,7 +39,7 @@
 <script>
     var currentLanguage = 'en_US';
     var languageSelect = document.getElementById('language');
-    document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
+    document.querySelector('myscript-languages-element').addEventListener('change', function (evt) {
         evt.detail.forEach(function (language) {
             var selected = currentLanguage === language.value;
             languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);

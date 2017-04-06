@@ -196,50 +196,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
 
         Polymer({
                     is: 'myscript-common-element',
-                    /**
-                     * Fired when undo button is press
-                     *
-                     * @event myscript-common-element-undo
-                     */
-                    /**
-                     * Fired when redo button is press
-                     *
-                     * @event myscript-common-element-redo
-                     */
-                    /**
-                     * Fired when clear button is press
-                     *
-                     * @event myscript-common-element-clear
-                     */
-                    /**
-                     * Fired when convert button is press
-                     *
-                     * @event myscript-common-element-convert
-                     */
-                    /**
-                     * Fired when export button is press
-                     *
-                     * @event myscript-common-element-export
-                     */
-                    /**
-                     * Fired when state of underlying model change
-                     *
-                     * @event myscript-common-element-change
-                     */
-                    /**
-                     * Fired when exports are received.
-                     *
-                     * @event myscript-common-element-exported
-                     */
-                    /**
-                     * Fired when a recognition error occurred.
-                     * @event myscript-common-element-error
-                     */
                     properties: {
                         /**
                          * <b>not mutable</b><br />
                          * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
-                         * @default 'TEXT'
                          */
                         type: {
                             type: String,
@@ -248,8 +208,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-                         * @type String
-                         * @default 'REST'
                          */
                         protocol: {
                             type: String,
@@ -258,9 +216,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                         * @private
-                         * @type Boolean
-                         * @default true
                          */
                         scheme: {
                             type: String,
@@ -269,8 +224,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * The current recognition service host.
-                         * @type String
-                         * @default 'cloud.myscript.com'
                          */
                         host: {
                             type: String,
@@ -278,9 +231,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 'cloud.myscript.com'
                         },
                         /**
-                         * Recognition API version to use (eg V3 or V4)
-                         * @type String
-                         * @default 'V3'
+                         * Cloud API version to use (eg V3 or V4)
                          */
                         apiversion: {
                             type: String,
@@ -288,9 +239,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 'V3'
                         },
                         /**
-                         * Delay without any user input before asking for recognition, only use in REST mode.
-                         * @type Number
-                         * @default 2000
+                         * Delay without any user input before asking for recognition, only use with REST protocol.
                          */
                         recognitiontriggerdelay: {
                             type: Number,
@@ -298,9 +247,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 2000
                         },
                         /**
-                         * Delay without any recognition exports received before processing the last one received, only use in WEBSOCKET mode.
-                         * @type Number
-                         * @default 2000
+                         * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
                          */
                         recognitionprocessdelay: {
                             type: Number,
@@ -311,7 +258,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          * Application key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                          * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                         * @type String
                          */
                         applicationkey: {
                             type: String,
@@ -321,7 +267,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
                          * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                         * @type String
                          */
                         hmackey: {
                             type: String,
@@ -354,8 +299,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             notify: true
                         },
                         /**
-                         * Set the stroke color
-                         * @type String
+                         * Color of the stroke
                          */
                         strokecolor: {
                             type: String,
@@ -364,8 +308,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             observer: 'strokecolorChanged'
                         },
                         /**
-                         * Set the stroke width
-                         * @type String
+                         * Width of the stroke
                          */
                         strokewidth: {
                             type: Number,
@@ -376,8 +319,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if undo is available
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canundo: {
                             type: Boolean,
@@ -388,8 +329,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if redo is available
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canredo: {
                             type: Boolean,
@@ -400,8 +339,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if there is something to clear
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canclear: {
                             type: Boolean,
@@ -412,8 +349,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if export button could be displayed.
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canexport: {
                             type: Boolean,
@@ -424,8 +359,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if convert button could be displayed.
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canconvert: {
                             type: Boolean,
@@ -435,8 +368,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * If set to true, hide the buttons (Trash, Undo, Redo).
-                         * @type Boolean
-                         * @default false
                          */
                         hidebuttons: {
                             type: Boolean,
