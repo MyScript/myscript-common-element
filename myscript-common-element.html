@@ -570,7 +570,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                                         commonElement.canclear = event.detail.canClear;
                                         commonElement.canundo = event.detail.canUndo;
                                         commonElement.canredo = event.detail.canRedo;
-                                        commonElement.canexport = event.detail.canUndo && event.detail.canClear;
+                                        commonElement.canexport = (commonElement.protocol === 'REST' || commonElement.apiversion === 'V4') && event.detail.canUndo && event.detail.canClear;
                                         commonElement.canconvert = commonElement.apiversion === 'V4' && event.detail.canUndo && event.detail.canClear;
                                     }
                                 }
