@@ -620,11 +620,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         if (!this.customStyle) {
                             this.customStyle = {};
                         }
-                        if (!this.customStyle.strokeStyle) {
-                            this.customStyle.strokeStyle = {};
+                        if (!this.customStyle.stroke) {
+                            this.customStyle.stroke = {};
                         }
-                        this.customStyle.strokeStyle.color = this.strokecolor;
-                        this.customStyle.strokeStyle.width = this.strokewidth;
+                        this.customStyle.stroke.color = this.strokecolor;
+                        this.customStyle.stroke.width = this.strokewidth;
                         return this.customStyle;
                     },
 
