@@ -119,13 +119,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             }
 
             .loader {
-                position: absolute;
                 z-index: 35;
-                margin: auto;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
+                position: absolute;
+                top: calc(50% - 76px);
+                left: calc(50% - 76px);
+                transform: translateY(-50%);
                 border: 16px solid var(--myscript-common-element-button-disabled-background, #F5F6F7);
                 border-radius: 50%;
                 border-top: 16px solid var(--myscript-common-element-button-background, #1A9FFF);
