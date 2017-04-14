@@ -31,7 +31,7 @@
 <body touch-action="none">
     <select id="language" disabled></select>
     <myscript-languages-element
-        host="cloud-internal-stable.visionobjects.com">
+        host="webdemoapi.myscript.com">
     </myscript-languages-element>
 </body>
 <script>
@@ -42,12 +42,14 @@
             console.log("All resources finished loading! Starting to init myscript-languages-element");
             var mycustomconfiguration = {
                 type: 'ANALYZER',
-                applicationKey: 'a8f991e2-994d-4f36-b61d-55f7ddf6f85d',
+                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
                 sortByValue: true
             };
             // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
             myscriptLanguagesElement.setAttribute('type', mycustomconfiguration.type);
             myscriptLanguagesElement.applicationkey = mycustomconfiguration.applicationKey;
+            myscriptLanguagesElement.hmackey = mycustomconfiguration.hmacKey;
             myscriptLanguagesElement.sortByValue = mycustomconfiguration.sortByValue;
             // Testing if configuration are taken into account
             myscriptLanguagesElement.configuration = {
