@@ -10,7 +10,7 @@
 - editor read only attributes allow you to access to the underlying editor object create when myscipt-common-element custom element is attached to the DOM  (see [MyScriptJS documentation]() for more details )
 - `unloaded` attribute ease the integration with other front-end frameworks or when you want to programmaticly set configuration and other attributs. Add the unloaded attribut into your markup and remove it in your JS logic when all attributes are set.
  
-## Breaking changes :
+## Breaking changes
 - `timeout` property has been renamed to `recognitiontriggerdelay`
 - existing events have been removed. See custom element docs to discover new behavior.
 - `resulttypes`, `language`, `typeset`, `textparameters`, `mathparameters`, `shapeparameters`, `musicparameters`, `analyzerparameters` are not longer exposed.
