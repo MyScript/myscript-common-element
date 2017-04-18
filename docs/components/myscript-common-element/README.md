@@ -24,8 +24,7 @@ myscript-common-element is the common layer of [myscript-math-web](https://githu
 ## Examples
 
 * [Simple shape REST demo](./demo/index.html)
-* [Programmatic init](./demo/programmatic-init.html)
-* [Programmatic update](./demo/change-non-mutable-attribute.html)
+* [Programmatic init](demo/programmatic-init.html)
 * [Customize style](./demo/customstyle.html)
 * [Error handling](./demo/init-error.html)
 * [Get statistics](./demo/stats.html)
