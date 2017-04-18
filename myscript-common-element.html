@@ -1,6 +1,5 @@
 <!--
-Copyright © MyScript.
-LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
@@ -472,11 +471,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     /**
                      * Update the stroke color.
-                     * @param newStrokecolor
+                     * @param color
                      * @private
                      */
-                    strokecolorChanged: function (newStrokecolor) {
-                        LOG('common-element strokecolorChanged', newStrokecolor);
+                    strokecolorChanged: function (color) {
+                        LOG('common-element strokecolorChanged', color);
                         if (this.editorDomElement && !this.initializing) {
                             this.buildCustomStyle();
                             this.editor.customStyle = this.customStyle;
@@ -485,11 +484,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     /**
                      * Update the stroke width.
-                     * @param newStrokewidth
+                     * @param width
                      * @private
                      */
-                    strokewidthChanged: function (newStrokewidth) {
-                        LOG('common-element strokewidthChanged', newStrokewidth);
+                    strokewidthChanged: function (width) {
+                        LOG('common-element strokewidthChanged', width);
                         if (this.editorDomElement && !this.initializing) {
                             this.buildCustomStyle();
                             this.editor.customStyle = this.customStyle;

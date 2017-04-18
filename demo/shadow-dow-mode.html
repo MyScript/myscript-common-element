@@ -11,6 +11,9 @@
     <meta name="mobile-web-app-capable" content="yes">
 
     <title>myscript-common-element demo</title>
+
+    <link rel="stylesheet" href="demo.css">
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script>
         /* this script must run before Polymer is imported */
@@ -20,15 +23,14 @@
         };
     </script>
     <link rel="import" href="../myscript-common-element.html">
-    <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-common-element
+        type="SHAPE"
         host="webdemoapi.myscript.com"
         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-        type="SHAPE">
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
     </myscript-common-element>
 </body>
 </html>
