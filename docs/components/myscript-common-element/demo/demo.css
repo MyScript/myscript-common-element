@@ -25,8 +25,3 @@ select {
 myscript-common-element {
     height: 100%;
 }
-
-paper-toast {
-    --paper-toast-background-color: #1A9FFF;
-    --paper-toast-color: white;
-}

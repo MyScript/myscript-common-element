@@ -29,10 +29,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 min-width: 200px;
                 height: 100%;
                 width: 100%;
-                color: var(--myscript-common-element-button-background, #1A9FFF);
-                --paper-fab-background: var(--myscript-common-element-button-background, #1A9FFF);
-                --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background, #1A9FFF);
-                --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background, #F5F6F7);
+                color: var(--myscript-common-element-color, #FFFFFF);
+                --paper-fab-background: var(--myscript-common-element-background-color, #1A9FFF);
+                --paper-fab-keyboard-focus-background: var(--myscript-common-element-focus-background-color, #1A9FFF);
+                --paper-fab-disabled-background: var(--myscript-common-element-disabled-background-color, #F5F6F7);
             }
 
             [hidden] {
@@ -96,9 +96,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 top: calc(50% - 76px);
                 left: calc(50% - 76px);
                 transform: translateY(-50%);
-                border: 16px solid var(--myscript-common-element-button-disabled-background, #F5F6F7);
+                border: 16px solid var(--myscript-common-element-color, #F5F6F7);
                 border-radius: 50%;
-                border-top: 16px solid var(--myscript-common-element-button-background, #1A9FFF);
+                border-top: 16px solid var(--myscript-common-element-background-color, #1A9FFF);
                 width: 120px;
                 height: 120px;
                 -webkit-animation: spin 2s linear infinite;
