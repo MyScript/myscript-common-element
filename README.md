@@ -40,7 +40,6 @@ It integrates all you need:
 ```html
     <myscript-common-element
         type="SHAPE"
-        host="webdemoapi.myscript.com"
         applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
