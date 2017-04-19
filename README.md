@@ -1,6 +1,7 @@
 # myscript-common-element
 
-myscript-common-element is the common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web).
+`myscript-common-element` is the common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web). 
+It helps you to integrate handwriting panel and recognition in your webapp.
  
 ![myscript-common-element preview](./preview.gif)
 
@@ -12,10 +13,10 @@ myscript-common-element is the common layer of [myscript-math-web](https://githu
 </head>
 <body>
     <myscript-common-element
+        type="MATH"
         host="webdemoapi.myscript.com"
         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-        type="SHAPE">
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
     </myscript-common-element>
 </body>
 </html>
@@ -36,6 +37,15 @@ myscript-common-element is the common layer of [myscript-math-web](https://githu
 ## [Documentation](./docs/index.html)
 
 ## Build from sources
+
+1. Install dependencies.
+    * `bower install`
+    
+**Start coding**
+
+2. Run using polyserve.
+    * `polyserve`. Documentation and demo will be available on `http://localhost:8080/components/myscript-common-element/`
+3. Debug using your favorite browser dev tools.
 
 ## Contribute
 
