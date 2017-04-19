@@ -31,7 +31,7 @@
     "branch": "2.0.0-alpha1",
     "commit": "ead40a8892063718232dbbf8341b40d1414ed609"
   },
-  "_source": "git://github.com/MyScript/MyScriptJS.git",
+  "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "2.0.0-alpha1",
-  "_originalSource": "git://github.com/MyScript/MyScriptJS.git"
+  "_originalSource": "myscript"
 }
