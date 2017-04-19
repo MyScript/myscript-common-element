@@ -1,26 +1,52 @@
 # myscript-common-element
 
 `myscript-common-element` is the common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web). 
-It helps you to integrate handwriting panel and recognition in your webapp.
+It helps you to integrate an ink editor and handwriting recognition in your webapp.
  
 ![myscript-common-element preview](./preview.gif)
 
+## What is it about?
+
+myscript-common-element is a web component that can be used in every web application (whatever javascript framework you are using) to bring handwriting recognition. 
+It integrates all you need:
+* Signal capture,
+* Nice digital ink rendering,
+* Plug with MyScript CDK to bring handwriting recognition.
+
+## Prerequisites
+
+1. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
+2. Get an application key and HMAC key for your application.
+3. Import webcomponents polyfill on your webapp.
+
 ```html
-<html>
-<head>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../myscript-common-element.html">
-</head>
-<body>
-    <myscript-common-element
-        type="MATH"
-        host="webdemoapi.myscript.com"
-        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-    </myscript-common-element>
-</body>
-</html>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 ```
+ 
+## Installation
+
+1. Download it.
+
+       bower install myscript-common-element
+
+2. Import it on your webapp.
+
+```html
+    <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
+```
+
+3. Configure it.
+
+```html
+    <myscript-common-element
+        type="SHAPE"
+        host="webdemoapi.myscript.com"
+        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+    </myscript-common-element>
+```
+   
+4. Use it!
 
 ## Examples
 
@@ -33,23 +59,15 @@ It helps you to integrate handwriting panel and recognition in your webapp.
 
 
 * [Retrieve available languages](./demo/languages.html)
-   
-## [Documentation](./docs/index.html)
 
-## Build from sources
+## Documentation
 
-1. Install dependencies.
-    * `bower install`
-    
-**Start coding**
-
-2. Run using polyserve.
-    * `polyserve`. Documentation and demo will be available on `http://localhost:8080/components/myscript-common-element/`
-3. Debug using your favorite browser dev tools.
+The API Reference is available here: [https://myscript.github.io/myscript-common-element/](https://myscript.github.io/myscript-common-element/)
 
 ## Contribute
 
-We welcome your contributions: If you would like to extend myscript-common-element for your needs, feel free to fork it!
+We welcome your contributions:
+If you would like to extend myscript-common-element for your needs, feel free to fork it!
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
 ## Share your feedback
