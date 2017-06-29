@@ -39,7 +39,7 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_source": "/home/mathieur/Projets/webcomponents/myscript-common-element",
+  "_source": "/home/fxg/projects/webcomponents/myscript-common-element",
   "_target": "*",
   "_originalSource": "../../myscript-common-element",
   "_direct": true
