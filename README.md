@@ -20,7 +20,7 @@ It integrates all you need:
 3. Import webcomponents polyfill on your webapp.
 
 ```html
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 ```
  
 ## Installation
