@@ -513,8 +513,8 @@
                                     this.canclear = event.detail.canClear;
                                     this.canundo = event.detail.canUndo;
                                     this.canredo = event.detail.canRedo;
-                                    this.canexport = (this.protocol === 'REST' || this.apiversion === 'V4') && event.detail.canUndo && event.detail.canClear;
-                                    this.canconvert = this.apiversion === 'V4' && event.detail.canUndo && event.detail.canClear;
+                                    this.canexport = event.detail.canExport;
+                                    this.canconvert = event.detail.canConvert;
                                 }
                             }
                                 break;
