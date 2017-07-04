@@ -13,9 +13,10 @@ clean:
 prepare:
 	@git fetch --tags
 	@bower install $(BOWER_PARAMETERS)
+	@polymer analyze myscript-common-element.html myscript-languages-element.html > analysis.json
 
 dev:
-	@polyserve
+	@polymer serve
 
 docs:
 	@rm -rf docs/components/* && mkdir -p docs/components

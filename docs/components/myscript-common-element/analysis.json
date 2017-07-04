@@ -1,0 +1,1823 @@
+{
+  "schema_version": "1.0.0",
+  "elements": [
+    {
+      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n    <myscript-common-element\n        type=\"SHAPE\"\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-common-element>",
+      "summary": "",
+      "path": "myscript-common-element.html",
+      "properties": [
+        {
+          "name": "type",
+          "type": "string",
+          "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 228,
+              "column": 20
+            },
+            "end": {
+              "line": 232,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"TEXT\""
+        },
+        {
+          "name": "protocol",
+          "type": "string",
+          "description": "The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 236,
+              "column": 20
+            },
+            "end": {
+              "line": 240,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"REST\""
+        },
+        {
+          "name": "scheme",
+          "type": "string",
+          "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 244,
+              "column": 20
+            },
+            "end": {
+              "line": 248,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"https\""
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "description": "The current recognition service host.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 252,
+              "column": 20
+            },
+            "end": {
+              "line": 256,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"cloud.myscript.com\""
+        },
+        {
+          "name": "apiversion",
+          "type": "string",
+          "description": "Cloud API version to use (eg V3 or V4)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 260,
+              "column": 20
+            },
+            "end": {
+              "line": 264,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"V3\""
+        },
+        {
+          "name": "recognitiontriggerdelay",
+          "type": "number",
+          "description": "Delay without any user input before asking for recognition, only use with REST protocol.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 268,
+              "column": 20
+            },
+            "end": {
+              "line": 272,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "2000"
+        },
+        {
+          "name": "recognitionprocessdelay",
+          "type": "number",
+          "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 276,
+              "column": 20
+            },
+            "end": {
+              "line": 280,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "1000"
+        },
+        {
+          "name": "applicationkey",
+          "type": "string",
+          "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 286,
+              "column": 20
+            },
+            "end": {
+              "line": 289,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "hmackey",
+          "type": "string",
+          "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 295,
+              "column": 20
+            },
+            "end": {
+              "line": 298,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "unloaded",
+          "type": "boolean",
+          "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/programmatic-init.html for a better understanding)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 303,
+              "column": 20
+            },
+            "end": {
+              "line": 309,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_unloadedChanged\""
+            }
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "editor",
+          "type": "Object",
+          "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 313,
+              "column": 20
+            },
+            "end": {
+              "line": 315,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "configuration",
+          "type": "Object",
+          "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 321,
+              "column": 20
+            },
+            "end": {
+              "line": 324,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "strokecolor",
+          "type": "string",
+          "description": "Color of the stroke",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 328,
+              "column": 20
+            },
+            "end": {
+              "line": 333,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_strokecolorChanged\""
+            }
+          },
+          "defaultValue": "\"#1580CD\""
+        },
+        {
+          "name": "strokewidth",
+          "type": "number",
+          "description": "Width of the stroke",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 337,
+              "column": 20
+            },
+            "end": {
+              "line": 342,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_strokewidthChanged\""
+            }
+          },
+          "defaultValue": "4"
+        },
+        {
+          "name": "canundo",
+          "type": "boolean",
+          "description": "True if undo is available",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 346,
+              "column": 20
+            },
+            "end": {
+              "line": 351,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canredo",
+          "type": "boolean",
+          "description": "True if redo is available",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 355,
+              "column": 20
+            },
+            "end": {
+              "line": 360,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canclear",
+          "type": "boolean",
+          "description": "True if there is something to clear",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 364,
+              "column": 20
+            },
+            "end": {
+              "line": 369,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canexport",
+          "type": "boolean",
+          "description": "True if export button could be displayed.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 373,
+              "column": 20
+            },
+            "end": {
+              "line": 378,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canconvert",
+          "type": "boolean",
+          "description": "True if convert button could be displayed.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 382,
+              "column": 20
+            },
+            "end": {
+              "line": 387,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "hidebuttons",
+          "type": "boolean",
+          "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 391,
+              "column": 20
+            },
+            "end": {
+              "line": 396,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "disableundoredo",
+          "type": "boolean",
+          "description": "True if the undo/redo feature is disabled, false otherwise",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 400,
+              "column": 20
+            },
+            "end": {
+              "line": 404,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "disableclear",
+          "type": "boolean",
+          "description": "True if the clear feature is disabled, false otherwise",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 408,
+              "column": 20
+            },
+            "end": {
+              "line": 412,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "disableexport",
+          "type": "boolean",
+          "description": "True if the export feature is disabled, false otherwise",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 416,
+              "column": 20
+            },
+            "end": {
+              "line": 420,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "disableconvert",
+          "type": "boolean",
+          "description": "True if the convert feature is disabled, false otherwise",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 424,
+              "column": 20
+            },
+            "end": {
+              "line": 428,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "exports",
+          "type": "Object.<String, Object>",
+          "description": "Exports.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 433,
+              "column": 20
+            },
+            "end": {
+              "line": 436,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "debug",
+          "type": "boolean",
+          "description": "True to display console output, false otherwise.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 440,
+              "column": 20
+            },
+            "end": {
+              "line": 444,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        }
+      ],
+      "methods": [
+        {
+          "name": "_resizeHandler",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 448,
+              "column": 12
+            },
+            "end": {
+              "line": 453,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ]
+        },
+        {
+          "name": "connectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 455,
+              "column": 12
+            },
+            "end": {
+              "line": 545,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "disconnectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 547,
+              "column": 12
+            },
+            "end": {
+              "line": 556,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "clear",
+          "description": "Clear all context",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 561,
+              "column": 12
+            },
+            "end": {
+              "line": 565,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "undo",
+          "description": "Undo action",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 570,
+              "column": 12
+            },
+            "end": {
+              "line": 574,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "redo",
+          "description": "Redo action",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 579,
+              "column": 12
+            },
+            "end": {
+              "line": 583,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "askForExport",
+          "description": "Trigger export",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 588,
+              "column": 12
+            },
+            "end": {
+              "line": 592,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "exports"
+            }
+          ]
+        },
+        {
+          "name": "convert",
+          "description": "Trigger convert",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 597,
+              "column": 12
+            },
+            "end": {
+              "line": 601,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "getStats",
+          "description": "Return the stats allowing to monitor what ink size is send to the server.\nStats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 607,
+              "column": 12
+            },
+            "end": {
+              "line": 611,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_strokecolorChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 613,
+              "column": 12
+            },
+            "end": {
+              "line": 620,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "color"
+            }
+          ]
+        },
+        {
+          "name": "_strokewidthChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 622,
+              "column": 12
+            },
+            "end": {
+              "line": 628,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "width"
+            }
+          ]
+        },
+        {
+          "name": "_unloadedChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 630,
+              "column": 12
+            },
+            "end": {
+              "line": 640,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "unloaded"
+            }
+          ]
+        },
+        {
+          "name": "_buildCustomStyle",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 642,
+              "column": 12
+            },
+            "end": {
+              "line": 652,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_buildConfiguration",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 654,
+              "column": 12
+            },
+            "end": {
+              "line": 680,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 166,
+          "column": 8
+        },
+        "end": {
+          "line": 682,
+          "column": 9
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "MyScriptCommonElement",
+      "attributes": [
+        {
+          "name": "type",
+          "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
+          "sourceRange": {
+            "start": {
+              "line": 228,
+              "column": 20
+            },
+            "end": {
+              "line": 232,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "protocol",
+          "description": "The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.",
+          "sourceRange": {
+            "start": {
+              "line": 236,
+              "column": 20
+            },
+            "end": {
+              "line": 240,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "scheme",
+          "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
+          "sourceRange": {
+            "start": {
+              "line": 244,
+              "column": 20
+            },
+            "end": {
+              "line": 248,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "host",
+          "description": "The current recognition service host.",
+          "sourceRange": {
+            "start": {
+              "line": 252,
+              "column": 20
+            },
+            "end": {
+              "line": 256,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "apiversion",
+          "description": "Cloud API version to use (eg V3 or V4)",
+          "sourceRange": {
+            "start": {
+              "line": 260,
+              "column": 20
+            },
+            "end": {
+              "line": 264,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "recognitiontriggerdelay",
+          "description": "Delay without any user input before asking for recognition, only use with REST protocol.",
+          "sourceRange": {
+            "start": {
+              "line": 268,
+              "column": 20
+            },
+            "end": {
+              "line": 272,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "recognitionprocessdelay",
+          "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.",
+          "sourceRange": {
+            "start": {
+              "line": 276,
+              "column": 20
+            },
+            "end": {
+              "line": 280,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "applicationkey",
+          "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
+          "sourceRange": {
+            "start": {
+              "line": 286,
+              "column": 20
+            },
+            "end": {
+              "line": 289,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "hmackey",
+          "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
+          "sourceRange": {
+            "start": {
+              "line": 295,
+              "column": 20
+            },
+            "end": {
+              "line": 298,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "unloaded",
+          "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/programmatic-init.html for a better understanding)",
+          "sourceRange": {
+            "start": {
+              "line": 303,
+              "column": 20
+            },
+            "end": {
+              "line": 309,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "editor",
+          "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
+          "sourceRange": {
+            "start": {
+              "line": 313,
+              "column": 20
+            },
+            "end": {
+              "line": 315,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "configuration",
+          "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).",
+          "sourceRange": {
+            "start": {
+              "line": 321,
+              "column": 20
+            },
+            "end": {
+              "line": 324,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "strokecolor",
+          "description": "Color of the stroke",
+          "sourceRange": {
+            "start": {
+              "line": 328,
+              "column": 20
+            },
+            "end": {
+              "line": 333,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "strokewidth",
+          "description": "Width of the stroke",
+          "sourceRange": {
+            "start": {
+              "line": 337,
+              "column": 20
+            },
+            "end": {
+              "line": 342,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "canundo",
+          "description": "True if undo is available",
+          "sourceRange": {
+            "start": {
+              "line": 346,
+              "column": 20
+            },
+            "end": {
+              "line": 351,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canredo",
+          "description": "True if redo is available",
+          "sourceRange": {
+            "start": {
+              "line": 355,
+              "column": 20
+            },
+            "end": {
+              "line": 360,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canclear",
+          "description": "True if there is something to clear",
+          "sourceRange": {
+            "start": {
+              "line": 364,
+              "column": 20
+            },
+            "end": {
+              "line": 369,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canexport",
+          "description": "True if export button could be displayed.",
+          "sourceRange": {
+            "start": {
+              "line": 373,
+              "column": 20
+            },
+            "end": {
+              "line": 378,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canconvert",
+          "description": "True if convert button could be displayed.",
+          "sourceRange": {
+            "start": {
+              "line": 382,
+              "column": 20
+            },
+            "end": {
+              "line": 387,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "hidebuttons",
+          "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
+          "sourceRange": {
+            "start": {
+              "line": 391,
+              "column": 20
+            },
+            "end": {
+              "line": 396,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableundoredo",
+          "description": "True if the undo/redo feature is disabled, false otherwise",
+          "sourceRange": {
+            "start": {
+              "line": 400,
+              "column": 20
+            },
+            "end": {
+              "line": 404,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableclear",
+          "description": "True if the clear feature is disabled, false otherwise",
+          "sourceRange": {
+            "start": {
+              "line": 408,
+              "column": 20
+            },
+            "end": {
+              "line": 412,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableexport",
+          "description": "True if the export feature is disabled, false otherwise",
+          "sourceRange": {
+            "start": {
+              "line": 416,
+              "column": 20
+            },
+            "end": {
+              "line": 420,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableconvert",
+          "description": "True if the convert feature is disabled, false otherwise",
+          "sourceRange": {
+            "start": {
+              "line": 424,
+              "column": 20
+            },
+            "end": {
+              "line": 428,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "exports",
+          "description": "Exports.",
+          "sourceRange": {
+            "start": {
+              "line": 433,
+              "column": 20
+            },
+            "end": {
+              "line": 436,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "Object.<String, Object>"
+        },
+        {
+          "name": "debug",
+          "description": "True to display console output, false otherwise.",
+          "sourceRange": {
+            "start": {
+              "line": 440,
+              "column": 20
+            },
+            "end": {
+              "line": 444,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "change",
+          "description": "change",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "clear",
+          "description": "clear",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "convert",
+          "description": "convert",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "converted",
+          "description": "converted",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "error",
+          "description": "error",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "export",
+          "description": "export",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "exported",
+          "description": "exported",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "load",
+          "description": "load",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "redo",
+          "description": "redo",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "undo",
+          "description": "undo",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "unloaded-changed",
+          "description": "Fired when the `unloaded` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "configuration-changed",
+          "description": "Fired when the `configuration` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "canundo-changed",
+          "description": "Fired when the `canundo` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "canredo-changed",
+          "description": "Fired when the `canredo` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "canclear-changed",
+          "description": "Fired when the `canclear` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "canexport-changed",
+          "description": "Fired when the `canexport` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "canconvert-changed",
+          "description": "Fired when the `canconvert` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "hidebuttons-changed",
+          "description": "Fired when the `hidebuttons` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "exports-changed",
+          "description": "Fired when the `exports` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "myscript-common-element"
+    },
+    {
+      "description": "`myscript-languages-element` is a web component to retrieve CDK available languages.\n\n    <myscript-languages-element\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-languages-element>",
+      "summary": "",
+      "path": "myscript-languages-element.html",
+      "properties": [
+        {
+          "name": "type",
+          "type": "string",
+          "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT or ANALYZER)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 26,
+              "column": 20
+            },
+            "end": {
+              "line": 30,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"TEXT\""
+        },
+        {
+          "name": "scheme",
+          "type": "string",
+          "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 34,
+              "column": 20
+            },
+            "end": {
+              "line": 38,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"https\""
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "description": "The current recognition service host.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 20
+            },
+            "end": {
+              "line": 46,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"cloud.myscript.com\""
+        },
+        {
+          "name": "applicationkey",
+          "type": "string",
+          "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 52,
+              "column": 20
+            },
+            "end": {
+              "line": 55,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "sortbyvalue",
+          "type": "boolean",
+          "description": "Language list sorts by values parameter. If false, language list sort by canonical name",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 59,
+              "column": 20
+            },
+            "end": {
+              "line": 63,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "languages",
+          "type": "Object",
+          "description": "Languages List",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 67,
+              "column": 20
+            },
+            "end": {
+              "line": 70,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "unloaded",
+          "type": "boolean",
+          "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/languages-selector-init.html for a better understanding)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 75,
+              "column": 20
+            },
+            "end": {
+              "line": 81,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_unloadedChanged\""
+            }
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "configuration",
+          "type": "Object",
+          "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 87,
+              "column": 20
+            },
+            "end": {
+              "line": 90,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "debug",
+          "type": "boolean",
+          "description": "True to display console output, false otherwise.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 94,
+              "column": 20
+            },
+            "end": {
+              "line": 98,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        }
+      ],
+      "methods": [
+        {
+          "name": "connectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 12
+            },
+            "end": {
+              "line": 110,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_unloadedChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 12
+            },
+            "end": {
+              "line": 117,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "unloaded"
+            }
+          ]
+        },
+        {
+          "name": "_buildConfiguration",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 12
+            },
+            "end": {
+              "line": 145,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_getLanguages",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 147,
+              "column": 12
+            },
+            "end": {
+              "line": 163,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "languageElement"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 14,
+          "column": 8
+        },
+        "end": {
+          "line": 165,
+          "column": 9
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "MyScriptLanguagesElement",
+      "attributes": [
+        {
+          "name": "type",
+          "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT or ANALYZER)",
+          "sourceRange": {
+            "start": {
+              "line": 26,
+              "column": 20
+            },
+            "end": {
+              "line": 30,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "scheme",
+          "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
+          "sourceRange": {
+            "start": {
+              "line": 34,
+              "column": 20
+            },
+            "end": {
+              "line": 38,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "host",
+          "description": "The current recognition service host.",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 20
+            },
+            "end": {
+              "line": 46,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "applicationkey",
+          "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
+          "sourceRange": {
+            "start": {
+              "line": 52,
+              "column": 20
+            },
+            "end": {
+              "line": 55,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "sortbyvalue",
+          "description": "Language list sorts by values parameter. If false, language list sort by canonical name",
+          "sourceRange": {
+            "start": {
+              "line": 59,
+              "column": 20
+            },
+            "end": {
+              "line": 63,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "languages",
+          "description": "Languages List",
+          "sourceRange": {
+            "start": {
+              "line": 67,
+              "column": 20
+            },
+            "end": {
+              "line": 70,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "unloaded",
+          "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/languages-selector-init.html for a better understanding)",
+          "sourceRange": {
+            "start": {
+              "line": 75,
+              "column": 20
+            },
+            "end": {
+              "line": 81,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "configuration",
+          "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).",
+          "sourceRange": {
+            "start": {
+              "line": 87,
+              "column": 20
+            },
+            "end": {
+              "line": 90,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "debug",
+          "description": "True to display console output, false otherwise.",
+          "sourceRange": {
+            "start": {
+              "line": 94,
+              "column": 20
+            },
+            "end": {
+              "line": 98,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "languages-changed",
+          "description": "Fired when the `languages` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "unloaded-changed",
+          "description": "Fired when the `unloaded` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "configuration-changed",
+          "description": "Fired when the `configuration` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "myscript-languages-element"
+    }
+  ]
+}

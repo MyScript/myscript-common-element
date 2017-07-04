@@ -197,6 +197,56 @@
                 return 'myscript-common-element'
             }
 
+            /**
+             * Fired when element is fully loaded.
+             * @event load
+             */
+
+            /**
+             * Fired when undo is triggered.
+             * @event undo
+             */
+
+            /**
+             * Fired when redo is triggered.
+             * @event redo
+             */
+
+            /**
+             * Fired when clear is triggered.
+             * @event clear
+             */
+
+            /**
+             * Fired when export is triggered.
+             * @event export
+             */
+
+            /**
+             * Fired when conversion is triggered.
+             * @event convert
+             */
+
+            /**
+             * Fired when editor state changed.
+             * @event change
+             */
+
+            /**
+             * Fired when export is done.
+             * @event exported
+             */
+
+            /**
+             * Fired when conversion is done.
+             * @event converted
+             */
+
+            /**
+             * Fired on error.
+             * @event error
+             */
+
             static get properties() {
                 return {
                     /**
@@ -320,7 +370,6 @@
                     },
                     /**
                      * True if undo is available
-                     * @private
                      */
                     canundo: {
                         type: Boolean,
@@ -330,7 +379,6 @@
                     },
                     /**
                      * True if redo is available
-                     * @private
                      */
                     canredo: {
                         type: Boolean,
@@ -340,7 +388,6 @@
                     },
                     /**
                      * True if there is something to clear
-                     * @private
                      */
                     canclear: {
                         type: Boolean,
@@ -350,7 +397,6 @@
                     },
                     /**
                      * True if export button could be displayed.
-                     * @private
                      */
                     canexport: {
                         type: Boolean,
@@ -360,7 +406,6 @@
                     },
                     /**
                      * True if convert button could be displayed.
-                     * @private
                      */
                     canconvert: {
                         type: Boolean,
@@ -538,36 +583,55 @@
                 this.logger.info('common-element detached');
             }
 
+            /**
+             * Clear all context
+             */
             clear() {
                 if (this.editor) {
                     this.editor.clear();
                 }
             }
 
+            /**
+             * Undo action
+             */
             undo() {
                 if (this.editor) {
                     this.editor.undo();
                 }
             }
 
+            /**
+             * Redo action
+             */
             redo() {
                 if (this.editor) {
                     this.editor.redo();
                 }
             }
 
+            /**
+             * Trigger export
+             */
             askForExport(exports) {
                 if (this.editor) {
                     this.editor.askForExport(exports);
                 }
             }
 
+            /**
+             * Trigger convert
+             */
             convert() {
                 if (this.editor) {
                     this.editor.convert();
                 }
             }
 
+            /**
+             * Return the stats allowing to monitor what ink size is send to the server.
+             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+             */
             getStats() {
                 if (this.editor) {
                     return this.editor.stats;
