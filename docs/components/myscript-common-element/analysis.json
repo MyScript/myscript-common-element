@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "elements": [
     {
-      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n    <myscript-common-element\n        type=\"SHAPE\"\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-common-element>",
+      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n    <myscript-common-element\n        type=\"SHAPE\"\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-common-element>\n\n### Styling\n\n`<myscript-common-element>` provides the following custom properties for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--myscript-common-element-background` | Background of the editor | none\n`--myscript-common-element-color` | Color of the editor | #FFFFFF\n`--myscript-common-element-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern\n`--myscript-common-element-loader-background` | Background of the loader | #1A9FFF\n`--myscript-common-element-loader-color` | Color of the loader | #F5F6F7\n`--myscript-common-element-button-background` | Buttons background | #1A9FFF\n`--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF\n`--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7",
       "summary": "",
       "path": "myscript-common-element.html",
       "properties": [
@@ -830,6 +830,10 @@
         {
           "url": "demo/programmatic-init.html",
           "description": "Programmatic initialization"
+        },
+        {
+          "url": "demo/stats.html",
+          "description": "Get statistics"
         }
       ],
       "metadata": {},
