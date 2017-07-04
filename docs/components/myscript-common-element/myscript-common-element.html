@@ -14,19 +14,32 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
 
-@demo demo/customstyle.html
-@demo demo/debug.html
-@demo demo/iink_preview.html
-@demo demo/init_error.html
-@demo demo/programmatic-init.html
-@demo demo/shadow_dom.html
-@demo demo/stats.html
+@demo demo/customstyle.html Customize your component
+@demo demo/debug.html Debug your component
+@demo demo/iink_preview.html IInk preview
+@demo demo/index.html Get started
+@demo demo/init-error.html Display initialization error
+@demo demo/programmatic-init.html Programmatic initialization
+@demo demo/stats.html Get statistics
+
+### Styling
+
+`<myscript-common-element>` provides the following custom properties for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--myscript-common-element-background` | Background of the editor | none
+`--myscript-common-element-color` | Color of the editor | #FFFFFF
+`--myscript-common-element-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern
+`--myscript-common-element-loader-background` | Primary background color of the loader | #1A9FFF
+`--myscript-common-element-loader-color` | Secondary background color of the loader | #F5F6F7
+`--myscript-common-element-button-background` | Buttons background color | #1A9FFF
+`--myscript-common-element-button-focus-background` | Buttons focus background color | #1A9FFF
+`--myscript-common-element-button-disabled-background` | Buttons disabled background color | #F5F6F7
 -->
 <dom-module id="myscript-common-element">
     <template>
         <style>
-            @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
             :host {
                 --myscript-common-element-background: none;
                 --myscript-common-element-color: #FFFFFF;
