@@ -808,32 +808,32 @@
       "staticMethods": [],
       "demos": [
         {
-          "url": "demo/customstyle.html",
+          "url": "demo/v3/customstyle.html",
           "description": "Customize your component"
         },
         {
-          "url": "demo/debug.html",
+          "url": "demo/v3/debug.html",
           "description": "Debug your component"
         },
         {
-          "url": "demo/iink_preview.html",
-          "description": "IInk preview"
-        },
-        {
-          "url": "demo/index.html",
+          "url": "demo/v3/index.html",
           "description": "Get started"
         },
         {
-          "url": "demo/init-error.html",
+          "url": "demo/v3/init-error.html",
           "description": "Display initialization error"
         },
         {
-          "url": "demo/programmatic-init.html",
+          "url": "demo/v3/programmatic-init.html",
           "description": "Programmatic initialization"
         },
         {
-          "url": "demo/stats.html",
+          "url": "demo/v3/stats.html",
           "description": "Get statistics"
+        },
+        {
+          "url": "demo/v4/iink_preview.html",
+          "description": "IInk preview"
         }
       ],
       "metadata": {},
@@ -4219,11 +4219,11 @@
       ],
       "demos": [
         {
-          "url": "demo/languages.html",
+          "url": "demo/v3/languages.html",
           "description": "Get started"
         },
         {
-          "url": "demo/languages-selector-init.html",
+          "url": "demo/v3/languages-selector-init.html",
           "description": "Programmatic initialization"
         }
       ],

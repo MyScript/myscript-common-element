@@ -6,7 +6,7 @@
 - New `unloaded` flag to control component state. `load` event will be trigger once the editor will be fully loaded.
 - New **not mutable** `configuration` attribute. Changing the configuration will clear the underlying editor, all currents strokes and results will be lost. To do it, set `unloaded=true` after changing configuration, and wait for a `load` event.
 - New **read-only** `editor` property that allow you to access to the underlying editor object (see [MyScriptJS documentation]() for more details).
-- New CSS variables to customize the web-component. See [demo/customstyle.html](demo/customstyle.html) as an example.
+- New CSS variables to customize the web-component. See [demo/v3/customstyle.html](demo/v3/customstyle.html) as an example.
  
 ## Breaking changes
 - Complete rewrite of the underlying javascript library with ES6 syntax

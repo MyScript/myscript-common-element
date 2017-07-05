@@ -49,15 +49,15 @@ It integrates all you need:
 
 ## Examples
 
-* [Simple shape REST demo](./demo/index.html)
-* [Programmatic init](demo/programmatic-init.html)
-* [Customize style](./demo/customstyle.html)
-* [Error handling](./demo/init-error.html)
-* [Get statistics](./demo/stats.html)
-* [Interactive ink preview (MATH)](./demo/iink_preview.html)
-
-
-* [Retrieve available languages](./demo/languages.html)
+* v3
+  * [Simple shape REST demo](demo/v3/index.html)
+  * [Programmatic init](demo/v3/programmatic-init.html)
+  * [Customize style](demo/v3/customstyle.html)
+  * [Error handling](demo/v3/init-error.html)
+  * [Get statistics](demo/v3/stats.html)
+  * [Retrieve available languages](demo/v3/languages.html)
+* v4
+  * [Interactive ink preview (MATH)](demo/v4/iink_preview.html)
 
 ## Documentation
 
