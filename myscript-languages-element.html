@@ -114,7 +114,7 @@
             _unloadedChanged(unloaded) {
                 if (this.connected === true && unloaded === true) {
                     this.logger.trace('unloaded changed', unloaded);
-                    this._getLanguages(this);
+                    this._getLanguages();
                 }
             }
 
@@ -146,21 +146,22 @@
                 return this.configuration;
             }
 
-            _getLanguages(languageElement) {
-                MyScript.getAvailableLanguageList(languageElement._buildConfiguration(), languageElement.sortbyvalue)
+            _getLanguages() {
+                MyScript.getAvailableLanguageList(this._buildConfiguration(), this.sortbyvalue)
                     .then((res) => {
-                        languageElement.languages = Object
+                        this.languages = Object
                             .keys(res.result)
                             .map((key) => {
                                 return { 'value': key, 'description': res.result[key] };
                             });
-                        languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
-                        languageElement.unloaded = false;
+                        this.unloaded = false;
+                        this.dispatchEvent(new CustomEvent('change', { detail: this.languages }));
+                        return this.languages;
                     })
                     .catch((err) => {
-                        languageElement.languages = [];
-                        languageElement.unloaded = false;
-                        languageElement.dispatchEvent(new CustomEvent('error', { detail: err }));
+                        this.languages = [];
+                        this.unloaded = false;
+                        this.dispatchEvent(new CustomEvent('error', { detail: err }));
                     });
             }
 
