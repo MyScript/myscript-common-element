@@ -49,15 +49,16 @@ It integrates all you need:
 
 ## Examples
 
-* v3
-  * [Simple shape REST demo](demo/v3/index.html)
-  * [Programmatic init](demo/v3/programmatic-init.html)
-  * [Customize style](demo/v3/customstyle.html)
-  * [Error handling](demo/v3/init-error.html)
-  * [Get statistics](demo/v3/stats.html)
-  * [Retrieve available languages](demo/v3/languages.html)
-* v4
-  * [Interactive ink preview (MATH)](demo/v4/iink_preview.html)
+- [demo/get_started.html](demo/get_started.html) Get started with SHAPE
+- [demo/v4_configuration.html](demo/v4_configuration.html) Use interactive ink api for MATH (v4)
+- [demo/handle_exports.html](demo/handle_exports.html) Handle exports
+- [demo/handle_error.html](demo/handle_error.html) Handle error
+- [demo/styling.html](demo/styling.html) Customize your component style
+- [demo/programmatic_init.html](demo/programmatic_init.html) Programmatic initialization
+- [demo/get_stats.html](demo/get_stats.html) Get statistics
+- [demo/debug.html](demo/debug.html) Debug your component
+- [demo/get_languages.html](demo/get_languages.html) Get available languages
+- [demo/get_languages_programmatic.html](demo/get_languages_programmatic.html) Get available languages programmatically
 
 ## Documentation
 
