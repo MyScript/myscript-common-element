@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "elements": [
     {
-      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n    <myscript-common-element\n        type=\"SHAPE\"\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-common-element>\n\n### Styling\n\n`<myscript-common-element>` provides the following custom properties for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--myscript-common-element-background` | Background of the editor | none\n`--myscript-common-element-color` | Color of the editor | #FFFFFF\n`--myscript-common-element-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern\n`--myscript-common-element-loader-background` | Background of the loader | #1A9FFF\n`--myscript-common-element-loader-color` | Color of the loader | #F5F6F7\n`--myscript-common-element-button-background` | Buttons background | #1A9FFF\n`--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF\n`--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7",
+      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n    <myscript-common-element\n        type=\"SHAPE\"\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-common-element>\n\n### Styling\n\n`<myscript-common-element>` provides the following custom properties for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--myscript-common-element-background` | Background of the editor | none\n`--myscript-common-element-color` | Color of the editor | #FFFFFF\n`--myscript-common-element-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern\n`--myscript-common-element-loader-background` | Background of the loader | #1A9FFF\n`--myscript-common-element-loader-color` | Color of the loader | #F5F6F7\n`--myscript-common-element-button-background` | Buttons background | #1A9FFF\n`--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF\n`--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7\n`--myscript-common-element-undo-redo-display` | Display undo/redo buttons (set to `none` to hide) | initial\n`--myscript-common-element-clear-display` | Display clear button (set to `none` to hide) | initial\n`--myscript-common-element-export-display` | Display export button (set to `none` to hide) | initial\n`--myscript-common-element-convert-display` | Display convert button (set to `none` to hide) | initial",
       "summary": "",
       "path": "myscript-common-element.html",
       "properties": [
@@ -13,11 +13,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 248,
+              "line": 274,
               "column": 20
             },
             "end": {
-              "line": 252,
+              "line": 278,
               "column": 21
             }
           },
@@ -33,11 +33,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 256,
+              "line": 282,
               "column": 20
             },
             "end": {
-              "line": 260,
+              "line": 286,
               "column": 21
             }
           },
@@ -53,11 +53,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 264,
+              "line": 290,
               "column": 20
             },
             "end": {
-              "line": 268,
+              "line": 294,
               "column": 21
             }
           },
@@ -73,11 +73,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 272,
+              "line": 298,
               "column": 20
             },
             "end": {
-              "line": 276,
+              "line": 302,
               "column": 21
             }
           },
@@ -93,11 +93,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 280,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 284,
+              "line": 310,
               "column": 21
             }
           },
@@ -113,11 +113,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 288,
+              "line": 314,
               "column": 20
             },
             "end": {
-              "line": 292,
+              "line": 318,
               "column": 21
             }
           },
@@ -133,11 +133,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 296,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 326,
               "column": 21
             }
           },
@@ -153,11 +153,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 306,
+              "line": 332,
               "column": 20
             },
             "end": {
-              "line": 309,
+              "line": 335,
               "column": 21
             }
           },
@@ -172,11 +172,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 315,
+              "line": 341,
               "column": 20
             },
             "end": {
-              "line": 318,
+              "line": 344,
               "column": 21
             }
           },
@@ -191,11 +191,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 323,
+              "line": 349,
               "column": 20
             },
             "end": {
-              "line": 329,
+              "line": 355,
               "column": 21
             }
           },
@@ -214,11 +214,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 333,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 335,
+              "line": 361,
               "column": 21
             }
           },
@@ -233,11 +233,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 367,
               "column": 20
             },
             "end": {
-              "line": 344,
+              "line": 370,
               "column": 21
             }
           },
@@ -254,11 +254,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 348,
+              "line": 374,
               "column": 20
             },
             "end": {
-              "line": 353,
+              "line": 379,
               "column": 21
             }
           },
@@ -276,11 +276,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 357,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 362,
+              "line": 388,
               "column": 21
             }
           },
@@ -292,17 +292,39 @@
           "defaultValue": "4"
         },
         {
+          "name": "hidebuttons",
+          "type": "boolean",
+          "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 392,
+              "column": 20
+            },
+            "end": {
+              "line": 397,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
           "name": "canundo",
           "type": "boolean",
           "description": "True if undo is available",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 366,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 406,
               "column": 21
             }
           },
@@ -320,11 +342,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 380,
+              "line": 415,
               "column": 21
             }
           },
@@ -342,11 +364,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 384,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 389,
+              "line": 424,
               "column": 21
             }
           },
@@ -364,11 +386,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 393,
+              "line": 428,
               "column": 20
             },
             "end": {
-              "line": 398,
+              "line": 433,
               "column": 21
             }
           },
@@ -386,11 +408,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 402,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 407,
+              "line": 442,
               "column": 21
             }
           },
@@ -398,108 +420,6 @@
             "polymer": {
               "notify": true
             }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "hidebuttons",
-          "type": "boolean",
-          "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 411,
-              "column": 20
-            },
-            "end": {
-              "line": 416,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableundoredo",
-          "type": "boolean",
-          "description": "True if the undo/redo feature is disabled, false otherwise",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 420,
-              "column": 20
-            },
-            "end": {
-              "line": 424,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableclear",
-          "type": "boolean",
-          "description": "True if the clear feature is disabled, false otherwise",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 428,
-              "column": 20
-            },
-            "end": {
-              "line": 432,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableexport",
-          "type": "boolean",
-          "description": "True if the export feature is disabled, false otherwise",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 436,
-              "column": 20
-            },
-            "end": {
-              "line": 440,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableconvert",
-          "type": "boolean",
-          "description": "True if the convert feature is disabled, false otherwise",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 444,
-              "column": 20
-            },
-            "end": {
-              "line": 448,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
           },
           "defaultValue": "false"
         },
@@ -510,11 +430,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 453,
+              "line": 447,
               "column": 20
             },
             "end": {
-              "line": 456,
+              "line": 450,
               "column": 21
             }
           },
@@ -531,11 +451,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 460,
+              "line": 454,
               "column": 20
             },
             "end": {
-              "line": 464,
+              "line": 458,
               "column": 21
             }
           },
@@ -552,11 +472,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 468,
+              "line": 462,
               "column": 12
             },
             "end": {
-              "line": 473,
+              "line": 467,
               "column": 13
             }
           },
@@ -573,11 +493,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 475,
+              "line": 469,
               "column": 12
             },
             "end": {
-              "line": 565,
+              "line": 559,
               "column": 13
             }
           },
@@ -590,11 +510,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 567,
+              "line": 561,
               "column": 12
             },
             "end": {
-              "line": 576,
+              "line": 570,
               "column": 13
             }
           },
@@ -607,11 +527,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 581,
+              "line": 575,
               "column": 12
             },
             "end": {
-              "line": 585,
+              "line": 579,
               "column": 13
             }
           },
@@ -624,11 +544,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 590,
+              "line": 584,
               "column": 12
             },
             "end": {
-              "line": 594,
+              "line": 588,
               "column": 13
             }
           },
@@ -641,11 +561,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 599,
+              "line": 593,
               "column": 12
             },
             "end": {
-              "line": 603,
+              "line": 597,
               "column": 13
             }
           },
@@ -658,11 +578,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 608,
+              "line": 602,
               "column": 12
             },
             "end": {
-              "line": 612,
+              "line": 606,
               "column": 13
             }
           },
@@ -679,11 +599,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 617,
+              "line": 611,
               "column": 12
             },
             "end": {
-              "line": 621,
+              "line": 615,
               "column": 13
             }
           },
@@ -696,11 +616,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 627,
+              "line": 621,
               "column": 12
             },
             "end": {
-              "line": 631,
+              "line": 625,
               "column": 13
             }
           },
@@ -713,11 +633,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 633,
+              "line": 627,
               "column": 12
             },
             "end": {
-              "line": 640,
+              "line": 634,
               "column": 13
             }
           },
@@ -734,11 +654,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 642,
+              "line": 636,
               "column": 12
             },
             "end": {
-              "line": 648,
+              "line": 642,
               "column": 13
             }
           },
@@ -750,16 +670,100 @@
           ]
         },
         {
+          "name": "_disableundoredoChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 644,
+              "column": 12
+            },
+            "end": {
+              "line": 650,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "disableundoredo"
+            }
+          ]
+        },
+        {
+          "name": "_disableclearChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 652,
+              "column": 12
+            },
+            "end": {
+              "line": 657,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "disableclear"
+            }
+          ]
+        },
+        {
+          "name": "_disableexportChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 659,
+              "column": 12
+            },
+            "end": {
+              "line": 664,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "disableexport"
+            }
+          ]
+        },
+        {
+          "name": "_disableconvertChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 666,
+              "column": 12
+            },
+            "end": {
+              "line": 671,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "disableconvert"
+            }
+          ]
+        },
+        {
           "name": "_unloadedChanged",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 650,
+              "line": 673,
               "column": 12
             },
             "end": {
-              "line": 660,
+              "line": 683,
               "column": 13
             }
           },
@@ -776,11 +780,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 662,
+              "line": 685,
               "column": 12
             },
             "end": {
-              "line": 672,
+              "line": 695,
               "column": 13
             }
           },
@@ -793,11 +797,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 674,
+              "line": 697,
               "column": 12
             },
             "end": {
-              "line": 700,
+              "line": 723,
               "column": 13
             }
           },
@@ -843,11 +847,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 186,
+          "line": 212,
           "column": 8
         },
         "end": {
-          "line": 702,
+          "line": 725,
           "column": 9
         }
       },
@@ -860,11 +864,11 @@
           "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "sourceRange": {
             "start": {
-              "line": 248,
+              "line": 274,
               "column": 20
             },
             "end": {
-              "line": 252,
+              "line": 278,
               "column": 21
             }
           },
@@ -876,11 +880,11 @@
           "description": "The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.",
           "sourceRange": {
             "start": {
-              "line": 256,
+              "line": 282,
               "column": 20
             },
             "end": {
-              "line": 260,
+              "line": 286,
               "column": 21
             }
           },
@@ -892,11 +896,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 264,
+              "line": 290,
               "column": 20
             },
             "end": {
-              "line": 268,
+              "line": 294,
               "column": 21
             }
           },
@@ -908,11 +912,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 272,
+              "line": 298,
               "column": 20
             },
             "end": {
-              "line": 276,
+              "line": 302,
               "column": 21
             }
           },
@@ -924,11 +928,11 @@
           "description": "Cloud API version to use (eg V3 or V4)",
           "sourceRange": {
             "start": {
-              "line": 280,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 284,
+              "line": 310,
               "column": 21
             }
           },
@@ -940,11 +944,11 @@
           "description": "Delay without any user input before asking for recognition, only use with REST protocol.",
           "sourceRange": {
             "start": {
-              "line": 288,
+              "line": 314,
               "column": 20
             },
             "end": {
-              "line": 292,
+              "line": 318,
               "column": 21
             }
           },
@@ -956,11 +960,11 @@
           "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.",
           "sourceRange": {
             "start": {
-              "line": 296,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 326,
               "column": 21
             }
           },
@@ -972,11 +976,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 306,
+              "line": 332,
               "column": 20
             },
             "end": {
-              "line": 309,
+              "line": 335,
               "column": 21
             }
           },
@@ -988,11 +992,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 315,
+              "line": 341,
               "column": 20
             },
             "end": {
-              "line": 318,
+              "line": 344,
               "column": 21
             }
           },
@@ -1004,11 +1008,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/programmatic_init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 323,
+              "line": 349,
               "column": 20
             },
             "end": {
-              "line": 329,
+              "line": 355,
               "column": 21
             }
           },
@@ -1020,11 +1024,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 333,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 335,
+              "line": 361,
               "column": 21
             }
           },
@@ -1036,11 +1040,11 @@
           "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 367,
               "column": 20
             },
             "end": {
-              "line": 344,
+              "line": 370,
               "column": 21
             }
           },
@@ -1052,11 +1056,11 @@
           "description": "Color of the stroke",
           "sourceRange": {
             "start": {
-              "line": 348,
+              "line": 374,
               "column": 20
             },
             "end": {
-              "line": 353,
+              "line": 379,
               "column": 21
             }
           },
@@ -1068,11 +1072,11 @@
           "description": "Width of the stroke",
           "sourceRange": {
             "start": {
-              "line": 357,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 362,
+              "line": 388,
               "column": 21
             }
           },
@@ -1080,15 +1084,31 @@
           "type": "number"
         },
         {
+          "name": "hidebuttons",
+          "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
+          "sourceRange": {
+            "start": {
+              "line": 392,
+              "column": 20
+            },
+            "end": {
+              "line": 397,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
           "name": "canundo",
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 366,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 406,
               "column": 21
             }
           },
@@ -1100,11 +1120,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 380,
+              "line": 415,
               "column": 21
             }
           },
@@ -1116,71 +1136,7 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 384,
-              "column": 20
-            },
-            "end": {
-              "line": 389,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "canexport",
-          "description": "True if export button could be displayed.",
-          "sourceRange": {
-            "start": {
-              "line": 393,
-              "column": 20
-            },
-            "end": {
-              "line": 398,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "canconvert",
-          "description": "True if convert button could be displayed.",
-          "sourceRange": {
-            "start": {
-              "line": 402,
-              "column": 20
-            },
-            "end": {
-              "line": 407,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "hidebuttons",
-          "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
-          "sourceRange": {
-            "start": {
-              "line": 411,
-              "column": 20
-            },
-            "end": {
-              "line": 416,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableundoredo",
-          "description": "True if the undo/redo feature is disabled, false otherwise",
-          "sourceRange": {
-            "start": {
-              "line": 420,
+              "line": 419,
               "column": 20
             },
             "end": {
@@ -1192,15 +1148,15 @@
           "type": "boolean"
         },
         {
-          "name": "disableclear",
-          "description": "True if the clear feature is disabled, false otherwise",
+          "name": "canexport",
+          "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
               "line": 428,
               "column": 20
             },
             "end": {
-              "line": 432,
+              "line": 433,
               "column": 21
             }
           },
@@ -1208,31 +1164,15 @@
           "type": "boolean"
         },
         {
-          "name": "disableexport",
-          "description": "True if the export feature is disabled, false otherwise",
+          "name": "canconvert",
+          "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 436,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 440,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableconvert",
-          "description": "True if the convert feature is disabled, false otherwise",
-          "sourceRange": {
-            "start": {
-              "line": 444,
-              "column": 20
-            },
-            "end": {
-              "line": 448,
+              "line": 442,
               "column": 21
             }
           },
@@ -1244,11 +1184,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 453,
+              "line": 447,
               "column": 20
             },
             "end": {
-              "line": 456,
+              "line": 450,
               "column": 21
             }
           },
@@ -1260,11 +1200,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 460,
+              "line": 454,
               "column": 20
             },
             "end": {
-              "line": 464,
+              "line": 458,
               "column": 21
             }
           },
@@ -1347,6 +1287,12 @@
         },
         {
           "type": "CustomEvent",
+          "name": "hidebuttons-changed",
+          "description": "Fired when the `hidebuttons` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
           "name": "canundo-changed",
           "description": "Fired when the `canundo` property changes.",
           "metadata": {}
@@ -1377,12 +1323,6 @@
         },
         {
           "type": "CustomEvent",
-          "name": "hidebuttons-changed",
-          "description": "Fired when the `hidebuttons` property changes.",
-          "metadata": {}
-        },
-        {
-          "type": "CustomEvent",
           "name": "exports-changed",
           "description": "Fired when the `exports` property changes.",
           "metadata": {}
@@ -1396,7 +1336,7 @@
       "tagname": "myscript-common-element"
     },
     {
-      "description": "`myscript-languages-element` is a web component to retrieve CDK available languages.\n\n    <myscript-languages-element\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-languages-element>\n\n### Styling\n\n`<myscript-languages-element>` provides the following custom properties for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--myscript-languages-element-display` | Display a language selector (set to `block` to display) | none",
+      "description": "`myscript-languages-element` is a web component to retrieve CDK available languages.\n\n    <myscript-languages-element\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-languages-element>\n\n### Styling\n\n`<myscript-languages-element>` provides the following custom properties for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--myscript-languages-element-display` | Display a language selector (set to `initial` to display) | none",
       "summary": "",
       "path": "myscript-languages-element.html",
       "properties": [
