@@ -28,10 +28,6 @@ Custom property | Description | Default
 `--myscript-common-element-button-background` | Buttons background | #1A9FFF
 `--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
 `--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
-`--myscript-common-element-undo-redo-display` | Display undo/redo buttons (set to `none` to hide) | initial
-`--myscript-common-element-clear-display` | Display clear button (set to `none` to hide) | initial
-`--myscript-common-element-export-display` | Display export button (set to `none` to hide) | initial
-`--myscript-common-element-convert-display` | Display convert button (set to `none` to hide) | initial
 
 @demo demo/get_started.html Get started with SHAPE
 @demo demo/v4_configuration.html Use interactive ink api for MATH (v4)
@@ -54,11 +50,6 @@ Custom property | Description | Default
                 --myscript-common-element-button-background: #1A9FFF;
                 --myscript-common-element-button-focus-background: #1A9FFF;
                 --myscript-common-element-button-disabled-background: #F5F6F7;
-
-                --myscript-common-element-undo-redo-display: initial;
-                --myscript-common-element-clear-display: initial;
-                --myscript-common-element-convert-display: initial;
-                --myscript-common-element-export-display: initial;
 
                 --paper-fab-background: var(--myscript-common-element-button-background);
                 --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background);
@@ -90,23 +81,6 @@ Custom property | Description | Default
 
             paper-fab {
                 margin: 6px;
-            }
-
-            paper-fab[title=undo],
-            paper-fab[title=redo] {
-                display: var(--myscript-common-element-undo-redo-display);
-            }
-
-            paper-fab[title=clear] {
-                display: var(--myscript-common-element-clear-display);
-            }
-
-            paper-fab[title=convert] {
-                display: var(--myscript-common-element-convert-display);
-            }
-
-            paper-fab[title=export] {
-                display: var(--myscript-common-element-export-display);
             }
 
             .ms-editor {
@@ -184,25 +158,25 @@ Custom property | Description | Default
             }
         </style>
         <div class="loader" hidden="[[ !unloaded ]]"></div>
-        <div class="error-msg" hidden>
-            MyScript recognition server is not reachable. Please reload once you are connected
+        <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
+            connected
         </div>
         <template is="dom-if" if="[[ !hidebuttons ]]">
             <nav>
                 <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
-                           disabled="[[ !canclear ]]">
+                           disabled="[[ !canclear ]]" hidden="[[ disableclear ]]">
                 </paper-fab>
                 <paper-fab mini src$="[[importPath]]undo.svg" title="undo" on-tap="undo"
-                           disabled="[[ !canundo ]]">
+                           disabled="[[ !canundo ]]" hidden="[[ disableundoredo ]]">
                 </paper-fab>
                 <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
-                           disabled="[[ !canredo ]]">
+                           disabled="[[ !canredo ]]" hidden="[[ disableundoredo ]]">
                 </paper-fab>
                 <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="askForExport"
-                           disabled="[[ !canexport ]]">
+                           disabled="[[ !canexport ]]" hidden="[[ disableexport ]]">
                 </paper-fab>
                 <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
-                           disabled="[[ !canconvert ]]">
+                           disabled="[[ !canconvert ]]" hidden="[[ disableconvert ]]">
                 </paper-fab>
             </nav>
         </template>
@@ -388,15 +362,6 @@ Custom property | Description | Default
                         observer: '_strokewidthChanged'
                     },
                     /**
-                     * If set to true, hide the buttons (Trash, Undo, Redo).
-                     */
-                    hidebuttons: {
-                        type: Boolean,
-                        reflectToAttribute: true,
-                        value: false,
-                        notify: true
-                    },
-                    /**
                      * True if undo is available
                      */
                     canundo: {
@@ -440,6 +405,47 @@ Custom property | Description | Default
                         value: false,
                         reflectToAttribute: true,
                         notify: true
+                    },
+                    /**
+                     * If set to true, hide the buttons (Trash, Undo, Redo).
+                     */
+                    hidebuttons: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
+                    },
+                    /**
+                     * True if the undo/redo feature is disabled, false otherwise
+                     */
+                    disableundoredo: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the clear feature is disabled, false otherwise
+                     */
+                    disableclear: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the export feature is disabled, false otherwise
+                     */
+                    disableexport: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the convert feature is disabled, false otherwise
+                     */
+                    disableconvert: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Exports.
@@ -552,8 +558,8 @@ Custom property | Description | Default
                     .keys(this.currentListeners)
                     .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
 
-                this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildCustomStyle());
-                this.configuration = this.editor.configuration;
+                    this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildCustomStyle());
+                    this.configuration = this.editor.configuration;
 
                 this.logger.info('common-element attached');
                 this.initializing = false;
@@ -640,35 +646,6 @@ Custom property | Description | Default
                     this._buildCustomStyle();
                     this.editor.customStyle = this.customStyle;
                 }
-            }
-
-            _disableundoredoChanged(disableundoredo) {
-              const style = {
-                  '--myscript-common-element-undo-display': disableundoredo ? 'none' : 'flex',
-                  '--myscript-common-element-redo-display': disableundoredo ? 'none' : 'flex'
-              };
-              this.updateStyles(style);
-            }
-
-            _disableclearChanged(disableclear) {
-                const style = {
-                    '--myscript-common-element-clear-display': disableclear? 'none' : 'flex'
-                };
-                this.updateStyles(style);
-            }
-
-            _disableexportChanged(disableexport) {
-                const style = {
-                    '--myscript-common-element-export-display': disableexport? 'none' : 'flex'
-                };
-                this.updateStyles(style);
-            }
-
-            _disableconvertChanged(disableconvert) {
-                const style = {
-                    '--myscript-common-element-convert-display': disableconvert? 'none' : 'flex'
-                };
-                this.updateStyles(style);
             }
 
             _unloadedChanged(unloaded) {
