@@ -8,14 +8,6 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-### Styling
-
-`<myscript-languages-element>` provides the following custom properties for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--myscript-languages-element-display` | Display a language selector (set to `block` to display) | none
-
 @demo demo/get_languages.html Get languages
 @demo demo/get_languages_programmatic.html Get languages programmatically
 -->
@@ -23,14 +15,15 @@ Custom property | Description | Default
     <template>
         <style>
             :host {
-                --myscript-languages-element-display: none;
-
                 box-sizing: border-box;
                 display: inline-block;
             }
 
+            [hidden] {
+                display: none !important;
+            }
+
             select {
-                display: var(--myscript-languages-element-display);
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 width: auto;
@@ -46,7 +39,7 @@ Custom property | Description | Default
                 -webkit-tap-highlight-color: transparent;
             }
         </style>
-        <select disabled="[[ unloaded ]]"></select>
+        <select disabled="[[ unloaded ]]" hidden="[[ !select ]]"></select>
     </template>
     <script>
         class MyScriptLanguagesElement extends Polymer.Element {
@@ -134,6 +127,15 @@ Custom property | Description | Default
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true
+                    },
+                    /**
+                     * If set to true, display the language select.
+                     */
+                    select: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
                     }
                 }
             }
