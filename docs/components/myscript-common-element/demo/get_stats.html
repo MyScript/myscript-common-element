@@ -27,8 +27,8 @@
 </body>
 <script>
     const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('change', () => {
-        paperToast.text = `Stats for this input are : ${JSON.stringify(document.querySelector('myscript-common-element').getStats())}`;
+    document.querySelector('myscript-common-element').addEventListener('change', (event) => {
+        paperToast.text = `Stats for this input are : ${JSON.stringify(event.target.getStats())}`;
         paperToast.fitIn = paperToast.show();
     });
 </script>
