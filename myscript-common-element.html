@@ -273,7 +273,6 @@ Custom property | Description | Default
             static get properties() {
                 return {
                     /**
-                     * <b>not mutable</b><br />
                      * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
                      */
                     type: {
@@ -534,20 +533,22 @@ Custom property | Description | Default
                             case MyScript.Constants.EventType.LOADED:
                                 this.unloaded = false;
                                 break;
-                            case MyScript.Constants.EventType.CHANGED: {
-                                if (event.detail) {
-                                    this.canclear = event.detail.canClear;
-                                    this.canundo = event.detail.canUndo;
-                                    this.canredo = event.detail.canRedo;
-                                    this.canexport = event.detail.canExport;
-                                    this.canconvert = event.detail.canConvert;
+                            case MyScript.Constants.EventType.CHANGED:
+                                {
+                                    if (event.detail) {
+                                        this.canclear = event.detail.canClear;
+                                        this.canundo = event.detail.canUndo;
+                                        this.canredo = event.detail.canRedo;
+                                        this.canexport = event.detail.canExport;
+                                        this.canconvert = event.detail.canConvert;
+                                    }
                                 }
-                            }
                                 break;
-                            case MyScript.Constants.EventType.EXPORTED: {
-                                this.exports = event.detail ? event.detail.exports : {};
-                                this.errorElement.setAttribute('hidden', 'true');
-                            }
+                            case MyScript.Constants.EventType.EXPORTED:
+                                {
+                                    this.exports = event.detail ? event.detail.exports : {};
+                                    this.errorElement.setAttribute('hidden', 'true');
+                                }
                                 break;
                             case MyScript.Constants.EventType.CLEAR:
                                 this.exports = {};
@@ -561,7 +562,7 @@ Custom property | Description | Default
                                             event.detail.serverMessage.error.result &&
                                             event.detail.serverMessage.error.result.error &&
                                             (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
-                                            event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
+                                                event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
                                             this.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
                                         } else {
                                             this.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
@@ -581,7 +582,9 @@ Custom property | Description | Default
                                 break;
                         }
                         // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                        this.dispatchEvent(new CustomEvent(event.type, {
+                            detail: event.detail
+                        }));
                     });
 
                 Object
