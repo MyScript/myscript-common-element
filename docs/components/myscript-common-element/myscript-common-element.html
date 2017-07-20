@@ -630,10 +630,92 @@ Custom property | Description | Default
              * Return the stats allowing to monitor what ink size is send to the server.
              * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
              */
+<<<<<<< Updated upstream
             getStats() {
                 if (this.editor) {
                     return this.editor.stats;
                 }
+=======
+            _disableRecognize: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableRecognize(hidebuttons,timeout,protocol)'
+            }
+        },
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        listeners: {
+            'iron-resize': '_onResize'
+        },
+        /**
+         * Clear all context
+         */
+        clear: function () {
+            if (this._inkPaper) {
+                this._inkPaper.clear();
+            }
+        },
+        /**
+         * <b>Deprecated</b>: Use clear instead of delete<br />
+         * @deprecated Use clear instead of delete
+         * @private
+         */
+        delete: function () {
+            this.clear();
+        },
+        /**
+         * Undo action, and launch recognition if timeout is set
+         */
+        undo: function () {
+            if (this._inkPaper) {
+                this._inkPaper.undo();
+            }
+        },
+        /**
+         * Redo action, and launch recognition if timeout is set
+         */
+        redo: function () {
+            if (this._inkPaper) {
+                this._inkPaper.redo();
+            }
+        },
+        /**
+         * Launch recognition
+         */
+        recognize: function () {
+            if (this._inkPaper) {
+                this._inkPaper.recognize();
+            }
+        },
+        /**
+         * Get available languages
+         * @param {String} inputMode Optional recognition input mode
+         */
+        getAvailableLanguages: function (inputMode) {
+            if (this._inkPaper) {
+                this._inkPaper.getAvailableLanguages(inputMode);
+            }
+        },
+        /**
+         * Return the stats allowing to monitor what ink size is send to the server.
+         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+         */
+        getStats: function () {
+            if (this._inkPaper) {
+                return this._inkPaper.getStats();
+            }
+        },
+        attached: function () {
+            this._inputArea = this.querySelector('#myscript-input-area');
+            this._paperToast = this.querySelector('paper-toast');
+            this._penParameters = new MyScript.PenParameters();
+            if(this.strokecolor){
+                this._penParameters.color = this.strokecolor;
+            }
+            if(this.strokewidth){
+                this._penParameters.width = this.strokewidth;
+>>>>>>> Stashed changes
             }
 
             _pencolorChanged(color) {
