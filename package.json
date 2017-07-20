@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "cache-clean": "bower cache clean",
+    "install": "bower install",
+    "analyze": "polymer analyze myscript-common-element.html myscript-languages-element.html > analysis.json",
+    "start": "polymer serve"
+  }
+}
