@@ -29,14 +29,16 @@ Custom property | Description | Default
 `--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
 `--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
 
-@demo demo/get_started.html Get started with SHAPE
-@demo demo/v4_configuration.html Use interactive ink api for MATH (v4)
-@demo demo/handle_exports.html Handle exports
-@demo demo/handle_error.html Handle error
-@demo demo/styling.html Customize your component style
-@demo demo/programmatic_init.html Programmatic initialization
-@demo demo/get_stats.html Get statistics
-@demo demo/debug.html Debug your component
+@demo examples/v4/index.html Get started (iink SDK web)
+@demo examples/v4/exporting_on_demand.html Handling exports (iink SDK web)
+@demo examples/v4/customizing_style.html Customizing style (iink SDK web)
+@demo examples/v3/index.html Get started (CDK v3.2)
+@demo examples/v3/handling_exports.html Handling exports (CDK 3.2)
+@demo examples/v3/customizing_style.html Customizing style (CDK 3.2)
+@demo examples/programmatic_init.html Configuring component with Javascript
+@demo examples/handling_errors.html Demonstration of error handling
+@demo examples/get_stats.html Accessing the editor stats
+
 -->
 <dom-module id="myscript-common-element">
     <style>
@@ -628,20 +630,22 @@ Custom property | Description | Default
                                 this.configuration = this.editor.configuration;
                                 this.unloaded = false;
                                 break;
-                            case MyScript.Constants.EventType.CHANGED: {
-                                if (event.detail) {
-                                    this.canclear = event.detail.canClear;
-                                    this.canundo = event.detail.canUndo;
-                                    this.canredo = event.detail.canRedo;
-                                    this.canexport = event.detail.canExport;
-                                    this.canconvert = event.detail.canConvert;
+                            case MyScript.Constants.EventType.CHANGED:
+                                {
+                                    if (event.detail) {
+                                        this.canclear = event.detail.canClear;
+                                        this.canundo = event.detail.canUndo;
+                                        this.canredo = event.detail.canRedo;
+                                        this.canexport = event.detail.canExport;
+                                        this.canconvert = event.detail.canConvert;
+                                    }
                                 }
-                            }
                                 break;
-                            case MyScript.Constants.EventType.EXPORTED: {
-                                this.exports = event.detail ? event.detail.exports : {};
-                                this.errorElement.setAttribute('hidden', 'true');
-                            }
+                            case MyScript.Constants.EventType.EXPORTED:
+                                {
+                                    this.exports = event.detail ? event.detail.exports : {};
+                                    this.errorElement.setAttribute('hidden', 'true');
+                                }
                                 break;
                             case MyScript.Constants.EventType.CLEAR:
                                 this.exports = {};
@@ -686,9 +690,9 @@ Custom property | Description | Default
 
                 Polymer.RenderStatus.beforeNextRender(this, () => {
                     this.editor = MyScript.register(this.editorDomElement,
-                                                    this._buildConfiguration(),
-                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                        this._buildConfiguration(),
+                        MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                        MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
                     this.logger.info('common-element attached');
                 })
             }

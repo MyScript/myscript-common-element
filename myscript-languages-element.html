@@ -8,8 +8,8 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-@demo demo/get_languages.html Get languages
-@demo demo/get_languages_programmatic.html Get languages programmatically
+@demo examples/myscript-languages-element/get_languages.html Get languages
+@demo examples/myscript-languages-element/get_languages_programmatic.html Get languages programmatically
 -->
 <dom-module id="myscript-languages-element">
     <template>
@@ -210,7 +210,9 @@
                 this._selectHandler = (e) => {
                     const selected = this.languages
                         .filter(language => language.value === e.target.value);
-                    this.dispatchEvent(new CustomEvent('select', { detail: selected.length > 0 ? selected[0] : undefined }));
+                    this.dispatchEvent(new CustomEvent('select', {
+                        detail: selected.length > 0 ? selected[0] : undefined
+                    }));
                 };
 
                 this.selectElement.addEventListener('change', this._selectHandler);
@@ -252,7 +254,10 @@
                         this.languages = Object
                             .keys(res.result)
                             .map((key) => {
-                                return { 'value': key, 'description': res.result[key] };
+                                return {
+                                    'value': key,
+                                    'description': res.result[key]
+                                };
                             });
                         this.unloaded = false;
 
@@ -262,13 +267,17 @@
                             this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, selected, selected)
                         });
                         this.selectElement.disabled = false;
-                        this.dispatchEvent(new CustomEvent('change', { detail: this.languages }));
+                        this.dispatchEvent(new CustomEvent('change', {
+                            detail: this.languages
+                        }));
                         return this.languages;
                     })
                     .catch((err) => {
                         this.languages = [];
                         this.unloaded = false;
-                        this.dispatchEvent(new CustomEvent('error', { detail: err }));
+                        this.dispatchEvent(new CustomEvent('error', {
+                            detail: err
+                        }));
                     });
             }
 
