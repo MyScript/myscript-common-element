@@ -206,7 +206,7 @@ Custom property | Description | Default
             <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
                        disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
-            <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="askForExport"
+            <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="exportContent"
                        disabled="[[ !canexport ]]" hidden="[[ disableexportcontrol ]]">
             </paper-fab>
             <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
@@ -738,9 +738,9 @@ Custom property | Description | Default
             /**
              * Trigger export
              */
-            askForExport(exports) {
+            exportContent(exports) {
                 if (this.editor) {
-                    this.editor.askForExport(exports);
+                    this.editor.exportContent(exports);
                 }
             }
 
