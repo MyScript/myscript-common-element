@@ -198,11 +198,21 @@
                     this.hmackey);
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('languages-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                Object
+                    .keys(MyScript.Constants.Logger)
+                    .forEach((key) => {
+                        MyScript.LoggerConfig
+                            .getLogger(MyScript.Constants.Logger[key])
+                            .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                    });
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
                 this.logger.info('attached callback');
 
                 this.selectElement = this.shadowRoot.querySelector('select');

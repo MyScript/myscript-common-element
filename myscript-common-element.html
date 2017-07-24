@@ -192,9 +192,9 @@ Custom property | Description | Default
                 }
             }
         </style>
-        <div class="loader" hidden="[[ !unloaded ]]"></div>
-        <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
-            connected
+        <div class="loader"></div>
+        <div class="error-msg" hidden>
+            MyScript recognition server is not reachable. Please reload once you are connected
         </div>
         <nav hidden="[[ disablecontrols ]]">
             <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
@@ -355,7 +355,7 @@ Custom property | Description | Default
                      */
                     unloaded: {
                         type: Boolean,
-                        value: true,
+                        value: false,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
@@ -599,10 +599,8 @@ Custom property | Description | Default
                 }
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-                this.addEventListener('iron-resize', this._resizeHandler);
-
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('common-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 Object
@@ -612,10 +610,15 @@ Custom property | Description | Default
                             .getLogger(MyScript.Constants.Logger[key])
                             .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                     });
+            }
 
+            connectedCallback() {
+                super.connectedCallback();
+                this.addEventListener('iron-resize', this._resizeHandler);
                 this.logger.info('common-element attached callback');
 
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
+                this.loader = this.shadowRoot.querySelector('.loader');
                 this.errorElement = this.shadowRoot.querySelector('.error-msg');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
 
@@ -628,24 +631,23 @@ Custom property | Description | Default
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
                                 this.configuration = this.editor.configuration;
+                                this.loader.setAttribute('hidden', 'true');
                                 this.unloaded = false;
                                 break;
-                            case MyScript.Constants.EventType.CHANGED:
-                                {
-                                    if (event.detail) {
-                                        this.canclear = event.detail.canClear;
-                                        this.canundo = event.detail.canUndo;
-                                        this.canredo = event.detail.canRedo;
-                                        this.canexport = event.detail.canExport;
-                                        this.canconvert = event.detail.canConvert;
-                                    }
+                            case MyScript.Constants.EventType.CHANGED: {
+                                if (event.detail) {
+                                    this.canclear = event.detail.canClear;
+                                    this.canundo = event.detail.canUndo;
+                                    this.canredo = event.detail.canRedo;
+                                    this.canexport = event.detail.canExport;
+                                    this.canconvert = event.detail.canConvert;
                                 }
+                            }
                                 break;
-                            case MyScript.Constants.EventType.EXPORTED:
-                                {
-                                    this.exports = event.detail ? event.detail.exports : {};
-                                    this.errorElement.setAttribute('hidden', 'true');
-                                }
+                            case MyScript.Constants.EventType.EXPORTED: {
+                                this.exports = event.detail ? event.detail.exports : {};
+                                this.errorElement.setAttribute('hidden', 'true');
+                            }
                                 break;
                             case MyScript.Constants.EventType.CLEAR:
                                 this.exports = {};
@@ -782,6 +784,7 @@ Custom property | Description | Default
                 if (this.editor) {
                     this.logger.trace('unloaded changed', unloaded);
                     if (unloaded === true) {
+                        this.loader.removeAttribute('hidden');
                         this.errorElement.setAttribute('hidden', 'true');
                         this.editor.configuration = this._buildConfiguration();
                     }
