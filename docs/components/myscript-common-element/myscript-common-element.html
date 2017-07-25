@@ -29,14 +29,17 @@ Custom property | Description | Default
 `--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
 `--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
 
-@demo demo/get_started.html Get started with SHAPE
-@demo demo/v4_configuration.html Use interactive ink api for MATH (v4)
-@demo demo/handle_exports.html Handle exports
-@demo demo/handle_error.html Handle error
-@demo demo/styling.html Customize your component style
-@demo demo/programmatic_init.html Programmatic initialization
-@demo demo/get_stats.html Get statistics
-@demo demo/debug.html Debug your component
+@demo examples/v4/index.html Get started (iink SDK web)
+@demo examples/v4/exporting_on_demand.html Handling exports (iink SDK web)
+@demo examples/v4/customizing_style.html Customizing style (iink SDK web)
+@demo examples/v4/exporting_on_demand.html Exporting on demand (iink SDK web)
+@demo examples/v3/index.html Get started (CDK v3.2)
+@demo examples/v3/handling_exports.html Handling exports (CDK 3.2)
+@demo examples/v3/customizing_style.html Customizing style (CDK 3.2)
+@demo examples/programmatic_init.html Configuring component with Javascript
+@demo examples/handling_errors.html Demonstration of error handling
+@demo examples/get_stats.html Accessing the editor stats
+
 -->
 <dom-module id="myscript-common-element">
     <template>
@@ -163,9 +166,9 @@ Custom property | Description | Default
                 }
             }
         </style>
-        <div class="loader" hidden="[[ !unloaded ]]"></div>
-        <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
-            connected
+        <div class="loader"></div>
+        <div class="error-msg" hidden>
+            MyScript recognition server is not reachable. Please reload once you are connected
         </div>
         <nav hidden="[[ disablecontrols ]]">
             <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
@@ -177,7 +180,7 @@ Custom property | Description | Default
             <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
                        disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
-            <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="askForExport"
+            <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="exportContent"
                        disabled="[[ !canexport ]]" hidden="[[ disableexportcontrol ]]">
             </paper-fab>
             <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
@@ -289,7 +292,7 @@ Custom property | Description | Default
                     /**
                      * Delay without any user input before asking for recognition, only use with REST protocol.
                      */
-                    recognitiontriggerdelay: {
+                    triggerdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 2000
@@ -297,10 +300,18 @@ Custom property | Description | Default
                     /**
                      * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
                      */
-                    recognitionprocessdelay: {
+                    processdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 1000
+                    },
+                    /**
+                     * True if export should be done on-demand, false otherwise
+                     */
+                    ondemand: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />
@@ -326,7 +337,7 @@ Custom property | Description | Default
                      */
                     unloaded: {
                         type: Boolean,
-                        value: true,
+                        value: false,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
@@ -344,10 +355,7 @@ Custom property | Description | Default
                      */
                     configuration: {
                         type: Object,
-                        notify: true,
-                        value() {
-                            return this._buildConfiguration();
-                        }
+                        notify: true
                     },
                     /**
                      * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
@@ -509,24 +517,30 @@ Custom property | Description | Default
                 };
             }
 
-            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
+                if (!conf.triggers) {
+                    conf.triggers = {};
+                }
                 if (!conf.recognitionParams) {
                     conf.recognitionParams = {};
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
                 }
-                if (recognitiontriggerdelay) {
-                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                if (triggerdelay) {
+                    conf.triggerdelay = triggerdelay;
                 }
-                if (recognitionprocessdelay) {
-                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                if (processdelay) {
+                    conf.processdelay = processdelay;
                 }
                 if (protocol) {
-                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                     conf.recognitionParams.protocol = protocol;
+                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
+                }
+                if (ondemand) {
+                    conf.triggers.exportContent = 'DEMAND';
                 }
                 if (type) {
                     conf.recognitionParams.type = type;
@@ -552,8 +566,9 @@ Custom property | Description | Default
             _buildConfiguration() {
                 return MyScriptCommonElement._generateConfiguration(
                     this.configuration,
-                    this.recognitiontriggerdelay,
-                    this.recognitionprocessdelay,
+                    this.triggerdelay,
+                    this.processdelay,
+                    this.ondemand,
                     this.type,
                     this.protocol,
                     this.apiversion,
@@ -570,10 +585,8 @@ Custom property | Description | Default
                 }
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-                this.addEventListener('iron-resize', this._resizeHandler);
-
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('common-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 Object
@@ -583,10 +596,15 @@ Custom property | Description | Default
                             .getLogger(MyScript.Constants.Logger[key])
                             .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                     });
+            }
 
+            connectedCallback() {
+                super.connectedCallback();
+                this.addEventListener('iron-resize', this._resizeHandler);
                 this.logger.info('common-element attached callback');
 
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
+                this.loader = this.shadowRoot.querySelector('.loader');
                 this.errorElement = this.shadowRoot.querySelector('.error-msg');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
 
@@ -599,6 +617,7 @@ Custom property | Description | Default
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
                                 this.configuration = this.editor.configuration;
+                                this.loader.setAttribute('hidden', 'true');
                                 this.unloaded = false;
                                 break;
                             case MyScript.Constants.EventType.CHANGED: {
@@ -659,9 +678,9 @@ Custom property | Description | Default
 
                 Polymer.RenderStatus.beforeNextRender(this, () => {
                     this.editor = MyScript.register(this.editorDomElement,
-                                                    this._buildConfiguration(),
-                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                        this._buildConfiguration(),
+                        MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                        MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
                     this.logger.info('common-element attached');
                 })
             }
@@ -707,9 +726,9 @@ Custom property | Description | Default
             /**
              * Trigger export
              */
-            askForExport(exports) {
+            exportContent() {
                 if (this.editor) {
-                    this.editor.askForExport(exports);
+                    this.editor.exportContent();
                 }
             }
 
@@ -751,6 +770,7 @@ Custom property | Description | Default
                 if (this.editor) {
                     this.logger.trace('unloaded changed', unloaded);
                     if (unloaded === true) {
+                        this.loader.removeAttribute('hidden');
                         this.errorElement.setAttribute('hidden', 'true');
                         this.editor.configuration = this._buildConfiguration();
                     }

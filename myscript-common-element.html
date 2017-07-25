@@ -32,6 +32,7 @@ Custom property | Description | Default
 @demo examples/v4/index.html Get started (iink SDK web)
 @demo examples/v4/exporting_on_demand.html Handling exports (iink SDK web)
 @demo examples/v4/customizing_style.html Customizing style (iink SDK web)
+@demo examples/v4/exporting_on_demand.html Exporting on demand (iink SDK web)
 @demo examples/v3/index.html Get started (CDK v3.2)
 @demo examples/v3/handling_exports.html Handling exports (CDK 3.2)
 @demo examples/v3/customizing_style.html Customizing style (CDK 3.2)
@@ -318,7 +319,7 @@ Custom property | Description | Default
                     /**
                      * Delay without any user input before asking for recognition, only use with REST protocol.
                      */
-                    recognitiontriggerdelay: {
+                    triggerdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 2000
@@ -326,10 +327,18 @@ Custom property | Description | Default
                     /**
                      * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
                      */
-                    recognitionprocessdelay: {
+                    processdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 1000
+                    },
+                    /**
+                     * True if export should be done on-demand, false otherwise
+                     */
+                    ondemand: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />
@@ -535,24 +544,30 @@ Custom property | Description | Default
                 };
             }
 
-            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
+                if (!conf.triggers) {
+                    conf.triggers = {};
+                }
                 if (!conf.recognitionParams) {
                     conf.recognitionParams = {};
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
                 }
-                if (recognitiontriggerdelay) {
-                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                if (triggerdelay) {
+                    conf.triggerdelay = triggerdelay;
                 }
-                if (recognitionprocessdelay) {
-                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                if (processdelay) {
+                    conf.processdelay = processdelay;
                 }
                 if (protocol) {
-                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                     conf.recognitionParams.protocol = protocol;
+                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
+                }
+                if (ondemand) {
+                    conf.triggers.exportContent = 'DEMAND';
                 }
                 if (type) {
                     conf.recognitionParams.type = type;
@@ -578,8 +593,9 @@ Custom property | Description | Default
             _buildConfiguration() {
                 return MyScriptCommonElement._generateConfiguration(
                     this.configuration,
-                    this.recognitiontriggerdelay,
-                    this.recognitionprocessdelay,
+                    this.triggerdelay,
+                    this.processdelay,
+                    this.ondemand,
                     this.type,
                     this.protocol,
                     this.apiversion,
@@ -737,9 +753,9 @@ Custom property | Description | Default
             /**
              * Trigger export
              */
-            exportContent(exports) {
+            exportContent() {
                 if (this.editor) {
-                    this.editor.exportContent(exports);
+                    this.editor.exportContent();
                 }
             }
 

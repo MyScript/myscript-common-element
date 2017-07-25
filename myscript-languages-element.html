@@ -144,24 +144,27 @@
                 }
             }
 
-            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
+                if (!conf.triggers) {
+                    conf.triggers = {};
+                }
                 if (!conf.recognitionParams) {
                     conf.recognitionParams = {};
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
                 }
-                if (recognitiontriggerdelay) {
-                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                if (triggerdelay) {
+                    conf.triggerDelay = triggerdelay;
                 }
-                if (recognitionprocessdelay) {
-                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                if (processdelay) {
+                    conf.processDelay = processdelay;
                 }
                 if (protocol) {
-                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                     conf.recognitionParams.protocol = protocol;
+                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                 }
                 if (type) {
                     conf.recognitionParams.type = type;
@@ -187,8 +190,8 @@
             _buildConfiguration() {
                 return MyScriptCommonElement._generateConfiguration(
                     this.configuration,
-                    this.recognitiontriggerdelay,
-                    this.recognitionprocessdelay,
+                    this.triggerdelay,
+                    this.processdelay,
                     this.type,
                     this.protocol,
                     this.apiversion,
