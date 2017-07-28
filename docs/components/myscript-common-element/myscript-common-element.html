@@ -166,10 +166,6 @@ Custom property | Description | Default
                 }
             }
         </style>
-        <div class="loader"></div>
-        <div class="error-msg" hidden>
-            MyScript recognition server is not reachable. Please reload once you are connected
-        </div>
         <nav hidden="[[ disablecontrols ]]">
             <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
                        disabled="[[ !canclear ]]" hidden="[[ disableclearcontrol ]]">
@@ -187,7 +183,20 @@ Custom property | Description | Default
                        disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
             </paper-fab>
         </nav>
-        <div id="editorDomElement" class="ms-editor"></div>
+        <div id="editorDomElement"
+             class="ms-editor"
+             on-load="_loadListener"
+             on-change="_changeListener"
+             on-exported="_exportedListener"
+             on-converted="_convertedListener"
+             on-undo="_undoListener"
+             on-redo="_redoListener"
+             on-clear="_clearListener"
+             on-export="_exportListener"
+             on-convert="_convertListener"
+             on-idle="_idleListener"
+             on-error="_errorListener">
+        </div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script>
@@ -578,11 +587,104 @@ Custom property | Description | Default
                     this.hmackey);
             }
 
-            _resizeHandler(event) {
+            _resizeListener(event) {
                 if (this.editor) {
                     this.logger.trace('resizing', event);
                     this.editor.resize();
                 }
+            }
+
+            _loadListener(event) {
+                this.configuration = this.editor.configuration;
+                this.unloaded = false;
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _changeListener(event) {
+                if (event.detail) {
+                    this.canclear = event.detail.canClear;
+                    this.canundo = event.detail.canUndo;
+                    this.canredo = event.detail.canRedo;
+                    this.canexport = event.detail.canExport;
+                    this.canconvert = event.detail.canConvert;
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportedListener(event) {
+                this.exports = event.detail ? event.detail.exports : {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertedListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _undoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _redoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _clearListener(event) {
+                this.exports = {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _idleListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _errorListener(event) {
+                this.logger.error('error', event);
+                if (event.detail && event.detail.message && (!event.detail.recoverable || event.detail.recoverable === true)) {
+                    this.paperToast.text = event.detail.message;
+                    this.paperToast.fitIn = this.paperToast.show();
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
             }
 
             constructor() {
@@ -599,100 +701,26 @@ Custom property | Description | Default
             }
 
             connectedCallback() {
-                super.connectedCallback();
-                this.addEventListener('iron-resize', this._resizeHandler);
                 this.logger.info('common-element attached callback');
+                super.connectedCallback();
+                this.addEventListener('iron-resize', this._resizeListener);
 
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
-                this.loader = this.shadowRoot.querySelector('.loader');
-                this.errorElement = this.shadowRoot.querySelector('.error-msg');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
-
-                this.currentListeners = {};
-                Object
-                    .keys(MyScript.Constants.EventType)
-                    .map(key => MyScript.Constants.EventType[key])
-                    .forEach(type => this.currentListeners[type] = (event) => {
-                        this.logger.trace(event.type + ' event intercepted', event);
-                        switch (event.type) {
-                            case MyScript.Constants.EventType.LOADED:
-                                this.configuration = this.editor.configuration;
-                                this.loader.setAttribute('hidden', 'true');
-                                this.unloaded = false;
-                                break;
-                            case MyScript.Constants.EventType.CHANGED: {
-                                if (event.detail) {
-                                    this.canclear = event.detail.canClear;
-                                    this.canundo = event.detail.canUndo;
-                                    this.canredo = event.detail.canRedo;
-                                    this.canexport = event.detail.canExport;
-                                    this.canconvert = event.detail.canConvert;
-                                }
-                            }
-                                break;
-                            case MyScript.Constants.EventType.EXPORTED: {
-                                this.exports = event.detail ? event.detail.exports : {};
-                                this.errorElement.setAttribute('hidden', 'true');
-                            }
-                                break;
-                            case MyScript.Constants.EventType.CLEAR:
-                                this.exports = {};
-                                break;
-                            case MyScript.Constants.EventType.ERROR:
-                                this.logger.trace('error detected');
-                                if (event.detail) {
-                                    if (event.detail.recoverable === false) {
-                                        if (event.detail.serverMessage &&
-                                            event.detail.serverMessage.error &&
-                                            event.detail.serverMessage.error.result &&
-                                            event.detail.serverMessage.error.result.error &&
-                                            (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
-                                                event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
-                                            this.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
-                                        } else {
-                                            this.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
-                                        }
-                                        this.errorElement.removeAttribute('hidden');
-                                    } else if (event.detail.message) {
-                                        this.paperToast.text = event.detail.message;
-                                        this.paperToast.fitIn = this.paperToast.show();
-                                    } else {
-                                        this.logger.error('not managed error', event);
-                                    }
-                                } else {
-                                    this.logger.error('not managed error', event);
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                        // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, {
-                            detail: event.detail
-                        }));
-                    });
-
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
 
                 Polymer.RenderStatus.beforeNextRender(this, () => {
                     this.editor = MyScript.register(this.editorDomElement,
-                        this._buildConfiguration(),
-                        MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                        MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                                                    this._buildConfiguration(),
+                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
                     this.logger.info('common-element attached');
                 })
             }
 
             disconnectedCallback() {
-                super.disconnectedCallback();
-                this.removeEventListener('iron-resize', this._resizeHandler);
-
                 this.logger.info('common-element detached callback');
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.editorDomElement.removeEventListener(type, this.currentListeners[type]));
+                super.disconnectedCallback();
+                this.removeEventListener('iron-resize', this._resizeListener);
                 this.logger.info('common-element detached');
             }
 
@@ -770,8 +798,6 @@ Custom property | Description | Default
                 if (this.editor) {
                     this.logger.trace('unloaded changed', unloaded);
                     if (unloaded === true) {
-                        this.loader.removeAttribute('hidden');
-                        this.errorElement.setAttribute('hidden', 'true');
                         this.editor.configuration = this._buildConfiguration();
                     }
                 }
