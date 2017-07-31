@@ -625,7 +625,6 @@ Custom property | Description | Default
 
             _loadListener(event) {
                 this.configuration = this.editor.configuration;
-                this.unloaded = false;
                 // Just forwarding event there.
                 this.dispatchEvent(new CustomEvent(event.type, {
                     detail: event.detail
@@ -730,20 +729,14 @@ Custom property | Description | Default
             }
 
             connectedCallback() {
-                this.logger.info('common-element attached callback');
                 super.connectedCallback();
+                this.logger.info('common-element attached callback');
                 this.addEventListener('iron-resize', this._resizeListener);
 
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
-
-                Polymer.RenderStatus.beforeNextRender(this, () => {
-                    this.editor = MyScript.register(this.editorDomElement,
-                                                    this._buildConfiguration(),
-                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
-                    this.logger.info('common-element attached');
-                })
+                this._unloadedChanged(this.unloaded);
+                this.logger.info('common-element attached');
             }
 
             disconnectedCallback() {
@@ -824,10 +817,15 @@ Custom property | Description | Default
 
             _unloadedChanged(unloaded) {
                 this.exports = undefined;
-                if (this.editor) {
-                    this.logger.trace('unloaded changed', unloaded);
-                    if (unloaded === true) {
+                this.logger.trace('unloaded changed', unloaded);
+                if (unloaded === false && this.editorDomElement) {
+                    if (this.editor) {
                         this.editor.configuration = this._buildConfiguration();
+                    } else {
+                        this.editor = MyScript.register(this.editorDomElement,
+                                                        this._buildConfiguration(),
+                                                        MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                                        MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
                     }
                 }
             }
