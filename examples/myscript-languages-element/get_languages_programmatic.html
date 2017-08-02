@@ -17,55 +17,38 @@
 
 <body>
     <select id="language" disabled></select>
-    <myscript-languages-element />
+    <myscript-languages-element unloaded />
 </body>
 <script>
     window.addEventListener('load', () => {
         const languageSelect = document.getElementById('language');
         const languagesElement = document.querySelector('myscript-languages-element');
-        window.setTimeout(() => {
-            console.log('All resources finished loading! Starting to init myscript-languages-element');
-            const configuration = {
-                type: 'ANALYZER',
-                scheme: 'https',
-                host: 'webdemoapi.myscript.com',
-                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
-                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
-                sortByValue: true
-            };
-            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-            languagesElement.setAttribute('type', configuration.type);
-            languagesElement.setAttribute('scheme', configuration.scheme);
-            languagesElement.setAttribute('host', configuration.host);
-            languagesElement.applicationkey = configuration.applicationKey;
-            languagesElement.hmackey = configuration.hmacKey;
-            languagesElement.sortByValue = configuration.sortByValue;
-            // Testing if configuration are taken into account
-            languagesElement.configuration = {
-                recognitionParams: {
-                    v3: {
-                        analyzerParameter: {
-                            textParameter: {
-                                textProperties: {},
-                                language: 'en_US',
-                                textInputMode: 'CURSIVE'
-                            }
-                        }
-                    }
-                }
-            };
-            languagesElement.unloaded = true;
-            console.log('myscript-languages-element should be loaded');
+        console.log('All resources finished loading! Starting to init myscript-languages-element');
+        const configuration = {
+            type: 'ANALYZER',
+            scheme: 'https',
+            host: 'webdemoapi.myscript.com',
+            applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+            hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
+            sortByValue: true
+        };
+        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+        languagesElement.setAttribute('type', configuration.type);
+        languagesElement.setAttribute('scheme', configuration.scheme);
+        languagesElement.setAttribute('host', configuration.host);
+        languagesElement.applicationkey = configuration.applicationKey;
+        languagesElement.hmackey = configuration.hmacKey;
+        languagesElement.sortByValue = configuration.sortByValue;
+        // Testing if configuration are taken into account
+        languagesElement.language = 'en_US';
 
-            const currentLanguage = languagesElement.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
-            languagesElement.addEventListener('change', (evt) => {
-                evt.detail.forEach((language) => {
-                    const selected = currentLanguage === language.value;
-                    languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
-                });
-                languageSelect.disabled = false;
+        languagesElement.addEventListener('change', (evt) => {
+            evt.detail.forEach((language) => {
+                languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, language.selected, language.selected);
             });
-        }, 3000);
+            languageSelect.disabled = false;
+        });
+        languagesElement.unloaded = false;
     });
 </script>
 
