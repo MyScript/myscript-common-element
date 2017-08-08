@@ -37,9 +37,9 @@ Custom property | Description | Default
 @demo examples/v3/index.html Get started (CDK v3.2)
 @demo examples/v3/handling_exports.html Handling exports (CDK 3.2)
 @demo examples/v3/customizing_style.html Customizing style (CDK 3.2)
-@demo examples/programmatic_init.html Configuring component with Javascript
-@demo examples/handling_errors.html Demonstration of error handling
-@demo examples/get_stats.html Accessing the editor stats
+@demo examples/v3/programmatic_init.html Configuring component with Javascript
+@demo examples/non-version-specific/handling_errors.html Demonstration of error handling
+@demo examples/dev/get_stats.html Accessing the editor stats
 
 -->
 <dom-module id="myscript-common-element">
@@ -366,7 +366,7 @@ Custom property | Description | Default
                     },
                     /**
                      * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
-                     * (see demo/programmatic_init.html for a better understanding)
+                     * (see examples/v4/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
@@ -704,7 +704,7 @@ Custom property | Description | Default
 
             _errorListener(event) {
                 this.logger.error('error', event);
-                if (event.detail && event.detail.message && (!event.detail.recoverable || event.detail.recoverable === true)) {
+                if (event.detail && event.detail.message && (!event.detail.recoverable ||  event.detail.recoverable === true)) {
                     this.paperToast.text = event.detail.message;
                     this.paperToast.fitIn = this.paperToast.show();
                 }
@@ -826,9 +826,9 @@ Custom property | Description | Default
                     } else {
                         Polymer.RenderStatus.beforeNextRender(this, () => {
                             this.editor = MyScript.register(this.editorDomElement,
-                                                            this._buildConfiguration(),
-                                                            MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                                            MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                                this._buildConfiguration(),
+                                MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
                         });
                     }
                 }

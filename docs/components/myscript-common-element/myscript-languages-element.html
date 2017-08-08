@@ -8,8 +8,8 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-@demo examples/myscript-languages-element/get_languages.html Get languages
-@demo examples/myscript-languages-element/get_languages_programmatic.html Get languages programmatically
+@demo examples/non-version-specific/get_languages.html Get languages
+@demo examples/non-version-specific/get_languages_programmatic.html Get languages programmatically
 -->
 <dom-module id="myscript-languages-element">
     <template>
@@ -228,7 +228,9 @@
             }
 
             _selectListener(event) {
-                this.languages = this.languages.map(language => Object.assign(language, { selected: language.value === event.target.value }));
+                this.languages = this.languages.map(language => Object.assign(language, {
+                    selected: language.value === event.target.value
+                }));
                 this.language = this.languages.find(language => language.selected);
                 this.dispatchEvent(new CustomEvent('change', {
                     detail: this.languages
