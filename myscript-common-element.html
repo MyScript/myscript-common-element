@@ -29,17 +29,18 @@ Custom property | Description | Default
 `--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
 `--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
 
-@demo examples/v4/index.html Get started (iink SDK web)
-@demo examples/v4/exporting_on_demand.html Handling exports (iink SDK web)
-@demo examples/v4/customizing_style.html Customizing style (iink SDK web)
-@demo examples/v4/exporting_on_demand.html Exporting on demand (iink SDK web)
-@demo examples/v4/change_language.html Change language implementation (iink SDK web)
-@demo examples/v3/index.html Get started (CDK v3.2)
-@demo examples/v3/handling_exports.html Handling exports (CDK 3.2)
-@demo examples/v3/customizing_style.html Customizing style (CDK 3.2)
-@demo examples/v3/programmatic_init.html Configuring component with Javascript
-@demo examples/non-version-specific/handling_errors.html Demonstration of error handling
-@demo examples/dev/get_stats.html Accessing the editor stats
+@demo examples/v4/index.html Get started [V4]
+@demo examples/v4/exporting_on_demand.html Handling exports [V4]
+@demo examples/v4/customizing_style.html Customizing style [V4]
+@demo examples/v4/exporting_on_demand.html Exporting on demand [V4]
+@demo examples/v4/change_language.html Change language implementation [V4]
+@demo examples/v4/programmatic_init.html Configuring component with Javascript [V4]
+@demo examples/v3/index.html Get started [V3]
+@demo examples/v3/handling_exports.html Handling exports [V3]
+@demo examples/v3/customizing_style.html Customizing style [V3]
+@demo examples/v3/programmatic_init.html Configuring component with Javascript [V3]
+@demo examples/index.html Other demonstrations
+
 
 -->
 <dom-module id="myscript-common-element">
@@ -218,12 +219,12 @@ Custom property | Description | Default
              on-change="_changeListener"
              on-exported="_exportedListener"
              on-converted="_convertedListener"
-             on-undo="_undoListener"
-             on-redo="_redoListener"
-             on-clear="_clearListener"
-             on-export="_exportListener"
-             on-convert="_convertListener"
-             on-idle="_idleListener"
+             on-undo="_forwardListener"
+             on-redo="_forwardListener"
+             on-clear="_forwardListener"
+             on-export="_forwardListener"
+             on-convert="_forwardListener"
+             on-idle="_forwardListener"
              on-error="_errorListener">
         </div>
         <paper-toast class="fit-bottom"></paper-toast>
@@ -652,50 +653,7 @@ Custom property | Description | Default
                 }));
             }
 
-            _convertedListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _undoListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _redoListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _clearListener(event) {
-                this.exports = {};
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _exportListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _convertListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _idleListener(event) {
+            _forwardListener(event) {
                 // Just forwarding event there.
                 this.dispatchEvent(new CustomEvent(event.type, {
                     detail: event.detail
