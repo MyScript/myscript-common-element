@@ -189,6 +189,7 @@ Custom property | Description | Default
         </nav>
         <div id="editorDomElement"
              class="ms-editor"
+             on-loaded="_changeListener"
              on-change="_changeListener"
              on-exported="_exportedListener"
              on-converted="_convertedListener"
@@ -208,6 +209,11 @@ Custom property | Description | Default
             static get is() {
                 return 'myscript-common-element';
             }
+
+            /**
+             * Fired when editor is loaded.
+             * @event loaded
+             */
 
             /**
              * Fired when undo is triggered.
