@@ -36,7 +36,10 @@
     "paper-fab": "PolymerElements/paper-fab#^2.0.0",
     "paper-toast": "PolymerElements/paper-toast#^2.0.0",
     "myscript": "2.0.0-alpha1",
-    "pepjs": "^0.4.3"
+    "pepjs": "^0.4.3",
+    "paper-swatch-picker": "^2.0.1",
+    "paper-toggle-button": "^2.0.0",
+    "paper-slider": "^2.0.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
