@@ -419,22 +419,6 @@ Custom property | Description | Default
                         reflectToAttribute: true
                     },
                     /**
-                     * font-family used to render text conversion
-                     */
-                    fontfamily: {
-                        type: String,
-                        value: 'Open Sans',
-                        reflectToAttribute: true
-                    },
-                    /**
-                     * font-size used to render text conversion
-                     */
-                    fontsize: {
-                        type: Number,
-                        value: 10.0,
-                        reflectToAttribute: true
-                    },
-                    /**
                      * Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)
                      */
                     theme: {
@@ -548,12 +532,12 @@ Custom property | Description | Default
 
             static get observers() {
                 return [
-                    '_updateTheme(editor, theme, themecolor, themewidth, fontfamily, fontsize)',
+                    '_updateTheme(editor, theme, themecolor, themewidth)',
                     '_updatePenStyle(editor, penstyle, pencolor, penwidth)'
                 ]
             }
 
-            static _generateTheme(theme, themecolor, themewidth, fontfamily, fontsize) {
+            static _generateTheme(theme, themecolor, themewidth) {
                 // FIXME: find a way to do a proper deep merge
                 const stylesheet = Object.assign({}, theme);
                 if (!stylesheet.ink) {
@@ -564,12 +548,6 @@ Custom property | Description | Default
                 }
                 if (themewidth) {
                     stylesheet.ink['-myscript-pen-width'] = themewidth;
-                }
-                if (fontfamily) {
-                    stylesheet.ink['font-family'] = fontfamily;
-                }
-                if (fontsize) {
-                    stylesheet.ink['font-size'] = fontsize;
                 }
                 return stylesheet;
             }
@@ -779,9 +757,9 @@ Custom property | Description | Default
                 }
             }
 
-            _updateTheme(editor, theme, themecolor, themewidth, fontfamily, fontsize) {
+            _updateTheme(editor, theme, themecolor, themewidth) {
                 if (editor) {
-                    editor.theme = MyScriptCommonElement._generateTheme(theme, themecolor, themewidth, fontfamily, fontsize);
+                    editor.theme = MyScriptCommonElement._generateTheme(theme, themecolor, themewidth);
                     this.logger.trace('theme changed', editor.theme);
                 }
             }
@@ -810,7 +788,7 @@ Custom property | Description | Default
                             this.editor = MyScript.register(this.editorDomElement,
                                 this._buildConfiguration(),
                                 MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth),
-                                MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth, this.fontfamily, this.fontsize));
+                                MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth));
                         });
                     }
                 }
