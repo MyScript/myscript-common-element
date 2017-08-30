@@ -39,7 +39,7 @@ It integrates all you need:
 
 ```html
     <myscript-common-element
-        type="SHAPE"
+        type="MATH"
         applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
@@ -49,16 +49,9 @@ It integrates all you need:
 
 ## Examples
 
-- [demo/get_started.html](demo/get_started.html) Get started with SHAPE
-- [demo/v4_configuration.html](demo/v4_configuration.html) Use interactive ink api for MATH (v4)
-- [demo/handle_exports.html](demo/handle_exports.html) Handle exports
-- [demo/handle_error.html](demo/handle_error.html) Handle error
-- [demo/styling.html](demo/styling.html) Customize your component style
-- [demo/programmatic_init.html](demo/programmatic_init.html) Programmatic initialization
-- [demo/get_stats.html](demo/get_stats.html) Get statistics
-- [demo/debug.html](demo/debug.html) Debug your component
-- [demo/get_languages.html](demo/get_languages.html) Get available languages
-- [demo/get_languages_programmatic.html](demo/get_languages_programmatic.html) Get available languages programmatically
+- [examples/non-version-specific/get_started.html](examples/non-version-specific/get_started.html) Get started with iink
+- [examples/v3/get_started_legacy.html](examples/v3/get_started_legacy.html) Get started with legacy api (v3)
+- [examples/index.html](examples/index.html) Other demonstrations
 
 ## Documentation
 
