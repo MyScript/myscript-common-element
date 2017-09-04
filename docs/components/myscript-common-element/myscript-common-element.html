@@ -62,7 +62,6 @@ CSS variable | Default
                 position: relative;
                 min-height: 200px;
                 min-width: 200px;
-                background: var(--myscript-common-element-background);
                 background-size: cover;
                 color: var(--myscript-common-element-color);
                 z-index: 0;
@@ -78,11 +77,10 @@ CSS variable | Default
             }
 
             nav {
-                position: inherit;
-                float: left;
                 display: flex;
                 display: -webkit-flex;
                 z-index: 25;
+                border-top: 1px solid #F5F6F7;
             }
 
             paper-fab {
@@ -90,10 +88,15 @@ CSS variable | Default
             }
 
             .ms-editor {
-                position: absolute;
-                height: 100%;
+                position: relative;
+                height: calc(100% - 53px);
                 width: 100%;
                 z-index: 20;
+                background: var(--myscript-common-element-background);
+            }
+
+            nav[hidden] + .ms-editor {
+                height: calc(100%);
             }
 
             .ms-editor canvas,
@@ -153,12 +156,6 @@ CSS variable | Default
              on-loaded="_changeListener"
              on-change="_changeListener"
              on-exported="_exportedListener"
-             on-converted="_convertedListener"
-             on-undo="_forwardListener"
-             on-redo="_forwardListener"
-             on-clear="_forwardListener"
-             on-export="_forwardListener"
-             on-convert="_forwardListener"
              on-error="_errorListener">
         </div>
         <paper-toast class="fit-bottom"></paper-toast>
@@ -606,35 +603,16 @@ CSS variable | Default
                     this.canexport = event.detail.canExport;
                     this.canconvert = event.detail.canConvert;
                 }
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _idleListener(event) {
                 if (event.detail) {
                     this.idle = event.detail.idle;
                 }
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _forwardListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _errorListener(event) {
@@ -643,10 +621,6 @@ CSS variable | Default
                     this.paperToast.text = event.detail.message;
                     this.paperToast.fitIn = this.paperToast.show();
                 }
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             constructor() {
@@ -674,7 +648,6 @@ CSS variable | Default
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-                this.editor.grabber.detach(this, this.editor.grabberContext);
                 this.removeEventListener('iron-resize', this._resizeListener);
                 this.logger.info('common-element disconnected');
             }
@@ -788,9 +761,6 @@ CSS variable | Default
                                 this._buildConfiguration(),
                                 MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth),
                                 MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth));
-
-                            this.editor.grabber.detach(this.editor.domElement, this.editor.grabberContext);
-                            this.editor.grabberContext = this.editor.grabber.attach(this, this.editor);
                         });
                     }
                 }
