@@ -723,10 +723,6 @@ CSS variable | Default
                     });
                 this.addEventListener('iron-resize', this._resizeListener);
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
-                this._observer = new Polymer.FlattenedNodesObserver(this.editorDomElement, (info) => {
-                    this.logger.debug('info', info);
-                    // info is {addedNodes: [...], removedNodes: [...]}
-                });
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
                 this._unloadedChanged(this.unloaded);
                 this.logger.info('common-element connected');
@@ -735,7 +731,6 @@ CSS variable | Default
             disconnectedCallback() {
                 super.disconnectedCallback();
                 this.removeEventListener('iron-resize', this._resizeListener);
-                this._observer.disconnect();
                 this.logger.info('common-element disconnected');
             }
 
