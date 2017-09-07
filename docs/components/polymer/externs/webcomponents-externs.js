@@ -2,18 +2,12 @@
  * @fileoverview Externs for webcomponents polyfills
  * @externs
  */
-/* eslint-disable */
 
 let HTMLImports = {
   /**
    * @param {function()} callback
    */
-  whenReady(callback){},
-  /**
-   * @param {Element} element
-   * @returns {Document} document
-   */
-  importForElement(element){}
+  whenReady(callback){}
 };
 
 window.HTMLImports = HTMLImports;
@@ -48,9 +42,4 @@ HTMLElement.prototype._activeElement;
 /**
  * @param {HTMLTemplateElement} template
  */
-HTMLTemplateElement.decorate = function(template){};
-
-/**
- * @param {function(function())} cb callback
- */
-CustomElementRegistry.prototype.polyfillWrapFlushCallback = function(cb){};
+HTMLTemplateElement.prototype.decorate = function(template){};
