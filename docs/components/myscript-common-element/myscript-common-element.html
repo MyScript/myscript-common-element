@@ -659,19 +659,68 @@ CSS variable | Default
                     editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
                 };
 
+                const pointerDownHandler = (evt) => { // Trigger a pointerDown
+                    if (this.activePointerId) {
+                        if (this.activePointerId === evt.pointerId) {
+                            this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
+                        }
+                    } else if ((evt.button !== 2) && (evt.buttons !== 2)) { // Ignore right click
+                        this.activePointerId = evt.pointerId;
+                        evt.stopPropagation();
+                        editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration), evt.pointerType, evt.pointerId);
+                    }
+                };
+
+                const pointerMoveHandler = (evt) => { // Trigger a pointerMove
+                    // Only considering the active pointer
+                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                        evt.stopPropagation();
+                        editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                    } else {
+                        this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
+                    }
+                };
+
+                const pointerUpHandler = (evt) => { // Trigger a pointerUp
+                    // Only considering the active pointer
+                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                        this.activePointerId = undefined; // Managing the active pointer
+                        evt.stopPropagation();
+                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                    } else {
+                        this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
+                    }
+                };
+
                 const context = {
+                    options: editor.configuration.listenerOptions,
                     listeners: [{
                         types: ['track'],
                         listener: handleTrack
                     }, {
                         types: ['tap'],
                         listener: handleTap
+                    }, {
+                        types: ['pointerdown'],
+                        listener: pointerDownHandler
+                    }, {
+                        types: ['pointermove'],
+                        listener: pointerMoveHandler
+                    }, {
+                        types: ['pointerup', 'pointerout', 'pointerleave', 'pointercancel'],
+                        listener: pointerUpHandler
                     }]
                 };
 
                 this.logger.debug('attaching listeners', context);
                 context.listeners.forEach((item) => {
-                    item.types.forEach(type => Polymer.Gestures.addListener(element, type, item.listener));
+                    item.types.forEach(type => {
+                        if (['track', 'tap'].includes(type)) {
+                            Polymer.Gestures.addListener(element, type, item.listener);
+                        } else {
+                            element.addEventListener(type, item.listener, context.options);
+                        }
+                    });
                 });
                 return context;
             }
@@ -679,7 +728,13 @@ CSS variable | Default
             _detachGrabber(element, context) {
                 this.logger.debug('detaching listeners', context);
                 context.listeners.forEach((item) => {
-                    item.types.forEach(type => Polymer.Gestures.removeListener(element, type, item.listener));
+                    item.types.forEach(type => {
+                        if (['track', 'tap'].includes(type)) {
+                            Polymer.Gestures.removeListener(element, type, item.listener);
+                        } else {
+                            element.removeEventListener(type, item.listener, context.options);
+                        }
+                    });
                 });
             }
 
