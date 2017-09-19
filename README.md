@@ -1,19 +1,22 @@
-# myscript-common-element
-
 `myscript-common-element` is the common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web). 
-It helps you to integrate an ink editor and handwriting recognition in your webapp.
+It helps you to integrate an ink editor and handwriting recognition in your **Polymer** webapp.
  
-![myscript-common-element preview](./preview.gif)
-
 ## What is it about?
 
-myscript-common-element is a web component that can be used in every web application (whatever javascript framework you are using) to bring handwriting recognition. 
-It integrates all you need:
+myscript-common-element is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:
 * Signal capture,
 * Nice digital ink rendering,
-* Plug with MyScript CDK to bring handwriting recognition.
+* Rich editing gestures,
+* Conversion,
+* Import,
+* Exports.
+By configuration mathematical and text content can be recognized.
 
-## Prerequisites
+If you are unfamiliar with webcomponents and Polymer please use [MyScriptJS](https://github.com/MyScript/MyScriptJS) or [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web).  
+
+## Getting started
+
+### Prerequisites
 
 1. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
 2. Get an application key and HMAC key for your application.
@@ -23,39 +26,44 @@ It integrates all you need:
     <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 ```
  
-## Installation
+#### Installation
+  
+  1. Download myscript-math-web.
+  ```shell
+  bower install myscript-common-element
+  ```
+  2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.
+  
+  ```html
+  <!-- Load the webcomponent polyfill -->
+  <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+  <!-- Load myscript-math-web and the related librairies -->
+  <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
+  ```
+  
+  3. Use the component in the body section. Use the keys you received by mail.
+  
+  ```html
+  <myscript-common-element
+    applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+    hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+  </myscript-common-element>
+  ```
+     
+  4. Launch a local web-server and use it!
 
-1. Download it.
-
-       bower install myscript-common-element
-
-2. Import it on your webapp.
-
-```html
-    <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
-```
-
-3. Configure it.
-
-```html
-    <myscript-common-element
-        type="MATH"
-        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
-        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
-    </myscript-common-element>
-```
-   
-4. Use it!
 
 ## Examples
 
-- [examples/non-version-specific/get_started.html](examples/non-version-specific/get_started.html) Get started with iink
-- [examples/v3/rest_text.html](examples/v3/rest_text.html) Get started with legacy api (v3)
-- [examples/index.html](examples/index.html) Other demonstrations
+Browse [the examples hosted on github.io](https://myscript.github.io/myscript-common-element/examples/).
+
+The [directory examples/](/examples) of this git repository contains all the example source code. 
 
 ## Documentation
 
-The API Reference is available here: [https://myscript.github.io/myscript-common-element/](https://myscript.github.io/myscript-common-element/)
+A complete guide is available on [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/1.0/web/web-components/common-element/).
+
+The API Reference is available in the `docs` directory or on [myscript.github.io/myscript-common-element/ website](https://myscript.github.io/myscript-common-element/).
 
 ## Contribute
 
