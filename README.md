@@ -5,14 +5,15 @@ It helps you to integrate an ink editor and handwriting recognition in your **Po
 
 myscript-common-element is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:
 * Signal capture,
-* Nice digital ink rendering,
+* Digital ink rendering,
 * Rich editing gestures,
 * Conversion,
 * Import,
 * Exports.
-By configuration mathematical and text content can be recognized.
 
-If you are unfamiliar with webcomponents and Polymer please use [MyScriptJS](https://github.com/MyScript/MyScriptJS) or [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web).  
+Both math and text can be recognized, you just have to define the appropriate configuration settings.
+
+If you are not familiar with webcomponents and Polymer, please use [MyScriptJS](https://github.com/MyScript/MyScriptJS) or [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web).  
 
 ## Getting started
 
@@ -28,36 +29,35 @@ If you are unfamiliar with webcomponents and Polymer please use [MyScriptJS](htt
  
 #### Installation
   
-  1. Download myscript-math-web.
-  ```shell
-  bower install myscript-common-element
-  ```
-  2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.
-  
-  ```html
+1. Download myscript-math-web.
+```shell
+bower install myscript-common-element
+```
+
+2. Create and edit `index.html` file in the same directory. Add the following line in the `head` section to import the library.
+```html
   <!-- Load the webcomponent polyfill -->
   <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
   <!-- Load myscript-math-web and the related librairies -->
   <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
-  ```
-  
-  3. Use the component in the body section. Use the keys you received by mail.
-  
-  ```html
+```
+
+3. Use the component in the `body` section. Use the keys you received by mail.
+```html
   <myscript-common-element
     applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
     hmackey="YOUR MYSCRIPT CDK HMAC KEY">
   </myscript-common-element>
-  ```
-     
-  4. Launch a local web-server and use it!
+```
+
+4. Launch a local web-server and use it!
 
 
 ## Examples
 
 Browse [the examples hosted on github.io](https://myscript.github.io/myscript-common-element/examples/).
 
-The [directory examples/](/examples) of this git repository contains all the example source code. 
+The [directory examples/](/examples) of this git repository contains all the example source codes. 
 
 ## Documentation
 
