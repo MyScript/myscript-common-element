@@ -31,7 +31,7 @@
     "!examples/**/*"
   ],
   "dependencies": {
-    "myscript": "2.0.0-alpha1",
+    "myscript": "master",
     "polymer": "^2.0.1",
     "iron-resizable-behavior": "^2.0.1",
     "paper-fab": "^2.0.0",
@@ -45,7 +45,7 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_source": "/home/rcascino/projects/webcomponents/myscript-common-element",
+  "_source": "/home/fxg/projects/webcomponents/myscript-common-element",
   "_target": "*",
   "_originalSource": "../../myscript-common-element",
   "_direct": true
