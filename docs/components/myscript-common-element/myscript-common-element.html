@@ -670,7 +670,7 @@ CSS variable | Default
 
                 const patchPointerEvent = (evt) => {
                     if (!evt.pointerId) {
-                        evt.pointerId = 0;
+                        evt.pointerId = -1;
                     }
                     if (!evt.pointerType) {
                         evt.pointerType = 'pen';
