@@ -656,6 +656,8 @@ CSS variable | Default
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
+                if (this.apiversion === 'V4')
+                    this.canclear = this.exports[Object.keys(this.exports)[0]] !== '';
             }
 
             _errorListener(event) {
