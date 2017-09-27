@@ -37,32 +37,6 @@ CSS variable | Default
 @demo examples/index.html Other demonstrations
 -->
 <dom-module id="myscript-common-element">
-    <style>
-        :host {
-            display: block;
-            position: relative;
-            min-height: 100px;
-            min-width: 200px;
-            --paper-fab-background: #1A9FFF;
-            --paper-fab-keyboard-focus-background: #1A9FFF;
-            --paper-fab-disabled-background: #D7DADC;
-            --paper-fab-disabled-text: #dcdee0;
-        }
-        .buttons {
-            position: inherit;
-            float: left;
-            display: flex;
-            display: -webkit-flex;
-            z-index: 2;
-            background-color: transparent;
-            padding: 6px;
-        }
-        paper-fab {
-            z-index: 3;
-            background: #1A9FFF;
-            margin: 6px;
-        }
-    </style>
     <template>
         <style include="myscript-stylesheet">
             :host {
@@ -656,6 +630,8 @@ CSS variable | Default
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
+                if (this.apiversion === 'V4')
+                    this.canclear = this.exports[Object.keys(this.exports)[0]] !== '';
             }
 
             _errorListener(event) {
