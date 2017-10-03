@@ -83,6 +83,10 @@ CSS variable | Default
                 box-sizing: border-box;
             }
 
+            :host::after {
+                @apply --myscript-common-element-icon;
+            }
+
             .ms-editor {
                 background: var(--myscript-common-element-background);
             }
