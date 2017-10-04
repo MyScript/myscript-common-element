@@ -131,8 +131,8 @@ CSS variable | Default
         <div id="editorDomElement"
              class="ms-editor"
              on-idle="_idleListener"
-             on-loaded="_changeListener"
-             on-change="_changeListener"
+             on-loaded="_changedListener"
+             on-changed="_changedListener"
              on-exported="_exportedListener"
              on-error="_errorListener">
         </div>
@@ -182,7 +182,7 @@ CSS variable | Default
 
             /**
              * Fired when editor state changed.
-             * @event change
+             * @event changed
              */
 
             /**
@@ -615,7 +615,7 @@ CSS variable | Default
                 }
             }
 
-            _changeListener(event) {
+            _changedListener(event) {
                 if (event.detail) {
                     this.initialized = event.detail.initialized;
                     this.canclear = event.detail.canClear;

@@ -750,7 +750,7 @@
           ]
         },
         {
-          "name": "_changeListener",
+          "name": "_changedListener",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -1767,8 +1767,8 @@
       "events": [
         {
           "type": "CustomEvent",
-          "name": "change",
-          "description": "change",
+          "name": "changed",
+          "description": "changed",
           "metadata": {}
         },
         {
