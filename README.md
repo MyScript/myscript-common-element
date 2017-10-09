@@ -55,7 +55,7 @@ bower install myscript-common-element
 
 ## Examples
 
-Browse [the examples hosted on github.io](https://myscript.github.io/myscript-common-element/examples/).
+Browse [the examples hosted on github.io](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations).
 
 The [directory examples/](/examples) of this git repository contains all the example source codes. 
 
