@@ -280,35 +280,26 @@
             }
 
             _getLanguages() {
-                MyScript.getAvailableLanguageList(this._buildConfiguration(), this.sortbyvalue)
-                    .then((res) => {
-                        this.languages = Object
-                            .keys(res.result)
-                            .map((key) => {
-                                return {
-                                    value: key,
-                                    description: res.result[key],
-                                    selected: this.language === key
-                                };
-                            });
-
-                        this.languages.forEach((language) => {
-                            this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, language.selected, language.selected)
-                        });
-                        this.selectElement.disabled = false;
-                        this.dispatchEvent(new CustomEvent('change', {
-                            detail: this.languages
-                        }));
-                        return this.languages;
-                    })
-                    .catch((err) => {
-                        this.languages = [];
-                        this.dispatchEvent(new CustomEvent('error', {
-                            detail: err
-                        }));
+                const res = MyScript.getAvailableLanguageList();
+                this.languages = Object
+                    .keys(res.result)
+                    .map((key) => {
+                        return {
+                            value: key,
+                            description: res.result[key],
+                            selected: this.language === key
+                        };
                     });
-            }
 
+                this.languages.forEach((language) => {
+                    this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, language.selected, language.selected)
+                });
+                this.selectElement.disabled = false;
+                this.dispatchEvent(new CustomEvent('change', {
+                    detail: this.languages
+                }));
+                return this.languages;
+            }
         }
         customElements.define(MyScriptLanguagesElement.is, MyScriptLanguagesElement);
     </script>
