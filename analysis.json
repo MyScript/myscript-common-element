@@ -843,7 +843,7 @@
               "column": 12
             },
             "end": {
-              "line": 738,
+              "line": 756,
               "column": 13
             }
           },
@@ -863,11 +863,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 740,
+              "line": 758,
               "column": 12
             },
             "end": {
-              "line": 751,
+              "line": 769,
               "column": 13
             }
           },
@@ -887,11 +887,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 758,
+              "line": 776,
               "column": 12
             },
             "end": {
-              "line": 773,
+              "line": 791,
               "column": 13
             }
           },
@@ -901,40 +901,6 @@
         {
           "name": "disconnectedCallback",
           "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 775,
-              "column": 12
-            },
-            "end": {
-              "line": 779,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "clear",
-          "description": "Clear all context",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 784,
-              "column": 12
-            },
-            "end": {
-              "line": 788,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "undo",
-          "description": "Undo action",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -950,8 +916,8 @@
           "params": []
         },
         {
-          "name": "redo",
-          "description": "Redo action",
+          "name": "clear",
+          "description": "Clear all context",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -967,8 +933,8 @@
           "params": []
         },
         {
-          "name": "exportContent",
-          "description": "Trigger export",
+          "name": "undo",
+          "description": "Undo action",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -984,16 +950,50 @@
           "params": []
         },
         {
+          "name": "redo",
+          "description": "Redo action",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 820,
+              "column": 12
+            },
+            "end": {
+              "line": 824,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "exportContent",
+          "description": "Trigger export",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 829,
+              "column": 12
+            },
+            "end": {
+              "line": 833,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
           "name": "importContent",
           "description": "Import content",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 823,
+              "line": 841,
               "column": 12
             },
             "end": {
-              "line": 827,
+              "line": 845,
               "column": 13
             }
           },
@@ -1020,11 +1020,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 833,
+              "line": 851,
               "column": 12
             },
             "end": {
-              "line": 837,
+              "line": 855,
               "column": 13
             }
           },
@@ -1042,11 +1042,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 842,
+              "line": 860,
               "column": 12
             },
             "end": {
-              "line": 846,
+              "line": 864,
               "column": 13
             }
           },
@@ -1059,11 +1059,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 852,
+              "line": 870,
               "column": 12
             },
             "end": {
-              "line": 856,
+              "line": 874,
               "column": 13
             }
           },
@@ -1076,11 +1076,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 858,
+              "line": 876,
               "column": 12
             },
             "end": {
-              "line": 863,
+              "line": 881,
               "column": 13
             }
           },
@@ -1106,11 +1106,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 865,
+              "line": 883,
               "column": 12
             },
             "end": {
-              "line": 870,
+              "line": 888,
               "column": 13
             }
           },
@@ -1136,11 +1136,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 872,
+              "line": 890,
               "column": 12
             },
             "end": {
-              "line": 876,
+              "line": 894,
               "column": 13
             }
           },
@@ -1157,11 +1157,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 878,
+              "line": 896,
               "column": 12
             },
             "end": {
-              "line": 899,
+              "line": 917,
               "column": 13
             }
           },
@@ -1211,7 +1211,7 @@
           "column": 8
         },
         "end": {
-          "line": 900,
+          "line": 918,
           "column": 9
         }
       },
