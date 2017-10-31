@@ -29,7 +29,7 @@ If you are not familiar with webcomponents and Polymer, please use [MyScriptJS](
  
 #### Installation
   
-1. Download myscript-common-web.
+1. Download myscript-common-element.
 ```shell
 bower install myscript-common-element
 ```
@@ -38,7 +38,7 @@ bower install myscript-common-element
 ```html
   <!-- Load the webcomponent polyfill -->
   <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-  <!-- Load myscript-common-web and the related librairies -->
+  <!-- Load myscript-common-element and the related librairies -->
   <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
 ```
 
