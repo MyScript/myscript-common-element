@@ -132,7 +132,7 @@ CSS variable | Default
             .smartguide-in {
                 visibility: visible !important;
                 transition: opacity 0.5s;
-                opacity: 0.9;
+                opacity: 1;
             }
 
             .smartguide-out {
@@ -142,7 +142,7 @@ CSS variable | Default
             }
 
             .prompter-text-container {
-                background-color: white;
+                background-color: rgba(255, 255, 255, 0.9);
                 height: 48px;
                 line-height: 48px;
                 overflow: hidden;
@@ -152,12 +152,12 @@ CSS variable | Default
                 border-bottom: 1px solid lightgray;
                 position: absolute;
                 z-index: 30;
-                color: #808080;
+                color: #757575;
                 -moz-user-select: none;
                 -webkit-user-select: none;
                 -ms-user-select: none;
-                -webkit-tap-highlight-color: transparent;
                 user-select: none;
+                -webkit-tap-highlight-color: transparent;
             }
 
             .prompter-text-container > div > span {
@@ -179,7 +179,7 @@ CSS variable | Default
                     color: black;
                 }
                 100% {
-                    color: grey;
+                    color: #757575;
                 }
             }
 
@@ -197,10 +197,10 @@ CSS variable | Default
                 padding: 0 10px;
                 text-align: center;
                 line-height: 30px;
-                border: 1px solid #CED5D9;
+                border: 1px solid lightgrey;
                 border-radius: 3px;
                 position: absolute;
-                background-color: #ffffff;
+                background-color: white;
                 z-index: 100;
             }
 
@@ -213,13 +213,16 @@ CSS variable | Default
                 border: 1px solid lightgrey;
                 font-weight: bold;
                 font-size: large;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
                 user-select: none;
                 position: absolute;
                 z-index: 31;
                 height: 48px;
                 line-height: 48px;
-                background-color: white;
-                color: #808080;
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #757575;
             }
 
             #ellipsis {
@@ -232,28 +235,29 @@ CSS variable | Default
                 padding: 0 8px;
                 font-weight: bold;
                 font-size: x-large;
-                background-color: white;
-                color: #808080;
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #757575;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
                 user-select: none;
             }
 
-            .options {
+            #more-menu {
                 margin-right: 12px;
-                padding: 0 10px;
-                text-align: center;
+                padding: 0 24px;
                 line-height: 30px;
-                border: 1px solid #CED5D9;
                 border-radius: 3px;
                 position: absolute;
-                background-color: #ffffff;
                 z-index: 100;
+                box-shadow: 2px 2px 10px #BDBDBD;
+                background-color: #F5F5F5;
             }
 
             .options-label-button {
                 font-size: 16px;
                 cursor: pointer;
                 box-sizing: border-box;
-                color: #1A9FFF;
                 background: transparent;
                 border: none;
                 padding: 0;

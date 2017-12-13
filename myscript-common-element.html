@@ -676,20 +676,32 @@ CSS variable | Default
                     return evt;
                 };
 
-
+                const hideMenu = (evt) => {
+                    const moreMenu = ['ellipsis', 'more-menu'];
+                    const moreMenuInDocument = this.shadowRoot.querySelector('#more-menu');
+                    if (!moreMenu.includes(evt.target.id) && !evt.target.classList.contains('options-label-button') && moreMenuInDocument && moreMenuInDocument.style.display !== 'none') {
+                        moreMenuInDocument.style.display = 'none';
+                        return true;
+                    }
+                    return false;
+                };
 
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
                     patchPointerEvent(evt);
+                    const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
                     if (this.activePointerId) {
                         if (this.activePointerId === evt.pointerId) {
                             this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
                         }
-                    } else if ((evt.button !== 2) && (evt.buttons !== 2) && (evt.target.id === editor.domElement.id)) { // Ignore right click
-                        this.activePointerId = evt.pointerId;
-                        unFocus();
-                        evt.stopPropagation();
-                        editor.pointerDown(MyScriptCommonElement._extractPoint(evt, element, editor.configuration), evt.pointerType, evt.pointerId);
+                    } else if ((evt.button !== 2) && (evt.buttons !== 2) && pointerDownOnEditor) { // Ignore right click
+                        if (!hideMenu(evt)) {
+                            this.activePointerId = evt.pointerId;
+                            unFocus();
+                            evt.stopPropagation();
+                            editor.pointerDown(MyScriptCommonElement._extractPoint(evt, element, editor.configuration), evt.pointerType, evt.pointerId);
+                        }
                     } else { // FIXME add more complete verification to pointer down on smart guide
+                        hideMenu(evt);
                         smartGuidePointerDown = true;
                         downSmartGuidePoint = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
                     }
@@ -723,7 +735,10 @@ CSS variable | Default
                             const pointerEnteredSmartGuide = smartGuideIds.includes(evtId) || scrollbarClasses.some((v) => evt.detail.hover().className.indexOf(v) >= 0);
                             // Check if pointer moved between words in smart guide
                             const pointerMovedWords = evt.detail.hover().tagName === 'SPAN' || evt.detail.hover().tagName === 'SPAN';
-                            return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas') || pointerEnteredSmartGuide || pointerMovedWords;
+                            return evt.detail.hover().id === 'editorDomElement'
+                                || evt.detail.hover().className.includes('ms-canvas')
+                                || pointerEnteredSmartGuide
+                                || pointerMovedWords;
                         }
                         return false;
                     };
