@@ -686,6 +686,15 @@ CSS variable | Default
                     return false;
                 };
 
+                const hideCandidates = (evt) => {
+                    const candidatesInDocument = this.shadowRoot.querySelector('.candidates');
+                    if (!evt.target.classList.contains('candidates') && !(evt.target.tagName === 'SPAN') && candidatesInDocument && candidatesInDocument.style.display !== 'none') {
+                        candidatesInDocument.style.display = 'none';
+                        return true;
+                    }
+                    return false;
+                };
+
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
                     patchPointerEvent(evt);
                     const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
@@ -694,7 +703,7 @@ CSS variable | Default
                             this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
                         }
                     } else if ((evt.button !== 2) && (evt.buttons !== 2) && pointerDownOnEditor) { // Ignore right click
-                        if (!hideMenu(evt)) {
+                        if (!hideMenu(evt) && !hideCandidates(evt)) {
                             this.activePointerId = evt.pointerId;
                             unFocus();
                             evt.stopPropagation();
@@ -702,6 +711,7 @@ CSS variable | Default
                         }
                     } else { // FIXME add more complete verification to pointer down on smart guide
                         hideMenu(evt);
+                        hideCandidates(evt);
                         smartGuidePointerDown = true;
                         downSmartGuidePoint = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
                     }
