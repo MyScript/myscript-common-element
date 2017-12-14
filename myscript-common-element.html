@@ -673,7 +673,6 @@ CSS variable | Default
 
                 const checkHover = (evt) => {
                     if (!this.usepointerlisteners && evt.detail.hover()) {
-                        console.log(evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas'));
                         return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas');
                     }
                     return false;
