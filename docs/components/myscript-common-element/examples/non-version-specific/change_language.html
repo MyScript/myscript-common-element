@@ -16,6 +16,10 @@
             myscript-common-element {
                 height: calc(100% - 2.625rem);
             }
+
+            myscript-languages-element {
+                padding: 12px;
+            }
         </style>
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -45,12 +49,14 @@
             const commonElement = document.querySelector('myscript-common-element');
             const langElement = document.querySelector('myscript-languages-element');
             langElement.addEventListener('change', (evt) => {
-                if (commonElement.configuration) {
+                const lang = evt.detail.find(language => language.selected === true).value;
+                if (commonElement.configuration && (lang !== commonElement.language)) {
                     commonElement.unloaded = true;
-                    commonElement.configuration.recognitionParams.v4.lang = evt.detail.find(language => language.selected === true).value;
+                    commonElement.language = evt.detail.find(language => language.selected === true).value;
                     commonElement.unloaded = false;
+                    console.log(commonElement.language);
                 }
-            });
+            })
         </script>
     </body>
 
