@@ -83,6 +83,8 @@ CSS variable | Default
                 display: flex;
                 display: -webkit-flex;
                 height: 52px;
+                padding-right: 6px;
+                align-items: center;
                 border-bottom: 1px solid #D7DDE3; /*#A9B7C5*/
             }
 
@@ -121,6 +123,46 @@ CSS variable | Default
             .loader {
                 z-index: 35;
                 position: absolute;
+            }
+
+            .classic-btn {
+                height: 36px;
+                line-height: 30px;
+                padding: 0 .75em 2px;
+                font-weight: 700;
+                font-size: 18px;
+                color: #fff;
+                background: #1a9fff;
+                box-shadow: 0 2px 8px -2px rgba(0,0,0,.2);
+                cursor: pointer;
+                display: inline-block;
+                text-align: center;
+                white-space: nowrap;
+                text-decoration: none;
+                border: 2px solid transparent;
+                border-radius: 3px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                -ms-touch-action: manipulation;
+                touch-action: manipulation;
+                transition: all 125ms;
+            }
+
+            .classic-btn:active {
+                color: #fff;
+                text-decoration: none;
+                background: #0065b8;
+                box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .5);
+            }
+
+            .classic-btn:disabled {
+                pointer-events: none;
+                cursor: default;
+                background-color: #ececec;
+                -webkit-box-shadow: none;
+                box-shadow: none;
             }
 
             #smartguide {

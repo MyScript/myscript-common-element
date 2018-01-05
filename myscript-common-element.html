@@ -123,10 +123,9 @@ CSS variable | Default
                        disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
             <div class="spacer"></div>
-            <paper-button mini title="convert" on-tap="convert"
-                          disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
+            <button class="classic-btn" title="convert" on-tap="convert" disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
                 Convert
-            </paper-button>
+            </button>
         </nav>
         <div id="editorDomElement"
              class="ms-editor"
