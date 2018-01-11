@@ -191,10 +191,10 @@ CSS variable | Default
                 white-space: nowrap;
                 display: block;
                 text-align: left;
-                border-bottom: 1px solid lightgray;
+                border-bottom: 1px solid #959DA6;
                 position: absolute;
                 z-index: 30;
-                color: #757575;
+                color: #bfbfbf;
                 -moz-user-select: none;
                 -webkit-user-select: none;
                 -ms-user-select: none;
@@ -211,9 +211,14 @@ CSS variable | Default
                 margin-left: 12px;
             }
 
+            .added-word {
+                animation: 0.1s linear word-added,
+                3s ease-in-out color-input;
+            }
+
             .modified-word {
-                animation: 0.1s linear word-input,
-                2s ease-in-out color-input;
+                animation: 0.1s linear word-modified,
+                3s ease-in-out color-input;
             }
 
             @keyframes color-input {
@@ -221,11 +226,20 @@ CSS variable | Default
                     color: black;
                 }
                 100% {
-                    color: #757575;
+                    color: #bfbfbf;
                 }
             }
 
-            @keyframes word-input {
+            @keyframes word-added {
+                0% {
+                    transform: translate(5px, 0);
+                }
+                100% {
+                    transform: none;
+                }
+            }
+
+            @keyframes word-modified {
                 0% {
                     transform: translate(0, 5px);
                 }
@@ -267,7 +281,7 @@ CSS variable | Default
 
             .tag-icon {
                 padding: 0 18px;
-                border: 1px solid lightgrey;
+                border: 1px solid #959DA6;
                 font-weight: bold;
                 font-size: large;
                 -moz-user-select: none;
@@ -279,12 +293,12 @@ CSS variable | Default
                 height: 48px;
                 line-height: 48px;
                 background-color: rgba(255, 255, 255, 0.9);
-                color: #757575;
+                color: #959DA6;
             }
 
             #ellipsis {
                 cursor: pointer;
-                border-bottom: 1px solid lightgray;
+                border-bottom: 1px solid #959DA6;
                 position: absolute;
                 z-index: 31;
                 height: 48px;
@@ -293,12 +307,16 @@ CSS variable | Default
                 font-weight: bold;
                 font-size: x-large;
                 background-color: rgba(255, 255, 255, 0.9);
-                color: #757575;
+                color: #959DA6;
                 -moz-user-select: none;
                 -webkit-user-select: none;
                 -ms-user-select: none;
                 user-select: none;
                 -webkit-tap-highlight-color: transparent;
+            }
+
+            #ellipsis:active {
+                background-color: #e0e0e0;
             }
 
             #more-menu {
@@ -339,8 +357,8 @@ CSS variable | Default
             }
 
             /*
- * Container style
- */
+             * Container style
+             */
             .ps {
                 overflow: hidden !important;
                 overflow-anchor: none;
