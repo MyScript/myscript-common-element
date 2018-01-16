@@ -1057,8 +1057,8 @@
           ]
         },
         {
-          "name": "importInk",
-          "description": "Import multiple strokes at the same time also call batch mode.",
+          "name": "pointerEvents",
+          "description": "Send multiple strokes at the same time also call batch mode.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -1073,9 +1073,9 @@
           "metadata": {},
           "params": [
             {
-              "name": "strokes",
-              "type": "Array.<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array.<Floats>, y: Array.<Floats>, t: Array.<Floats>}>",
-              "description": "Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.\n\nExample of input :\n````\n    [{\n    \"gesture\": false,\n    \"pointerType\": \"PEN\",\n    \"pointerId\": 1,\n    \"x\": [273, 278, 281],\n    \"y\": [121, 128, 133],\n    \"t\": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]\n    },{\n    \"gesture\": false,\n    \"pointerType\": \"PEN\",\n    \"pointerId\": 1,\n    \"x\": [173, 178, 181],\n    \"y\": [221, 228, 233],\n    \"t\": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]\n    }]\n````"
+              "name": "events",
+              "type": "{processGestures: Boolean, events: Array.<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array.<Floats>, y: Array.<Floats>, t: Array.<Floats>}>}",
+              "description": "to process (strokes)\nDepending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.\n\nExample of input :\n````{\n     \"processGestures\": true,\n     \"events\": [{\n     \"pointerType\": \"PEN\",\n     \"pointerId\": 1,\n     \"x\": [273, 278, 281],\n     \"y\": [121, 128, 133],\n     \"t\": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]\n     },{\n     \"pointerType\": \"PEN\",\n     \"pointerId\": 1,\n     \"x\": [173, 178, 181],\n     \"y\": [221, 228, 233],\n     \"t\": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]\n     }]\n    }\n````"
             }
           ]
         },
