@@ -23,11 +23,11 @@
     "!bower.json",
     "!dist/**/*"
   ],
-  "_release": "4f6c0a058b",
+  "_release": "e2e7124dc4",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "4f6c0a058bca1d164fc858ed1fcf746e353a9986"
+    "commit": "e2e7124dc46ac402181cea5ccaaaaabfa1466ae8"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "master",
