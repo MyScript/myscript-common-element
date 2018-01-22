@@ -1,3 +1,16 @@
+# v4.1.0
+
+## Features
+- Modifications to include smart guide from MyScriptJS
+- New `penStyleClasses` property. Used to change the theme using classes passed using the `theme` property (see the [example](./examples/non-version-specific/customize_style.html)).
+- New `usepointerlisteners` property used to force the pointer events use.
+- New guides for text.
+- New `isEmpty`, `possibleUndoCount` and `undoStackIndex` properties.
+
+## Breaking changes
+- `importContent()` and `exportContent()` respectively renamed to `import_()` and `export_()`.
+- `importInk(strokes)` changed to `pointerEvents(events)`.
+
 # [v4.0.0](https://github.com/MyScript/myscript-common-element/tree/v4.0.0)
 
 ## Features
