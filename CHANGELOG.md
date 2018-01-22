@@ -4,8 +4,9 @@
 - Modifications to include smart guide from MyScriptJS
 - New `penStyleClasses` property. Used to change the theme using classes passed using the `theme` property (see the [example](./examples/non-version-specific/customize_style.html)).
 - New `usepointerlisteners` property used to force the pointer events use.
-- New guides for text.
-- New `isEmpty`, `possibleUndoCount` and `undoStackIndex` properties.
+- New guides for text using a svg DOM element behind the model layer.
+- No more css background if api is set to `V4`.
+- New `isEmpty`, `possibleUndoCount` and `undoStackIndex` properties in details on `changed` event to help development of custom undo/redo stacks.
 
 ## Breaking changes
 - `importContent()` and `exportContent()` respectively renamed to `import_()` and `export_()`.
