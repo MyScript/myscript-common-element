@@ -64,11 +64,10 @@ bower install myscript-common-element
 
 1. Create an `index.html` file in the same directory. 
 
-2. Add the following lines in the `head` section to import the library, the webcomponents polyfill and PEP. We use [PEP](https://github.com/jquery/PEP) to ensure better browsers compatibilities.
+2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
 ```html
   <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
   <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-  <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
 ```
 
 3. Still in the `head` section, add the following style:
@@ -94,7 +93,6 @@ bower install myscript-common-element
     <head>
         <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
         <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
         <style>
             myscript-common-element {
                 height: 100%;
