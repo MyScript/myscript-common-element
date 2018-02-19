@@ -1,4 +1,10 @@
-# v4.1.0
+# [v4.1.1](https://github.com/MyScript/myscript-common-element/tree/v4.1.1)
+
+## Bug fixed
+
+- Multiple smart guides now working in case of multiple editors.
+
+# [v4.1.0](https://github.com/MyScript/myscript-common-element/tree/v4.1.0)
 
 ## Features
 - Modifications to include smart guide from MyScriptJS
