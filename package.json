@@ -1,5 +1,5 @@
 {
-  "name": "@polymer/myscript-common-element",
+  "name": "myscript-common-element",
   "flat": true,
   "version": "4.2.0",
   "description": "myscript-common-element is the common layer of myscript-math-web and myscript-text-web.",
@@ -34,5 +34,11 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.8.2"
+  },
+  "scripts": {
+    "cache-clean": "npm cache clean",
+    "install": "npm install",
+    "analyze": "polymer analyze myscript-common-element.html myscript-languages-element.html myscript-stylesheet.html > analysis.json",
+    "start": "polymer serve"
   }
 }
