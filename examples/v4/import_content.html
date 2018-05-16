@@ -23,8 +23,7 @@
     </style>
 
     <!-- As web components are not fully support -->
-    <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="pepjs/dist/pep.min.js"></script>
+    <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <!-- myscript-common-element is import to be used later -->
     <script type="module" src="../../myscript-common-element.js"></script>
 </head>
@@ -44,14 +43,13 @@
                          disableconvertcontrol
                          disableclearcontrol>
 </myscript-common-element>
-<script type="module">
-import '../../myscript-common-element.js';
-const component = document.querySelector('myscript-common-element');
-const importContent = document.getElementById('importContentField');
+<script>
+    const component = document.querySelector('myscript-common-element');
+    const importContent = document.getElementById('importContentField');
 
-document.getElementById('importContent').addEventListener('click', function () {
-    component.import_(importContent.value, importContent.dataset.type);
-});
+    document.getElementById('importContent').addEventListener('click', function () {
+        component.import_(importContent.value, importContent.dataset.type);
+    });
 </script>
 </body>
 

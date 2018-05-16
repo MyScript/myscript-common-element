@@ -43,6 +43,7 @@ import './myscript-stylesheet';
  @demo examples/v3/rest_text.html Configure component with legacy api [V3]
  @demo examples/index.html Other demonstrations
  */
+
 class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronResizableBehavior], PolymerElement)) {
   constructor() {
     super();
@@ -145,8 +146,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         </nav>
         <div id="editorDomElement" class="ms-editor" on-idle="_idleListener" on-loaded="_changedListener" on-changed="_changedListener" on-exported="_exportedListener" on-error="_errorListener">
         </div>
-        <paper-toast class="fit-bottom"></paper-toast>
-`;
+        <paper-toast class="fit-bottom"></paper-toast>`;
   }
 
   /**
@@ -199,14 +199,14 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
    * @event converted
    */
 
-  static get is() {
-    return 'myscript-common-element';
-  }
-
   /**
    * Fired on error.
    * @event error
    */
+
+  static get is() {
+    return 'myscript-common-element';
+  }
 
   static get properties() {
     return {

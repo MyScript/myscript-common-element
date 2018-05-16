@@ -19,21 +19,25 @@
   "license": "Apache-2",
   "homepage": "https://github.com/MyScript/myscript-common-element/",
   "dependencies": {
-    "@polymer/iron-component-page": "^3.0.0-pre.18",
-    "@polymer/iron-resizable-behavior": "^3.0.0-pre.1",
-    "@polymer/paper-button": "^3.0.0-pre.1",
-    "@polymer/paper-fab": "^3.0.0-pre.1",
-    "@polymer/paper-toast": "^3.0.0-pre.1",
-    "@polymer/polymer": "^3.0.0-pre.1",
+    "@polymer/iron-component-page": "^3.0.0-pre.19",
+    "@polymer/iron-resizable-behavior": "^3.0.0-pre.19",
+    "@polymer/paper-button": "^3.0.0-pre.19",
+    "@polymer/paper-fab": "^3.0.0-pre.19",
+    "@polymer/paper-toast": "^3.0.0-pre.19",
+    "@polymer/polymer": "^3.0.0-pre.13",
     "@webcomponents/webcomponentsjs": "^2.0.0",
-    "myscript": "github:myscript/myscriptjs"
+    "myscript": "github:myscript/myscriptjs#master"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.8.2"
+    "eslint-plugin-react": "^7.8.2",
+    "@polymer/paper-swatch-picker": "^3.0.0-pre.19",
+    "@polymer/paper-toggle-button": "^3.0.0-pre.19",
+    "@polymer/paper-slider": "^3.0.0-pre.19",
+    "web-animations-js": "^2.3.1"
   },
   "scripts": {
     "cache-clean": "npm cache clean",
