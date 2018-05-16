@@ -1,8 +1,10 @@
-import '@polymer/polymer/polymer-element.js';
-const $_documentContainer = document.createElement('div');
-$_documentContainer.setAttribute('style', 'display: none;');
+/* eslint-disable no-undef */
+import '@polymer/polymer/polymer-element';
 
-$_documentContainer.innerHTML = `<dom-module id="myscript-stylesheet">
+const documentContainer = document.createElement('div');
+documentContainer.setAttribute('style', 'display: none;');
+
+documentContainer.innerHTML = `<dom-module id="myscript-stylesheet">
     <template>
         <style>
             :host {
@@ -524,7 +526,7 @@ $_documentContainer.innerHTML = `<dom-module id="myscript-stylesheet">
     </template>
 </dom-module>`;
 
-document.head.appendChild($_documentContainer);
+document.head.appendChild(documentContainer);
 
 /*
 `myscript-stylesheet` is the default stylesheet applied the the editor.
@@ -541,4 +543,3 @@ CSS variable | Default
 `--myscript-editor-error-background` | Error image
 `--myscript-editor-loader` | Spinner
 */
-;

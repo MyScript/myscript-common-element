@@ -18,8 +18,8 @@ import './myscript-stylesheet';
 
  <myscript-common-element
  type="TEXT"
- applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
- hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+ applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+ hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
  </myscript-common-element>
 
  ### Styling
@@ -48,6 +48,8 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
     super();
     this.logger = MyScript.LoggerConfig.getLogger('common-element');
   }
+
+  static get importMeta() { return import.meta; }
 
   static get template() {
     return html`
@@ -130,11 +132,11 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
             }
         </style>
         <nav hidden="[[ disablecontrols ]]">
-            <paper-fab mini src$="[[importPath]]/clear.svg" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ disableclearcontrol ]]">
+            <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ disableclearcontrol ]]">
             </paper-fab>
-            <paper-fab mini src$="[[importPath]]/undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ disableundoredocontrol ]]">
+            <paper-fab mini src$="[[importPath]]undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
-            <paper-fab mini src$="[[importPath]]/redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
+            <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
             <div class="spacer"></div>
             <button class="classic-btn" title="convert" on-tap="convert" disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
