@@ -153,9 +153,6 @@
         }
     }
 
-    // Set penColor after to prevent taken into account too early
-    penColor.color = '#ff7314';
-
     document.querySelector('#theme').addEventListener('change', (event) => {
         const selectedTheme = themes.find(theme => theme.name === event.target.value);
         if (selectedTheme) {

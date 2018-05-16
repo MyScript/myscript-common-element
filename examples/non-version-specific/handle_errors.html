@@ -21,12 +21,12 @@
 <body>
 <paper-toast class="fit-top"></paper-toast>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-common-element host="thisisnotanhost" applicationkey="WRONG">
+<myscript-common-element host="webdemoapi.myscript.com" applicationkey="WRONG">
 </myscript-common-element>
 <script>
     const paperToast = document.querySelector('paper-toast');
     document.querySelector('myscript-common-element').addEventListener('error', (event) => {
-        paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
+        paperToast.text = `Error : ${JSON.stringify(event)}`;
         paperToast.fitIn = paperToast.show();
     });
 </script>
