@@ -11,6 +11,11 @@
     "recognition",
     "cloud"
   ],
+  "files": [
+    "myscript-common-element.js",
+    "myscript-languages-element.js",
+    "*.svg"
+  ],
   "main": "myscript-common-element.html",
   "repository": {
     "type": "git",
