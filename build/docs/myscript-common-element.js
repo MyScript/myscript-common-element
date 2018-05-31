@@ -1,18 +1,15 @@
 /* eslint-disable no-undef,no-underscore-dangle,no-param-reassign,no-shadow,no-prototype-builtins */
-import { GestureEventListeners } from '@polymer/polymer/lib/mixins/gesture-event-listeners';
-import { addListener, removeListener } from '@polymer/polymer/lib/utils/gestures';
-import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
-import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior';
-import { html, PolymerElement } from '@polymer/polymer';
-
-import '@polymer/paper-button/paper-button';
-import '@polymer/paper-fab/paper-fab';
-import '@polymer/paper-toast/paper-toast';
-
-import * as MyScript from 'myscript/dist/myscript.esm';
-import './myscript-stylesheet';
-
+import { GestureEventListeners } from "./node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js";
+import { addListener, removeListener } from "./node_modules/@polymer/polymer/lib/utils/gestures.js";
+import { beforeNextRender } from "./node_modules/@polymer/polymer/lib/utils/render-status.js";
+import { mixinBehaviors } from "./node_modules/@polymer/polymer/lib/legacy/class.js";
+import { IronResizableBehavior } from "./node_modules/@polymer/iron-resizable-behavior/iron-resizable-behavior.js";
+import { html, PolymerElement } from "./node_modules/@polymer/polymer/polymer-element.js";
+import "./node_modules/@polymer/paper-button/paper-button.js";
+import "./node_modules/@polymer/paper-fab/paper-fab.js";
+import "./node_modules/@polymer/paper-toast/paper-toast.js";
+import * as MyScript from "./node_modules/myscript/dist/myscript.esm.js";
+import "./myscript-stylesheet.js";
 /**
  `myscript-common-element` is a web component wrapper around MyScriptJS editor.
 
@@ -232,7 +229,6 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         </div>
         <paper-toast class="fit-bottom"></paper-toast>`;
   }
-
   /**
    * Fired when editor is idle.
    * @event idle
@@ -288,6 +284,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
    * @event error
    */
 
+
   static get is() {
     return 'myscript-common-element';
   }
@@ -302,6 +299,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 'TEXT'
       },
+
       /**
        * The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WebSocket.
        */
@@ -310,6 +308,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 'WEBSOCKET'
       },
+
       /**
        * Scheme to use to connect to MyScript Cloud or Server. (https or http)
        */
@@ -318,6 +317,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 'https'
       },
+
       /**
        * The current recognition service host.
        */
@@ -326,6 +326,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 'cloud.myscript.com'
       },
+
       /**
        * Use if host and scheme should be set using window.location
        */
@@ -334,6 +335,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: false
       },
+
       /**
        * Cloud API version to use.
        */
@@ -342,6 +344,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 'V4'
       },
+
       /**
        * Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.
        */
@@ -350,6 +353,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 2000
       },
+
       /**
        * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol if not on-demand.
        */
@@ -358,6 +362,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: 1000
       },
+
       /**
        * True if export should be done on-demand, false otherwise
        */
@@ -366,6 +371,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: false
       },
+
       /**
        * Application key to use for recognition on MyScript handwriting recognition server.<br />
        * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
@@ -375,6 +381,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: String,
         reflectToAttribute: true
       },
+
       /**
        * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
        * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
@@ -384,6 +391,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: String,
         reflectToAttribute: true
       },
+
       /**
        * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
        * (see examples/v4/programmatic_init.html for a better understanding)
@@ -395,6 +403,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         observer: '_unloadedChanged'
       },
+
       /**
        * True if editor is initialized
        */
@@ -405,6 +414,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         observer: '_initializedChanged'
       },
+
       /**
        * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
        */
@@ -412,6 +422,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: Object,
         notify: true
       },
+
       /**
        * Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
        * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
@@ -421,6 +432,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: Object,
         notify: true
       },
+
       /**
        * Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
        */
@@ -428,6 +440,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: String,
         reflectToAttribute: true
       },
+
       /**
        * Pen width in mm (no other unit is supported yet)
        */
@@ -435,6 +448,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: Number,
         reflectToAttribute: true
       },
+
       /**
        * Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)
        */
@@ -442,6 +456,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: Object,
         notify: true
       },
+
       /**
        * Pen style classes
        */
@@ -450,6 +465,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         value: '',
         notify: true
       },
+
       /**
        * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
        */
@@ -458,6 +474,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         value: '#1580CD',
         reflectToAttribute: true
       },
+
       /**
        * Width of strokes and primitives in mm (no other unit is supported yet)
        */
@@ -466,6 +483,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         value: 1,
         reflectToAttribute: true
       },
+
       /**
        * Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)
        */
@@ -473,6 +491,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: Object,
         notify: true
       },
+
       /**
        * True if undo is available
        */
@@ -482,6 +501,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         notify: true
       },
+
       /**
        * True if redo is available
        */
@@ -491,6 +511,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         notify: true
       },
+
       /**
        * True if there is something to clear
        */
@@ -500,6 +521,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         notify: true
       },
+
       /**
        * True if export button could be displayed.
        */
@@ -509,6 +531,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         notify: true
       },
+
       /**
        * True if convert button could be displayed.
        */
@@ -518,20 +541,23 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         notify: true
       },
+
       /**
        * Number of operations that it is currently possible to undo.
        */
       possibleUndoCount: {
         type: Number,
-        value: 0,
+        value: 0
       },
+
       /**
        * The position of the cursor identifying the current state in the internal iink undo/redo stack.
        */
       undoStackIndex: {
         type: Number,
-        value: 0,
+        value: 0
       },
+
       /**
        * If set to true, disable the autoReconnect.
        */
@@ -541,6 +567,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         value: false,
         notify: true
       },
+
       /**
        * If set to true, remove the controls (undo/redo, clear...).
        */
@@ -550,6 +577,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         value: false,
         notify: true
       },
+
       /**
        * If set to true, remove the undo/redo controls.
        */
@@ -558,6 +586,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: false
       },
+
       /**
        * If set to true, remove the clear control.
        */
@@ -566,6 +595,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: false
       },
+
       /**
        * If set to true, remove the convert control.
        */
@@ -574,6 +604,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         reflectToAttribute: true,
         value: false
       },
+
       /**
        * Exports.
        * @type {Object<String, Object>} Attributes depends on configuration.
@@ -582,6 +613,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         type: Object,
         notify: true
       },
+
       /**
        * True if component is idle
        */
@@ -590,14 +622,16 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
         value: true,
         notify: true
       },
+
       /**
        * True if pointer events listeners is used, false otherwise
        */
       usepointerlisteners: {
         type: Boolean,
         reflectToAttribute: true,
-        value: false,
+        value: false
       },
+
       /**
        * True to display console output, false otherwise.
        */
@@ -614,107 +648,131 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
   }
 
   static get observers() {
-    return [
-      '_updateTheme(editor, theme, themecolor, themewidth)',
-      '_updatePenStyle(editor, penstyle, pencolor, penwidth)',
-      '_updatePenStyleClasses(editor, penstyleclasses)'
-    ];
+    return ['_updateTheme(editor, theme, themecolor, themewidth)', '_updatePenStyle(editor, penstyle, pencolor, penwidth)', '_updatePenStyleClasses(editor, penstyleclasses)'];
   }
 
   static _generateTheme(theme, themecolor, themewidth) {
     // FIXME: find a way to do a proper deep merge
     const stylesheet = Object.assign({}, theme);
+
     if (!stylesheet.ink) {
       stylesheet.ink = {};
     }
+
     if (themecolor) {
       stylesheet.ink.color = themecolor;
     }
+
     if (themewidth) {
       stylesheet.ink['-myscript-pen-width'] = themewidth;
     }
+
     return stylesheet;
   }
 
   static _generatePenStyle(penstyle, pencolor, penwidth) {
     // FIXME: find a way to do a proper deep merge
     const inlinestyle = Object.assign({}, penstyle);
+
     if (pencolor) {
       inlinestyle.color = pencolor;
     }
+
     if (penwidth) {
       inlinestyle['-myscript-pen-width'] = penwidth;
     }
+
     return inlinestyle;
   }
 
   static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, usewindowlocation, applicationkey, hmackey, disableautoreconnect) {
     // FIXME: find a way to do a proper deep merge
     const conf = Object.assign({}, configuration);
+
     if (!conf.triggers) {
       conf.triggers = {};
     }
+
     if (!conf.recognitionParams) {
       conf.recognitionParams = {};
     }
+
     if (!conf.recognitionParams.server) {
       conf.recognitionParams.server = {};
     }
+
     if (!conf.recognitionParams.server.websocket) {
       conf.recognitionParams.server.websocket = {};
     }
+
     if (triggerdelay) {
       conf.triggerdelay = triggerdelay;
     }
+
     if (processdelay) {
       conf.processdelay = processdelay;
     }
+
     if (protocol) {
       conf.recognitionParams.protocol = protocol;
       conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
     }
+
     if (ondemand) {
       conf.triggers.exportContent = 'DEMAND';
     }
+
     if (type) {
       conf.recognitionParams.type = type;
     }
+
     if (apiversion) {
       conf.recognitionParams.apiVersion = apiversion;
     }
+
     if (scheme) {
       conf.recognitionParams.server.scheme = scheme;
     }
+
     if (host) {
       conf.recognitionParams.server.host = host;
     }
+
     if (usewindowlocation) {
       conf.recognitionParams.server.scheme = window.location.protocol.slice(0, -1);
       conf.recognitionParams.server.host = window.location.host;
     }
+
     if (applicationkey) {
       conf.recognitionParams.server.applicationKey = applicationkey;
     }
+
     if (hmackey) {
       conf.recognitionParams.server.hmacKey = hmackey;
     }
+
     if (disableautoreconnect !== undefined) {
       conf.recognitionParams.server.websocket.autoReconnect = !disableautoreconnect;
     }
+
     return conf;
   }
 
   static _roundFloat(oneFloat, requestedFloatPrecision) {
     const floatPrecisionArray = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000];
+
     if (requestedFloatPrecision || requestedFloatPrecision === 0) {
       let floatPrecision;
+
       if (requestedFloatPrecision > 10) {
         floatPrecision = floatPrecisionArray;
       } else {
         floatPrecision = floatPrecisionArray[requestedFloatPrecision];
       }
+
       return Math.round(oneFloat * floatPrecision) / floatPrecision;
     }
+
     return oneFloat;
   }
 
@@ -728,21 +786,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
   }
 
   _buildConfiguration() {
-    return MyScriptCommonElement._generateConfiguration(
-      this.configuration,
-      this.triggerdelay,
-      this.processdelay,
-      this.ondemand,
-      this.type,
-      this.protocol,
-      this.apiversion,
-      this.scheme,
-      this.host,
-      this.usewindowlocation,
-      this.applicationkey,
-      this.hmackey,
-      this.disableautoreconnect
-    );
+    return MyScriptCommonElement._generateConfiguration(this.configuration, this.triggerdelay, this.processdelay, this.ondemand, this.type, this.protocol, this.apiversion, this.scheme, this.host, this.usewindowlocation, this.applicationkey, this.hmackey, this.disableautoreconnect);
   }
 
   _resizeListener(event) {
@@ -755,11 +799,13 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
   _changedListener(event) {
     if (event.detail) {
       this.initialized = event.detail.initialized;
+
       if (event.detail.isEmpty !== undefined) {
         this.canclear = !event.detail.isEmpty;
       } else {
         this.canclear = event.detail.canClear;
       }
+
       this.canundo = event.detail.canUndo;
       this.canredo = event.detail.canRedo;
       this.canexport = event.detail.canExport;
@@ -781,6 +827,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
 
   _errorListener(event) {
     this.logger.error('error', event);
+
     if (event.detail && event.detail.message && (!event.detail.recoverable || event.detail.recoverable === true)) {
       this.paperToast.text = event.detail.message;
       this.paperToast.fitIn = this.paperToast.show();
@@ -801,31 +848,37 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       }
     };
 
-    const patchPointerEvent = (evt) => {
+    const patchPointerEvent = evt => {
       if (!evt.pointerId) {
         evt.pointerId = -1;
       }
+
       if (!evt.pointerType) {
         evt.pointerType = 'pen';
       }
+
       return evt;
     };
 
-    const hideMenu = (evt) => {
+    const hideMenu = evt => {
       const moreMenuInDocument = this.shadowRoot.querySelector('#more-menu');
+
       if (!evt.target.classList.contains('ellipsis') && !evt.target.classList.contains('more-menu') && !evt.target.classList.contains('options-label-button') && moreMenuInDocument && moreMenuInDocument.style.display !== 'none') {
         moreMenuInDocument.style.display = 'none';
         return true;
       }
+
       return false;
     };
 
-    const hideCandidates = (evt) => {
+    const hideCandidates = evt => {
       const candidatesInDocument = this.shadowRoot.querySelector('.candidates');
+
       if (!evt.target.classList.contains('candidates') && !(evt.target.tagName === 'SPAN') && candidatesInDocument && candidatesInDocument.style.display !== 'none') {
         candidatesInDocument.style.display = 'none';
         return true;
       }
+
       return false;
     };
 
@@ -833,18 +886,22 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       this.logger.debug('down on prompter text');
     };
 
-    const pointerDownHandler = (evt) => { // Trigger a pointerDown
+    const pointerDownHandler = evt => {
+      // Trigger a pointerDown
       if (firstPointerDown) {
         addListener(editor.smartGuide.elements.textContainer, 'down', downText);
       }
+
       firstPointerDown = false;
       patchPointerEvent(evt);
       const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
+
       if (this.activePointerId) {
         if (this.activePointerId === evt.pointerId) {
           this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
         }
-      } else if ((evt.button !== 2) && (evt.buttons !== 2) && pointerDownOnEditor) { // Ignore right click
+      } else if (evt.button !== 2 && evt.buttons !== 2 && pointerDownOnEditor) {
+        // Ignore right click
         if (!hideMenu(evt) && !hideCandidates(evt)) {
           this.activePointerId = evt.pointerId;
           unFocus();
@@ -855,7 +912,8 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       } else if (evt.target.classList.contains('ellipsis') || evt.target.classList.contains('tag-icon')) {
         hideMenu(evt);
         hideCandidates(evt);
-      } else { // FIXME add more complete verification to pointer down on smart guide
+      } else {
+        // FIXME add more complete verification to pointer down on smart guide
         hideMenu(evt);
         hideCandidates(evt);
         smartGuidePointerDown = true;
@@ -863,21 +921,24 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       }
     };
 
-    const pointerMoveHandler = (evt) => { // Trigger a pointerMove
-      patchPointerEvent(evt);
-      // Only considering the active pointer
+    const pointerMoveHandler = evt => {
+      // Trigger a pointerMove
+      patchPointerEvent(evt); // Only considering the active pointer
+
       if (this.activePointerId && this.activePointerId === evt.pointerId) {
         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       } else if (smartGuidePointerDown) {
         const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
+
         const diffX = Math.abs(downSmartGuidePoint.x - point.x);
         const diffY = Math.abs(downSmartGuidePoint.y - point.y);
         mMaxDiffX = Math.max(diffX, mMaxDiffX);
         const cond1 = diffX < 5 && diffY > 5 && mMaxDiffX < 15;
         const cond2 = diffX > 5 && diffY > 5 && mMaxDiffX < 15;
+
         if (cond1 || cond2) {
-          this.activePointerId = evt.pointerId;
-          // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
+          this.activePointerId = evt.pointerId; // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
+
           const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
           unFocus();
           evt.preventDefault();
@@ -886,38 +947,40 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       }
     };
 
-    const polymerPointerMoveHandler = (evt) => { // Trigger a pointerMove
-      const checkHover = (evt) => {
+    const polymerPointerMoveHandler = evt => {
+      // Trigger a pointerMove
+      const checkHover = evt => {
         const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
         const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
+
         if (evt.detail.hover()) {
           // Check if pointer entered into any smart guide elements or scrollbar
-          const pointerEnteredSmartGuide = smartGuideIds.some(v => evt.detail.hover().className.indexOf(v) >= 0) || scrollbarClasses.some(v => evt.detail.hover().className.indexOf(v) >= 0);
-          // Check if pointer moved between words in smart guide
+          const pointerEnteredSmartGuide = smartGuideIds.some(v => evt.detail.hover().className.indexOf(v) >= 0) || scrollbarClasses.some(v => evt.detail.hover().className.indexOf(v) >= 0); // Check if pointer moved between words in smart guide
+
           const pointerMovedWords = evt.detail.hover().tagName === 'SPAN' || evt.detail.hover().tagName === 'SPAN';
-          return evt.detail.hover().id === 'editorDomElement'
-            || evt.detail.hover().className.includes('ms-canvas')
-            || pointerEnteredSmartGuide
-            || pointerMovedWords;
+          return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas') || pointerEnteredSmartGuide || pointerMovedWords;
         }
+
         return false;
       };
 
-      patchPointerEvent(evt);
-      // Only considering the active pointer
+      patchPointerEvent(evt); // Only considering the active pointer
+
       if (checkHover(evt) && this.activePointerId && this.activePointerId === evt.pointerId) {
         evt.stopPropagation();
         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       } else if (smartGuidePointerDown) {
         const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
+
         const diffX = Math.abs(downSmartGuidePoint.x - point.x);
         const diffY = Math.abs(downSmartGuidePoint.y - point.y);
         mMaxDiffX = Math.max(diffX, mMaxDiffX);
         const cond1 = diffX < 5 && diffY > 5 && mMaxDiffX < 15;
         const cond2 = diffX > 5 && diffY > 5 && mMaxDiffX < 15;
+
         if (cond1 || cond2) {
-          this.activePointerId = evt.pointerId;
-          // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
+          this.activePointerId = evt.pointerId; // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
+
           const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
           unFocus();
           editor.pointerDown(downSmartGuidePoint, evt.pointerType, pointerId);
@@ -925,26 +988,31 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       } else {
         evt.stopPropagation();
         this.activePointerId = undefined; // Managing the active pointer
+
         editor.pointerUp(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       }
     };
 
-    const pointerUpHandler = (evt) => { // Trigger a pointerUp
+    const pointerUpHandler = evt => {
+      // Trigger a pointerUp
       patchPointerEvent(evt);
       mMaxDiffX = 0;
       smartGuidePointerDown = false;
       const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
-      const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
-      // Check if pointer entered into any smartguide elements or scrollbar
-      const pointerEnteredSmartGuide = evt.relatedTarget && (smartGuideIds.includes(evt.relatedTarget.className) || scrollbarClasses.includes(evt.relatedTarget.className));
-      // Check if pointer didn't stay in the smartguide and pointer exited the smartguide or scrollbar
-      const pointerExitedSmartGuide = evt.relatedTarget && evt.target && (smartGuideIds.includes(evt.target.className) || scrollbarClasses.includes(evt.target.className));
-      // Check if pointer moved between words in smartguide
+      const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x']; // Check if pointer entered into any smartguide elements or scrollbar
+
+      const pointerEnteredSmartGuide = evt.relatedTarget && (smartGuideIds.includes(evt.relatedTarget.className) || scrollbarClasses.includes(evt.relatedTarget.className)); // Check if pointer didn't stay in the smartguide and pointer exited the smartguide or scrollbar
+
+      const pointerExitedSmartGuide = evt.relatedTarget && evt.target && (smartGuideIds.includes(evt.target.className) || scrollbarClasses.includes(evt.target.className)); // Check if pointer moved between words in smartguide
+
       const pointerMovedWords = evt.relatedTarget && evt.target && (evt.target.tagName === 'SPAN' || evt.relatedTarget.tagName === 'SPAN');
+
       if (pointerEnteredSmartGuide || pointerExitedSmartGuide || pointerMovedWords) {
         evt.stopPropagation();
-      } else if (this.activePointerId && this.activePointerId === evt.pointerId) { // Only considering the active pointer
+      } else if (this.activePointerId && this.activePointerId === evt.pointerId) {
+        // Only considering the active pointer
         this.activePointerId = undefined; // Managing the active pointer
+
         evt.stopPropagation();
         editor.pointerUp(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       } else {
@@ -952,12 +1020,16 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       }
     };
 
-    const polymerPointerUpHandler = (evt) => { // Trigger a pointerUp
+    const polymerPointerUpHandler = evt => {
+      // Trigger a pointerUp
       patchPointerEvent(evt);
       mMaxDiffX = 0;
       smartGuidePointerDown = false;
-      if (this.activePointerId && this.activePointerId === evt.pointerId) { // Only considering the active pointer
+
+      if (this.activePointerId && this.activePointerId === evt.pointerId) {
+        // Only considering the active pointer
         this.activePointerId = undefined; // Managing the active pointer
+
         evt.stopPropagation();
         editor.pointerUp(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       } else {
@@ -975,7 +1047,6 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       types: ['pointerup', 'pointerout', 'pointerleave', 'pointercancel'],
       listener: pointerUpHandler
     }];
-
     const polymerGestureListeners = [{
       types: ['down'],
       listener: pointerDownHandler
@@ -986,7 +1057,6 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       types: ['up'],
       listener: polymerPointerUpHandler
     }];
-
     const context = {
       options: editor.configuration.listenerOptions,
       listeners: this.usepointerlisteners ? pointerListeners : polymerGestureListeners
@@ -997,8 +1067,8 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
     }
 
     this.logger.debug('attaching listeners', context);
-    context.listeners.forEach((item) => {
-      item.types.forEach((type) => {
+    context.listeners.forEach(item => {
+      item.types.forEach(type => {
         if (['down', 'track', 'up'].includes(type)) {
           addListener(element, type, item.listener);
         } else {
@@ -1011,8 +1081,8 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
 
   _detachGrabber(element, context) {
     this.logger.debug('detaching listeners', context);
-    context.listeners.forEach((item) => {
-      item.types.forEach((type) => {
+    context.listeners.forEach(item => {
+      item.types.forEach(type => {
         if (['track', 'tap'].includes(type)) {
           removeListener(element, type, item.listener);
         } else {
@@ -1025,17 +1095,15 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
   connectedCallback() {
     super.connectedCallback();
     this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-    Object
-      .keys(MyScript.Constants.Logger)
-      .forEach((key) => {
-        MyScript.LoggerConfig
-          .getLogger(MyScript.Constants.Logger[key])
-          .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-      });
+    Object.keys(MyScript.Constants.Logger).forEach(key => {
+      MyScript.LoggerConfig.getLogger(MyScript.Constants.Logger[key]).setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+    });
     this.addEventListener('iron-resize', this._resizeListener);
     this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
     this.paperToast = this.shadowRoot.querySelector('paper-toast');
+
     this._unloadedChanged(this.unloaded);
+
     this.logger.info('common-element connected');
   }
 
@@ -1044,54 +1112,58 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
     this.removeEventListener('iron-resize', this._resizeListener);
     this.logger.info('common-element disconnected');
   }
-
   /**
    * Clear all context
    */
+
+
   clear() {
     if (this.editor) {
       this.editor.clear();
     }
   }
-
   /**
    * Undo action
    */
+
+
   undo() {
     if (this.editor) {
       this.editor.undo();
     }
   }
-
   /**
    * Redo action
    */
+
+
   redo() {
     if (this.editor) {
       this.editor.redo();
     }
   }
-
   /**
    * Trigger export
    */
+
+
   export_() {
     if (this.editor) {
       this.editor.export_();
     }
   }
-
   /**
    * Import content
    * @param {Blob|*} data Data to import
    * @param {String} [mimetype] Mimetype of the data, needed if data is not a Blob
    */
+
+
   import_(data, mimetype) {
     if (this.editor) {
       this.editor.import_(data, mimetype);
     }
   }
-
   /**
    * Send multiple strokes at the same time also call batch mode.
    * @param {{ events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
@@ -1115,25 +1187,29 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
    *     }
    * ````
    */
+
+
   pointerEvents(events) {
     if (this.editor) {
       this.editor.pointerEvents(events);
     }
   }
-
   /**
    * Trigger convert
    */
+
+
   convert() {
     if (this.editor) {
       this.editor.convert();
     }
   }
-
   /**
    * Return the stats allowing to monitor what ink size is send to the server.
    * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
    */
+
+
   getStats() {
     return this.editor.getStats();
   }
@@ -1168,27 +1244,23 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
   _unloadedChanged(unloaded) {
     this.exports = undefined;
     this.logger.trace('unloaded changed', unloaded);
+
     if (unloaded === false && this.editorDomElement) {
       if (this.editor) {
         this.editor.configuration = this._buildConfiguration();
       } else {
         beforeNextRender(this, () => {
-          this.editor = MyScript.register(
-            this.editorDomElement,
-            this._buildConfiguration(),
-            MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth),
-            MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth),
-            {
-              grabber: {
-                attach: this._attachGrabber.bind(this),
-                detach: this._detachGrabber.bind(this)
-              }
+          this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth), MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth), {
+            grabber: {
+              attach: this._attachGrabber.bind(this),
+              detach: this._detachGrabber.bind(this)
             }
-          );
+          });
         });
       }
     }
   }
+
 }
 
 customElements.define(MyScriptCommonElement.is, MyScriptCommonElement);

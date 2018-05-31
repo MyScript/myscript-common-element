@@ -1,7 +1,7 @@
 {
   "name": "myscript-common-element",
   "flat": true,
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "myscript-common-element is the common layer of myscript-math-web and myscript-text-web.",
   "keywords": [
     "myscript",
@@ -15,7 +15,7 @@
     "myscript-common-element.js",
     "myscript-languages-element.js",
     "myscript-stylesheet.js",
-    "*.svg"
+    "assets/*.svg"
   ],
   "main": "myscript-common-element.html",
   "repository": {
@@ -25,24 +25,24 @@
   "license": "Apache-2",
   "homepage": "https://github.com/MyScript/myscript-common-element/",
   "dependencies": {
+    "@polymer/polymer": "^3.0.0-pre.13",
+    "myscript": "github:myscript/myscriptjs#master"
+  },
+  "devDependencies": {
     "@polymer/iron-component-page": "^3.0.0-pre.19",
     "@polymer/iron-resizable-behavior": "^3.0.0-pre.19",
     "@polymer/paper-button": "^3.0.0-pre.19",
     "@polymer/paper-fab": "^3.0.0-pre.19",
+    "@polymer/paper-slider": "^3.0.0-pre.19",
+    "@polymer/paper-swatch-picker": "^3.0.0-pre.19",
     "@polymer/paper-toast": "^3.0.0-pre.19",
-    "@polymer/polymer": "^3.0.0-pre.13",
+    "@polymer/paper-toggle-button": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
-    "myscript": "github:myscript/myscriptjs#master"
-  },
-  "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.8.2",
-    "@polymer/paper-swatch-picker": "^3.0.0-pre.19",
-    "@polymer/paper-toggle-button": "^3.0.0-pre.19",
-    "@polymer/paper-slider": "^3.0.0-pre.19",
     "web-animations-js": "^2.3.1"
   },
   "scripts": {

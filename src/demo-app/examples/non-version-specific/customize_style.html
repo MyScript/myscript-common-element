@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="../examples.css">
     <style>
-        .nav-style {
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -21,7 +21,7 @@
             padding: 0 12px 12px;
         }
 
-        .nav-style span {
+        nav span {
             align-items: center;
             display: flex;
             flex-wrap: wrap;
@@ -53,13 +53,13 @@
         }
     </style>
 
-    <script src="../../../../node_modules/@webcomponents/webcomponentsjs"></script>
-    <script type="module" src="../../node_modules/@polymer/paper-toggle-button/paper-toggle-button.js"></script>
-    <script type="module" src="../../node_modules/@polymer/paper-swatch-picker/paper-swatch-picker.js"></script>
-    <script type="module" src="../../node_modules/@polymer/paper-slider/paper-slider.js"></script>
-    <script src="../../node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
+    <script src="../../../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="../../../../node_modules/@polymer/paper-toggle-button/paper-toggle-button.js"></script>
+    <script type="module" src="../../../../node_modules/@polymer/paper-swatch-picker/paper-swatch-picker.js"></script>
+    <script type="module" src="../../../../node_modules/@polymer/paper-slider/paper-slider.js"></script>
+    <script src="../../../../node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
 
-    <script type="module" src="../../myscript-common-element.js"></script>
+    <script type="module" src="../../../../myscript-common-element.js"></script>
     <custom-style>
         <style>
             myscript-common-element {
@@ -84,7 +84,7 @@
 </head>
 
 <body>
-<nav class="nav-style">
+<nav>
     <paper-toggle-button class="flex-item" id="penstyleclasses" checked>Apply pen style classes (greenThickPen)
     </paper-toggle-button>
     <span class="flex-item">
