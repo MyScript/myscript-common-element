@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "elements": [
     {
-      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n <myscript-common-element\n type=\"TEXT\"\n applicationkey=\"YOUR MYSCRIPT DEVELOPER APPLICATION KEY\"\n hmackey=\"YOUR MYSCRIPT DEVELOPER HMAC KEY\">\n </myscript-common-element>\n\n ### Styling\n\n `<myscript-common-element>` provides the following custom properties for styling:\n\n CSS variable | Default\n -------------|--------\n `--myscript-common-element-background` | none\n `--myscript-common-element-color` | #FFFFFF\n `--myscript-common-element-line-pattern` | Classic notebook square pattern\n `--myscript-common-element-button-background` | #1A9FFF\n `--myscript-common-element-button-focus-background` | #1A9FFF\n `--myscript-common-element-button-disabled-background` | #F5F6F7",
+      "description": "`myscript-common-element` is a web component wrapper around MyScriptJS editor.\n\n    <myscript-common-element\n         type=\"TEXT\"\n         applicationkey=\"YOUR MYSCRIPT DEVELOPER APPLICATION KEY\"\n         hmackey=\"YOUR MYSCRIPT DEVELOPER HMAC KEY\">\n    </myscript-common-element>\n\n ### Styling\n\n `<myscript-common-element>` provides the following custom properties for styling:\n\n CSS variable | Default\n -------------|--------\n `--myscript-common-element-background` | none\n `--myscript-common-element-color` | #FFFFFF\n `--myscript-common-element-line-pattern` | Classic notebook square pattern\n `--myscript-common-element-button-background` | #1A9FFF\n `--myscript-common-element-button-focus-background` | #1A9FFF\n `--myscript-common-element-button-disabled-background` | #F5F6F7",
       "summary": "",
       "path": "myscript-common-element.js",
       "properties": [

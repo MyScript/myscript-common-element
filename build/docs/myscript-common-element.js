@@ -13,11 +13,11 @@ import "./myscript-stylesheet.js";
 /**
  `myscript-common-element` is a web component wrapper around MyScriptJS editor.
 
- <myscript-common-element
- type="TEXT"
- applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
- hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
- </myscript-common-element>
+    <myscript-common-element
+         type="TEXT"
+         applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+         hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
+    </myscript-common-element>
 
  ### Styling
 
