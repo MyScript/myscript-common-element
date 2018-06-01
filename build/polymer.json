@@ -4,7 +4,6 @@
   "sources": [
     "src/**/*",
     "analysis.json",
-    "assets/**",
     "myscript-common-element.js",
     "myscript-languages-element.js",
     "myscript-stylesheet.js",

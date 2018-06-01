@@ -12,7 +12,6 @@ import '@polymer/paper-toast/paper-toast';
 
 import * as MyScript from 'myscript/dist/myscript.esm';
 import './myscript-stylesheet';
-
 /**
  `myscript-common-element` is a web component wrapper around MyScriptJS editor.
 
@@ -43,7 +42,6 @@ import './myscript-stylesheet';
  @demo src/demo-app/examples/v3/rest_text.html Configure component with legacy api [V3]
  @demo src/demo-app/examples/index.html Other demonstrations
  */
-
 class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronResizableBehavior], PolymerElement)) {
   constructor() {
     super();

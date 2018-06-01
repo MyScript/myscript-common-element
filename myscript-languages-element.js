@@ -6,8 +6,8 @@ import * as MyScript from 'myscript/dist/myscript.esm';
 
     <myscript-languages-element
         type="TEXT"
-        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
-        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+        applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
     </myscript-languages-element>
 
 @demo examples/non-version-specific/get_languages.html Get languages [V4]
