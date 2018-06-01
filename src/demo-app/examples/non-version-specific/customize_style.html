@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="../examples.css">
     <style>
-        nav {
+        .nav-style {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -21,7 +21,7 @@
             padding: 0 12px 12px;
         }
 
-        nav span {
+        .nav-style > span {
             align-items: center;
             display: flex;
             flex-wrap: wrap;
@@ -84,7 +84,7 @@
 </head>
 
 <body>
-<nav>
+<nav class="nav-style">
     <paper-toggle-button class="flex-item" id="penstyleclasses" checked>Apply pen style classes (greenThickPen)
     </paper-toggle-button>
     <span class="flex-item">
