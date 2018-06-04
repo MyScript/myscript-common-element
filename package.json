@@ -26,18 +26,18 @@
   "homepage": "https://github.com/MyScript/myscript-common-element/",
   "dependencies": {
     "@polymer/polymer": "^3.0.0-pre.13",
-    "myscript": "github:myscript/myscriptjs#master"
+    "myscript": "github:myscript/myscriptjs#master",
+    "@polymer/iron-resizable-behavior": "^3.0.0-pre.19",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@polymer/paper-toast": "^3.0.0-pre.19"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^3.0.0-pre.19",
-    "@polymer/iron-resizable-behavior": "^3.0.0-pre.19",
     "@polymer/paper-button": "^3.0.0-pre.19",
-    "@polymer/paper-fab": "^3.0.0-pre.19",
     "@polymer/paper-slider": "^3.0.0-pre.19",
     "@polymer/paper-swatch-picker": "^3.0.0-pre.19",
-    "@polymer/paper-toast": "^3.0.0-pre.19",
+    "@polymer/paper-fab": "^3.0.0-pre.19",
     "@polymer/paper-toggle-button": "^3.0.0-pre.19",
-    "@webcomponents/webcomponentsjs": "^2.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",

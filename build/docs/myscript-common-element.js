@@ -5,8 +5,6 @@ import { beforeNextRender } from "./node_modules/@polymer/polymer/lib/utils/rend
 import { mixinBehaviors } from "./node_modules/@polymer/polymer/lib/legacy/class.js";
 import { IronResizableBehavior } from "./node_modules/@polymer/iron-resizable-behavior/iron-resizable-behavior.js";
 import { html, PolymerElement } from "./node_modules/@polymer/polymer/polymer-element.js";
-import "./node_modules/@polymer/paper-button/paper-button.js";
-import "./node_modules/@polymer/paper-fab/paper-fab.js";
 import "./node_modules/@polymer/paper-toast/paper-toast.js";
 import * as MyScript from "./node_modules/myscript/dist/myscript.esm.js";
 import "./myscript-stylesheet.js";
