@@ -6539,11 +6539,11 @@
       ],
       "demos": [
         {
-          "url": "examples/non-version-specific/get_languages.html",
+          "url": "src/demo-app/examples/non-version-specific/get_languages.html",
           "description": "Get languages [V4]"
         },
         {
-          "url": "examples/non-version-specific/get_languages_programmatic.html",
+          "url": "src/demo-app/examples/non-version-specific/get_languages_programmatic.html",
           "description": "Get languages programmatically [V4]"
         }
       ],

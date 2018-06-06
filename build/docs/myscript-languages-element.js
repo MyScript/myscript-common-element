@@ -10,8 +10,8 @@ import * as MyScript from "./node_modules/myscript/dist/myscript.esm.js";
         hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
     </myscript-languages-element>
 
-@demo examples/non-version-specific/get_languages.html Get languages [V4]
-@demo examples/non-version-specific/get_languages_programmatic.html Get languages programmatically [V4]
+@demo src/demo-app/examples/non-version-specific/get_languages.html Get languages [V4]
+@demo src/demo-app/examples/non-version-specific/get_languages_programmatic.html Get languages programmatically [V4]
 */
 
 class MyScriptLanguagesElement extends PolymerElement {

@@ -48,6 +48,7 @@
   "scripts": {
     "analyze": "polymer analyze myscript-common-element.js myscript-languages-element.js myscript-stylesheet.js > analysis.json",
     "start": "polymer serve",
-    "build": "polymer build"
+    "build": "polymer build",
+    "docs": "npm run analyze & npm run build"
   }
 }
