@@ -30,9 +30,9 @@ If you are not familiar with [Web components](https://www.webcomponents.org/) an
 
 If you're not familiar with MyScript and Interactive Ink, consider discovering its major features with our [text demo and tutorial](http://webdemo.myscript.com/views/text.html).
 
-You can find on our examples page a [simple text example](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/get-started-[v4]) of `myscript-common-element`. 
+[Simple text example](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/get-started-[v4]) of `myscript-common-element`. 
 
-We also provide several examples to show the features of `myscript-common-element`. Those examples can be found on our [examples page](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations) with the source codes in [this directory](https://github.com/MyScript/myscript-common-element/tree/master/examples).
+[All our examples](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations) with the [source codes](https://github.com/MyScript/myscript-common-element/tree/master/examples).
 
 ## Features
 
@@ -72,7 +72,6 @@ npm install myscript-common-element
 1. Create an `index.html` file in the same directory. 
 
 2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
-
 ```html
 <script type="module" src="node_modules/myscript-common-element/myscript-common-element.js"></script>
 <script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
@@ -90,8 +89,8 @@ npm install myscript-common-element
 4. Use the component in the `body` section with the keys you received by mail.
 ```html
   <myscript-common-element
-    applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
-    hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
+        applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
   </myscript-common-element>
 ```
 
@@ -100,7 +99,7 @@ npm install myscript-common-element
 <html>
     <head>
         <script type="module" src="node_modules/myscript-common-element/myscript-common-element.js"></script>
-        <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-common-element {
                 height: 100%;
@@ -117,7 +116,6 @@ npm install myscript-common-element
 ```
 
 6. Launch a local Web server to start using it! We recommend to use the polymer one, you can find more information on the [Polymer website](https://www.polymer-project.org/3.0/start/install-3-0).
-
 ```
 polymer serve
 ```
