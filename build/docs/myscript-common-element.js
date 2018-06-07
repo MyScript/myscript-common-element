@@ -5,7 +5,6 @@ import { beforeNextRender } from "./node_modules/@polymer/polymer/lib/utils/rend
 import { mixinBehaviors } from "./node_modules/@polymer/polymer/lib/legacy/class.js";
 import { IronResizableBehavior } from "./node_modules/@polymer/iron-resizable-behavior/iron-resizable-behavior.js";
 import { html, PolymerElement } from "./node_modules/@polymer/polymer/polymer-element.js";
-import "./node_modules/@polymer/paper-toast/paper-toast.js";
 import * as MyScript from "./node_modules/myscript/dist/myscript.esm.js";
 import "./myscript-stylesheet.js";
 /**
@@ -224,8 +223,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
           </button>
         </nav>
         <div id="editorDomElement" class="ms-editor" on-idle="_idleListener" on-loaded="_changedListener" on-changed="_changedListener" on-exported="_exportedListener" on-error="_errorListener">
-        </div>
-        <paper-toast class="fit-bottom"></paper-toast>`;
+        </div>`;
   }
   /**
    * Fired when editor is idle.
@@ -825,11 +823,6 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
 
   _errorListener(event) {
     this.logger.error('error', event);
-
-    if (event.detail && event.detail.message && (!event.detail.recoverable || event.detail.recoverable === true)) {
-      this.paperToast.text = event.detail.message;
-      this.paperToast.fitIn = this.paperToast.show();
-    }
   }
 
   _attachGrabber(element, editor) {
@@ -1098,7 +1091,6 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
     });
     this.addEventListener('iron-resize', this._resizeListener);
     this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
-    this.paperToast = this.shadowRoot.querySelector('paper-toast');
 
     this._unloadedChanged(this.unloaded);
 
