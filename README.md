@@ -74,7 +74,7 @@ npm install myscript-common-element
 2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
 ```html
 <script type="module" src="node_modules/myscript-common-element/myscript-common-element.js"></script>
-<script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
+<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 ```  
 
 3. Still in the `head` section, add the following style:
@@ -99,7 +99,7 @@ npm install myscript-common-element
 <html>
     <head>
         <script type="module" src="node_modules/myscript-common-element/myscript-common-element.js"></script>
-        <script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-common-element {
                 height: 100%;
