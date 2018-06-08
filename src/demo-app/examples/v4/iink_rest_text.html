@@ -29,7 +29,6 @@
 </head>
 
 <body>
-<paper-toast class="fit-top"></paper-toast>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
 <myscript-common-element scheme="https"
                          protocol="REST"
@@ -39,12 +38,6 @@
                          touch-action="none"
                          disableconvertcontrol>
 </myscript-common-element>
-<script>
-    const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
-        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-        paperToast.fitIn = paperToast.show();
-    });
-</script>
+
 </body>
 </html>
