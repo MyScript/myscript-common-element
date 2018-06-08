@@ -30,9 +30,9 @@ If you are not familiar with [Web components](https://www.webcomponents.org/) an
 
 If you're not familiar with MyScript and Interactive Ink, consider discovering its major features with our [text demo and tutorial](http://webdemo.myscript.com/views/text.html).
 
-You can find on our examples page a [simple text example](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/get-started-[v4]) of `myscript-common-element`. 
+[Simple text example](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/get-started-[v4]) of `myscript-common-element`. 
 
-We also provide several examples to show the features of `myscript-common-element`. Those examples can be found on our [examples page](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations) with the source codes in [this directory](https://github.com/MyScript/myscript-common-element/tree/master/examples).
+[All our examples](https://myscript.github.io/myscript-common-element/components/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations) with the [source codes](https://github.com/MyScript/myscript-common-element/tree/master/examples).
 
 ## Features
 
@@ -49,15 +49,22 @@ You can discover all the features on our Developer website for [Text](https://de
 
 ## Requirements
 
-1. Have [bower](https://bower.io/#install-bower) installed.
+1. Have [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install) installed.
 2. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
 3. Get your keys and the free monthly quota to access MyScript Cloud at [developer.myscript.com](https://developer.myscript.com/getting-started/web)
  
 ## Installation
   
-1. Download myscript-common-element.
+Use an existing project or start a fresh one.
+
 ```shell
-bower install myscript-common-element
+npm init
+```
+
+Install `myscript-common-element` and use it as showed in the [Usage]() section.
+
+```shell
+npm install myscript-common-element
 ```
 
 ## Usage
@@ -66,15 +73,15 @@ bower install myscript-common-element
 
 2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
 ```html
-  <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
-  <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-```
+<script type="module" src="node_modules/myscript-common-element/myscript-common-element.js"></script>
+<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+```  
 
 3. Still in the `head` section, add the following style:
 ```html
 <style>
     myscript-common-element {
-        height: 100%;
+        height: 100vw;
     }
 </style>
 ```
@@ -82,8 +89,8 @@ bower install myscript-common-element
 4. Use the component in the `body` section with the keys you received by mail.
 ```html
   <myscript-common-element
-    applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
-    hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
+        applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
   </myscript-common-element>
 ```
 
@@ -91,8 +98,8 @@ bower install myscript-common-element
 ```html
 <html>
     <head>
-        <link rel="import" href="bower_components/myscript-common-element/myscript-common-element.html">
-        <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+        <script type="module" src="node_modules/myscript-common-element/myscript-common-element.js"></script>
+        <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-common-element {
                 height: 100%;
@@ -108,9 +115,9 @@ bower install myscript-common-element
 </html>
 ```
 
-6. Launch a local Web server like the one below and open the page in your browser (at [0.0.0.0:8000](http://0.0.0.0:8000) if you used the one below) to start using it!
+6. Launch a local Web server to start using it! We recommend to use the polymer one, you can find more information on the [Polymer website](https://www.polymer-project.org/3.0/start/install-3-0).
 ```
-python -m SimpleHTTPServer
+polymer serve
 ```
 
 You can find this guide and a more complete example on the [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/common-element/).
