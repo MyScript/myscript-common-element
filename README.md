@@ -1,4 +1,9 @@
 # MyScript Common Element
+
+[![npm version](https://badge.fury.io/js/myscript-common-element.svg)](https://badge.fury.io/js/myscript-common-element)
+[![Examples](https://img.shields.io/badge/Link%20to-examples-blue.svg)](https://myscript.github.io/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations)
+[![Documentation](https://img.shields.io/badge/Link%20to-documentation-green.svg)](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/common-element/)
+
 > The common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web). 
 
 <div align="center">
