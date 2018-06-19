@@ -35,7 +35,6 @@ import './myscript-stylesheet';
  @demo src/demo-app/examples/non-version-specific/customize_style.html Customize style [V4]
  @demo src/demo-app/examples/non-version-specific/custom_controls.html Redefining the controls [V4]
  @demo src/demo-app/examples/v4/import_content.html Import content [V4]
- @demo src/demo-app/examples/v3/rest_text.html Configure component with legacy api [V3]
  @demo src/demo-app/examples/index.html Other demonstrations
  */
 class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronResizableBehavior], PolymerElement)) {
