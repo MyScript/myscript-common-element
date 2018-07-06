@@ -86,7 +86,7 @@ npm install myscript-common-element
 ```html
 <style>
     myscript-common-element {
-        height: 100vw;
+        height: 100vh;
     }
 </style>
 ```
@@ -107,7 +107,7 @@ npm install myscript-common-element
         <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-common-element {
-                height: 100%;
+                height: 100vh;
             }
         </style>
     </head>
