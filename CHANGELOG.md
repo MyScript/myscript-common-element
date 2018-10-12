@@ -1,3 +1,9 @@
+# [v5.0.1](https://github.com/MyScript/myscript-common-element/tree/v5.0.1)
+
+## Bug fixed
+
+- The attributes `processdelay` and `triggerdelay` are now correctly transfered to configuration.
+
 # [v5.0.0](https://github.com/MyScript/myscript-common-element/tree/v5.0.0)
 
 `myscript-common-element` now supports all the features introduced by the version [4.2.0 of MyScriptJS](https://github.com/MyScript/myscript-js/tree/v4.2.0).

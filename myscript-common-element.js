@@ -656,10 +656,10 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       conf.recognitionParams.server.websocket = {};
     }
     if (triggerdelay) {
-      conf.triggerdelay = triggerdelay;
+      conf.triggerDelay = triggerdelay;
     }
     if (processdelay) {
-      conf.processdelay = processdelay;
+      conf.processDelay = processdelay;
     }
     if (protocol) {
       conf.recognitionParams.protocol = protocol;
