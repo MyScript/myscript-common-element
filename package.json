@@ -1,7 +1,7 @@
 {
   "name": "myscript-common-element",
   "flat": true,
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "myscript-common-element is the common layer of myscript-math-web and myscript-text-web.",
   "keywords": [
     "myscript",
