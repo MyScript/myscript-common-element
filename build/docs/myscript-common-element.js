@@ -701,11 +701,11 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
     }
 
     if (triggerdelay) {
-      conf.triggerdelay = triggerdelay;
+      conf.triggerDelay = triggerdelay;
     }
 
     if (processdelay) {
-      conf.processdelay = processdelay;
+      conf.processDelay = processdelay;
     }
 
     if (protocol) {
