@@ -1,3 +1,13 @@
+# [v5.1.0](https://github.com/MyScript/myscript-common-element/tree/v5.1.0)
+
+## Features
+
+- Addition of a new Recognition Assets Builder API to dynamically build text lexicons and math grammars
+- Ability to import JJIX Math content
+- Style and decoration support in the JIIX exports
+- New configuration options for a finer tuning of JIIX exports
+- Always connected is now the default mode for better end user experience
+
 # [v5.0.1](https://github.com/MyScript/myscript-common-element/tree/v5.0.1)
 
 ## Bug fixed
