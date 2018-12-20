@@ -30,7 +30,7 @@
     "@polymer/paper-toast": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.1",
-    "myscript": "MyScript/MyScriptJS#master"
+    "myscript": "github:MyScript/MyScriptJS#master"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^4.0.1",
