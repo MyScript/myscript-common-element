@@ -4,6 +4,19 @@
 [![Examples](https://img.shields.io/badge/Link%20to-examples-blue.svg)](https://myscript.github.io/myscript-common-element/#/elements/myscript-common-element/demos/other-demonstrations)
 [![Documentation](https://img.shields.io/badge/Link%20to-documentation-green.svg)](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/common-element/)
 
+## :warning: This repository is archived :warning:
+iinkJS grants you high integration flexibility by letting you choose your favorite framework or components. For this reason, we have decided to focus on iinkJS and to discontinue our ready-to-use Web components.
+
+For more information, please see [documentation](https://developer.myscript.com/).
+
+We also provide an example to integrate [iinkJS](https://github.com/MyScript/iinkJS) as webcomponent: [link](https://github.com/MyScript/web-integration-samples).
+
+<div align="center">
+
+:construction:
+
+</div>
+
 > The common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web). 
 
 <div align="center">
